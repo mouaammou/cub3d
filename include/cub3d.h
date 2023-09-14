@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/14 01:52:35 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:26:24 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 typedef enum screen_data
 {
-	SIZE = 64,
+	SIZE = 100,
 	MAP_NUM_ROWS = 11,
 	MAP_NUM_COLS = 15,
 	WINDOW_WIDTH = MAP_NUM_COLS * SIZE,
@@ -38,4 +38,37 @@ typedef struct cub3d
 	float	scale_factor;
 }t_cub3d;
 
+typedef struct player
+{
+	int		x;
+	int		y;
+	int		radius;
+	int		turn_direction;
+	int		walk_direction;
+	float	rotation_angle;
+	int		move_speed;
+	float	rotation_speed;
+}t_player;
+
+typedef struct ray
+{
+	int	ray_angle;
+	int	wall_hit_x;
+	int	wall_hit_y;
+	int	distance;
+	int	was_hit_vertical;
+	int	hit_wall_color;
+	int	is_ray_down;
+	int	is_ray_up;
+	int	is_ray_right;
+	int	is_ray_left;
+}t_ray;
+
+//map.c functions
+int		hasWallAt(int x, int y, t_cub3d *data);
+void	render_map(t_cub3d *data);
+
+// player functions in c
+void	update_position(t_player *character, t_cub3d *map);
+void	render_player(int x, int y, t_cub3d *data);
 #endif
