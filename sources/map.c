@@ -6,45 +6,101 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/14 16:56:03 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/14 23:39:51 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+void	initialize_map(t_cub3d *data)
+{
+	data->mlx = mlx_init();
+	data->win = mlx_new_window(data->mlx, TILE_SIZE * MAP_NUM_COLS, TILE_SIZE * MAP_NUM_ROWS, "MiniMap");
+
+	// Initialize your grid data->here
+	int array2D[MAP_NUM_ROWS][MAP_NUM_COLS] = {
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1},
+		{1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+		{1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+		{1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1},
+		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	};
+	fill_my_map(data, array2D);
+	initialize_player(data);
+}
+
+void	fill_my_map(t_cub3d *data, int array2d[MAP_NUM_ROWS][MAP_NUM_COLS])
+{
+	//fill my grid array with array2d
+	int	i = 0;
+	int	j;
+	while (i < MAP_NUM_ROWS)
+	{
+		j = 0;
+		while (j < MAP_NUM_COLS)
+		{
+			data->grid[i][j] = array2d[i][j];
+			j++;
+		}
+		i++;
+	}
+}
+
 int	hasWallAt(int x, int y, t_cub3d *data)
 {
+	int	map_grid_x;
+	int	map_grid_y;
+
 	if (x < 0 || x > WINDOW_WIDTH || y < 0 || y > WINDOW_HEIGHT)
 		return 0;
-	//check if the x,y position has the value 1 or 0
-	return (data->grid[y][x]);
+	map_grid_x = floor(x / TILE_SIZE);
+	map_grid_y = floor(y / TILE_SIZE);
+	return (data->grid[map_grid_y][map_grid_x]);
+}
+
+void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < TILE_SIZE)
+	{
+		j = 0;
+		while (j < TILE_SIZE)
+		{
+			mlx_pixel_put(data->mlx, data->win,tile_x + i,tile_y + j,tile_color);
+			j++;
+		}
+		i++;
+	}
 }
 
 void	render_map(t_cub3d *data)
 {
 	int i, j;
-
-	for (i = 0; i < MAP_NUM_ROWS; i++)
+	
+	i = 0;
+	while (i < MAP_NUM_ROWS)
 	{
-		for (j = 0; j < MAP_NUM_COLS; j++)
+		j = 0;
+		while (j < MAP_NUM_COLS)
 		{
-			int tileX = j * SIZE;
-			int tileY = i * SIZE;
-			int tileColor = data->grid[i][j] != 0 ? 0x222222 : 0xFFFFFF; // Hexadecimal color values
+			int tile_x = j * TILE_SIZE;
+			int tile_y = i * TILE_SIZE;
+			int tile_color =  0x222222;
 
-			// Draw the rectangle by filling individual pixels
-			for (int x = 0; x < SIZE * data->scale_factor; x++)
-			{
-				for (int y = 0; y < SIZE * data->scale_factor; y++)
-				{
-					mlx_pixel_put(
-						data->mlx, data->win,
-						tileX * data->scale_factor + x,
-						tileY * data->scale_factor + y,
-						tileColor
-					);
-				}
-			}
+			if (data->grid[i][j] != 0)
+				tile_color = 0x2fff001;
+			draw_case(data, tile_x, tile_y, tile_color);
+			j++;
 		}
+		i++;
 	}
 }
