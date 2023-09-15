@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/14 23:38:03 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/15 22:23:03 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@
 
 typedef enum screen_data
 {
-	TILE_SIZE				= 32,
+	UP_KEY				= 126,
+	DOWN_KEY			= 125,
+	RIGHT_KEY			= 124,
+	LEFT_KEY			= 123,
+	ON_KEYDOWN			= 2,
+	ON_DESTROY			= 17,
+	TILE_SIZE			= 32,
 	MAP_NUM_ROWS		= 11,
 	MAP_NUM_COLS		= 15,
 	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
@@ -30,7 +36,6 @@ typedef enum screen_data
 	NUM_RAYS			= WINDOW_WIDTH / WALL_STRIP_WIDTH
 }t_window_data;
 
-
 typedef struct player
 {
 	int		x;
@@ -38,9 +43,9 @@ typedef struct player
 	int		radius;
 	int		turn_direction;
 	int		walk_direction;
-	float	rotation_angle;
-	int		move_speed;
-	float	rotation_speed;
+	double		rotation_angle;
+	int			move_speed;
+	double		rotation_speed;
 }t_player;
 
 typedef struct ray
@@ -65,6 +70,7 @@ typedef struct cub3d
 	float		scale_factor;
 	t_player	myplayer;
 }t_cub3d;
+
 //map.c functions
 int		hasWallAt(int x, int y, t_cub3d *data);
 void	render_map(t_cub3d *data);
@@ -73,7 +79,8 @@ void	initialize_map(t_cub3d *data);
 
 // player functions in c
 void	initialize_player(t_cub3d *data);
-void	update_position(t_player *character, t_cub3d *map);
 void	render_player(t_cub3d *data);
-void	dd_draw_line(int x0, int y0, int x1, int y1, t_cub3d *data);
+void	draw_line(int x0, int y0, int x1, int y1, t_cub3d *data);
+int		move_player(int keycode, t_cub3d *data);
+void	delete_line(int x0, int y0, int x1, int y1, t_cub3d *data, int color);
 #endif
