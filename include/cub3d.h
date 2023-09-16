@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/16 18:08:20 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/17 00:06:51 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ typedef struct player
 	int				y;
 	int				turn_direction;
 	int				walk_direction;
-	double				rotation_angle;
+	double			rotation_angle;
 	int				move_speed;
-	double				rotation_speed;
+	double			rotation_speed;
 }t_player;
 
 typedef struct ray
@@ -79,6 +79,7 @@ void	initialize_map(t_cub3d *data);
 // player functions in c
 void	initialize_player(t_cub3d *data);
 void	render_player(t_cub3d *data);
-void	draw_line(double x0, double y0, int x1, int y1, t_cub3d *data);
+void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data);
 int		move_player(int keycode, t_cub3d *data);
+void	dd_pixel(double x0, double y0, double x1, double y1, t_cub3d *data, double rotation_speed);
 #endif

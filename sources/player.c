@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:05:39 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/16 18:22:35 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/17 00:10:29 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	initialize_player(t_cub3d *data)
 	data->myplayer.walk_direction = 0;
 	data->myplayer.rotation_angle = M_PI;
 	data->myplayer.move_speed = 8;
-	data->myplayer.rotation_speed = 4 * (M_PI / 180);
+	data->myplayer.rotation_speed = 1 * (M_PI / 180);
 }
 
 void	delete_player(t_cub3d *data ,int background_color)
@@ -40,14 +40,13 @@ void	delete_player(t_cub3d *data ,int background_color)
 
 void	update(t_cub3d *data)
 {
-	printf("rotation speed: %f, turndirection: %d\n", data->myplayer.rotation_speed, data->myplayer.turn_direction);
 	data->myplayer.rotation_angle += data->myplayer.turn_direction * data->myplayer.rotation_speed;
-	float	moveStep = data->myplayer.walk_direction * data->myplayer.move_speed;
+	double	moveStep = data->myplayer.walk_direction * data->myplayer.move_speed;
 
-	float	newPlayerX = round(data->myplayer.x + cos(data->myplayer.rotation_angle) * moveStep);
-	float	newPlayerY = round(data->myplayer.y + sin(data->myplayer.rotation_angle) * moveStep);
+	double	newPlayerX = round(data->myplayer.x + cos(data->myplayer.rotation_angle) * moveStep);
+	double	newPlayerY = round(data->myplayer.y + sin(data->myplayer.rotation_angle) * moveStep);
 
-	printf("X= %f, Y= %f, angle: %f\n", newPlayerX, newPlayerY, data->myplayer.rotation_angle);
+	// printf("X= %f, Y= %f, angle: %f\n", newPlayerX, newPlayerY, data->myplayer.rotation_angle);
 	if (!hasWallAt(newPlayerX, newPlayerY, data))
 	{
 		data->myplayer.x = newPlayerX;
@@ -90,7 +89,7 @@ int	move_player(int keycode, t_cub3d *data)
 	{
 		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
 		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
-		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data);
+		dd_pixel(data->myplayer.x, data->myplayer.y, x1, y1, data, data->myplayer.rotation_speed);
 		delete_player(data, 0x222222);
 		key_pressed(data, keycode);
 		update(data);
@@ -116,22 +115,29 @@ void	render_player(t_cub3d *data)
 	}
 }
 
-void	dd_pixel(int x0, int y0, int x1, int y1, t_cub3d *data, int rotation_speed)
+void	delete_pixel(int x, int y, int color, t_cub3d *data)
 {
-	int	i = 0;
-	while (i < TILE_SIZE)
-	{
-		mlx_pixel_put(data->mlx, data->win,x1 + rotation_speed,y1 + rotation_speed,0xffffff);
-		// draw_line(x0, y0, x1 + rotation_speed, y1 + rotation_speed,data);
-		i++;
-	}
+	mlx_pixel_put(data->mlx, data->win, x, y, color);
 }
 
-void	draw_line(double x0, double y0, int x1, int y1, t_cub3d *data)
+void	dd_pixel(double x0, double y0, double x1, double y1, t_cub3d *data, double rotation_speed)
+{
+	int i = 0;
+	while (i < TILE_SIZE)
+	{
+		x1 = x0 + cos(data->myplayer.rotation_angle) * 30;
+		y1 = y0 + sin(data->myplayer.rotation_angle) * 30;
+		draw_line(x0, y0, x1, y1, data);
+		i++;
+	}
+	// mlx_pixel_put(data->mlx, data->win, x1, y1, 0xffffff);
+}
+
+void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data)
 {
 	double	dx;
 	double	dy;
-	int		steps;
+	double	steps;
 	double	x_inc;
 	double	y_inc;
 	int		i;
@@ -142,14 +148,13 @@ void	draw_line(double x0, double y0, int x1, int y1, t_cub3d *data)
 		steps = fabs(dx);
 	else
 		steps = fabs(dy);
-	x_inc = round(dx / (double)steps);
-	y_inc = round(dy / (double)steps);
+	x_inc = (dx / (double)steps);
+	y_inc = (dy / (double)steps);
 
 	i = 0;
 	while (i <= steps)
 	{
-		// mlx_pixel_put(data->mlx, data->win, x0, y0, 0xffffff);
-		dd_pixel(x0, y0, x1, y1, data, data->myplayer.rotation_speed);
+		mlx_pixel_put(data->mlx, data->win, x0, y0, 0xffffff);
 		x0 += x_inc; // increment in x at each step
 		y0 += y_inc; // increment in y at each step
 		i++;
