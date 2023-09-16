@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:05:39 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/16 16:32:32 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/16 18:08:02 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	initialize_player(t_cub3d *data)
 	data->myplayer.walk_direction = 0;
 	data->myplayer.rotation_angle = 0;
 	data->myplayer.move_speed = 8;
-	data->myplayer.rotation_speed = 1 * (M_PI / 180);
+	data->myplayer.rotation_speed = 4 * (M_PI / 180);
 }
 
 void	delete_player(t_cub3d *data ,int background_color)
@@ -38,50 +38,18 @@ void	delete_player(t_cub3d *data ,int background_color)
 	mlx_pixel_put(data->mlx, data->win, x + 1, y + 1, background_color);
 }
 
-
-// void	update_player(t_cub3d *data)
-// {
-// 	t_player	player;
-// 	int			move_step;
-// 	int			new_x;
-// 	int			new_y;
-
-// 	player = data->myplayer;
-	
-// 	player.rotation_angle += player.walk_direction * player.rotation_speed * (M_PI / 180);
-	
-// 	move_step = player.move_speed * player.walk_direction;
-	
-// 	new_x = player.x + cos(player.rotation_angle) * move_step;
-// 	new_y = player.y + sin(player.rotation_angle) * move_step;
-	
-// 	if (hasWallAt(new_x, new_y, data) == 0)
-// 	{
-// 		data->myplayer.x = new_x;
-// 		data->myplayer.y = new_y;
-// 	}
-// }
-
 void	update(t_cub3d *data)
 {
-	
-	t_player	player;
-	
-	player = data->myplayer;
-	int x1, y1;
+	printf("rotation speed: %f, turndirection: %d\n", data->myplayer.rotation_speed, data->myplayer.turn_direction);
+	data->myplayer.rotation_angle += data->myplayer.turn_direction * data->myplayer.rotation_speed;
+	float	moveStep = data->myplayer.walk_direction * data->myplayer.move_speed;
 
-	data->myplayer.rotation_angle += player.turn_direction * player.rotation_speed;
-	float	moveStep = player.walk_direction * player.move_speed;
+	float	newPlayerX = round(data->myplayer.x + cos(data->myplayer.rotation_angle) * moveStep);
+	float	newPlayerY = round(data->myplayer.y + sin(data->myplayer.rotation_angle) * moveStep);
 
-	float	newPlayerX = player.x + cos(player.rotation_angle) * moveStep;
-	float	newPlayerY = player.y + sin(player.rotation_angle) * moveStep;
-
-	printf("X= %f, Y= %f, angle: %f\n", newPlayerX, newPlayerY, player.rotation_angle);
-	draw_line(player.x, player.y, newPlayerX, newPlayerY, data);
+	printf("X= %f, Y= %f, angle: %f\n", newPlayerX, newPlayerY, data->myplayer.rotation_angle);
 	if (!hasWallAt(newPlayerX, newPlayerY, data))
 	{
-		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
-		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
 		data->myplayer.x = newPlayerX;
 		data->myplayer.y = newPlayerY;
 	}
@@ -89,53 +57,45 @@ void	update(t_cub3d *data)
 
 void	key_pressed(t_cub3d *data, int key_code)
 {
-	int x,y;
-	
-	x = data->myplayer.x;
-	y = data->myplayer.y;
-	data->myplayer.walk_direction = 0;
-	data->myplayer.turn_direction = 0;
 	if (key_code == UP_KEY)
-	{
-		data->myplayer.walk_direction = -1;
-		// update(data);
-		// if (hasWallAt(x, y, data))
-		// 	return ;
-	}
+		data->myplayer.walk_direction = +1;
 	else if (key_code == DOWN_KEY)
-	{
-		data->myplayer.walk_direction = 1;
-		// update(data);
-		// if (hasWallAt(x, y, data))
-		// 	return ;
-	}
+		data->myplayer.walk_direction = -1;
 	else if (key_code == RIGHT_KEY)
-	{
-		data->myplayer.turn_direction = -1;
-		// update(data);
-		// if (hasWallAt(x, y, data))
-		// 	return ;
-	}
-	else if (key_code == LEFT_KEY)
-	{
 		data->myplayer.turn_direction = 1;
-		// update(data);
-		// if (hasWallAt(x, y, data))
-		// 	return ;
-	}
+	else if (key_code == LEFT_KEY)
+		data->myplayer.turn_direction = -1;
+}
+
+void	key_released(t_cub3d *data, int key_code)
+{
+	if (key_code == UP_KEY)
+		data->myplayer.walk_direction = 0;
+	else if (key_code == DOWN_KEY)
+		data->myplayer.walk_direction = 0;
+	else if (key_code == RIGHT_KEY)
+		data->myplayer.turn_direction = 0;
+	else if (key_code == LEFT_KEY)
+		data->myplayer.turn_direction = 0;
 }
 
 int	move_player(int keycode, t_cub3d *data)
 {
+	int x1, y1;
+		
 	if (keycode == 53)
 		exit(0);
 	if (keycode == UP_KEY || keycode == DOWN_KEY
 		|| keycode == RIGHT_KEY || keycode == LEFT_KEY)
 	{
+		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
+		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
+		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data);
 		delete_player(data, 0x222222);
 		key_pressed(data, keycode);
 		update(data);
 		render_player(data);
+		key_released(data, keycode);
 	}
 	return 0;
 }
@@ -144,8 +104,6 @@ void	render_player(t_cub3d *data)
 {
 	int	x;
 	int	y;
-	int	x1;
-	int	y1;
 
 	x = data->myplayer.x;
 	y = data->myplayer.y;
@@ -158,23 +116,33 @@ void	render_player(t_cub3d *data)
 	}
 }
 
-void	draw_line(int x0, int y0, int x1, int y1, t_cub3d *data)
+void	dd_pixel(int x0, int y0, int x1, int y1, t_cub3d *data)
 {
-	int		dx;
-	int		dy;
+	int	i = 0;
+	while (i < TILE_SIZE)
+	{
+		mlx_pixel_put(data->mlx, data->win,x0 + i,y0 + i,0xffffff);
+		i++;
+	}
+}
+
+void	draw_line(double x0, double y0, int x1, int y1, t_cub3d *data)
+{
+	double	dx;
+	double	dy;
 	int		steps;
-	float	x_inc;
-	float	y_inc;
+	double	x_inc;
+	double	y_inc;
 	int		i;
 	
 	dx = x1 - x0;
 	dy = y1 - y0;
-	if (abs(dx) > abs(dy))
-		steps = abs(dx);
+	if (fabs(dx) > fabs(dy))
+		steps = fabs(dx);
 	else
-		steps = abs(dy);
-	x_inc = round((float)dx / (float)steps);
-	y_inc = round((float)dy / (float)steps);
+		steps = fabs(dy);
+	x_inc = round(dx / (double)steps);
+	y_inc = round(dy / (double)steps);
 
 	i = 0;
 	while (i <= steps)

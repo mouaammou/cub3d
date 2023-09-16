@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/16 15:08:56 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/16 18:08:20 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ typedef enum screen_data
 
 typedef struct player
 {
-	int			x;
-	int			y;
-	int			turn_direction;
-	int			walk_direction;
-	double		rotation_angle;
-	int			move_speed;
-	double		rotation_speed;
+	int				x;
+	int				y;
+	int				turn_direction;
+	int				walk_direction;
+	double				rotation_angle;
+	int				move_speed;
+	double				rotation_speed;
 }t_player;
 
 typedef struct ray
@@ -79,6 +79,6 @@ void	initialize_map(t_cub3d *data);
 // player functions in c
 void	initialize_player(t_cub3d *data);
 void	render_player(t_cub3d *data);
-void	draw_line(int x0, int y0, int x1, int y1, t_cub3d *data);
+void	draw_line(double x0, double y0, int x1, int y1, t_cub3d *data);
 int		move_player(int keycode, t_cub3d *data);
 #endif
