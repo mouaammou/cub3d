@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/15 14:57:32 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/16 16:04:25 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	initialize_map(t_cub3d *data)
 {
 	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, TILE_SIZE * MAP_NUM_COLS, TILE_SIZE * MAP_NUM_ROWS, "MiniMap");
+	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "MiniMap");
 
 	// Initialize your grid data->here
 	int array2D[MAP_NUM_ROWS][MAP_NUM_COLS] = {
@@ -96,7 +96,7 @@ void	render_map(t_cub3d *data)
 			int tile_y = i * TILE_SIZE;
 			int tile_color =  0x222222;
 
-			if (data->grid[i][j] != 0)
+			if (data->grid[i][j] == 1)
 				tile_color = 0x2fff001;
 			draw_case(data, tile_x, tile_y, tile_color);
 			j++;

@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:05:39 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/15 22:27:51 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/16 16:32:32 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 void	initialize_player(t_cub3d *data)
 {
-	data->myplayer.rotation_angle = 0;
 	data->myplayer.x = WINDOW_WIDTH / 2;
 	data->myplayer.y = WINDOW_HEIGHT / 7;
 	data->myplayer.turn_direction = 0;
 	data->myplayer.walk_direction = 0;
 	data->myplayer.rotation_angle = 0;
 	data->myplayer.move_speed = 8;
-	data->myplayer.rotation_speed = 0.1 * (M_PI / 180);
+	data->myplayer.rotation_speed = 1 * (M_PI / 180);
 }
 
 void	delete_player(t_cub3d *data ,int background_color)
@@ -71,18 +70,18 @@ void	update(t_cub3d *data)
 	player = data->myplayer;
 	int x1, y1;
 
-	data->myplayer.rotation_angle += player.turn_direction + player.rotation_speed;
+	data->myplayer.rotation_angle += player.turn_direction * player.rotation_speed;
 	float	moveStep = player.walk_direction * player.move_speed;
 
 	float	newPlayerX = player.x + cos(player.rotation_angle) * moveStep;
 	float	newPlayerY = player.y + sin(player.rotation_angle) * moveStep;
 
 	printf("X= %f, Y= %f, angle: %f\n", newPlayerX, newPlayerY, player.rotation_angle);
+	draw_line(player.x, player.y, newPlayerX, newPlayerY, data);
 	if (!hasWallAt(newPlayerX, newPlayerY, data))
 	{
 		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
 		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
-		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data);
 		data->myplayer.x = newPlayerX;
 		data->myplayer.y = newPlayerY;
 	}
@@ -90,8 +89,7 @@ void	update(t_cub3d *data)
 
 void	key_pressed(t_cub3d *data, int key_code)
 {
-	int	x;
-	int	y;
+	int x,y;
 	
 	x = data->myplayer.x;
 	y = data->myplayer.y;
@@ -158,7 +156,6 @@ void	render_player(t_cub3d *data)
 		mlx_pixel_put(data->mlx, data->win, x, y + 1, 0xff0000);
 		mlx_pixel_put(data->mlx, data->win, x + 1, y + 1, 0xff0000);
 	}
-	
 }
 
 void	draw_line(int x0, int y0, int x1, int y1, t_cub3d *data)
@@ -176,11 +173,11 @@ void	draw_line(int x0, int y0, int x1, int y1, t_cub3d *data)
 		steps = abs(dx);
 	else
 		steps = abs(dy);
-	x_inc = (float)dx / (float)steps;
-	y_inc = (float)dy / (float)steps;
+	x_inc = round((float)dx / (float)steps);
+	y_inc = round((float)dy / (float)steps);
 
 	i = 0;
-	while (i < steps)
+	while (i <= steps)
 	{
 		mlx_pixel_put(data->mlx, data->win, x0, y0, 0xffffff);
 		x0 += x_inc; // increment in x at each step
