@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:05:39 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/16 18:08:02 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/16 18:22:35 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	initialize_player(t_cub3d *data)
 	data->myplayer.y = WINDOW_HEIGHT / 7;
 	data->myplayer.turn_direction = 0;
 	data->myplayer.walk_direction = 0;
-	data->myplayer.rotation_angle = 0;
+	data->myplayer.rotation_angle = M_PI;
 	data->myplayer.move_speed = 8;
 	data->myplayer.rotation_speed = 4 * (M_PI / 180);
 }
@@ -116,12 +116,13 @@ void	render_player(t_cub3d *data)
 	}
 }
 
-void	dd_pixel(int x0, int y0, int x1, int y1, t_cub3d *data)
+void	dd_pixel(int x0, int y0, int x1, int y1, t_cub3d *data, int rotation_speed)
 {
 	int	i = 0;
 	while (i < TILE_SIZE)
 	{
-		mlx_pixel_put(data->mlx, data->win,x0 + i,y0 + i,0xffffff);
+		mlx_pixel_put(data->mlx, data->win,x1 + rotation_speed,y1 + rotation_speed,0xffffff);
+		// draw_line(x0, y0, x1 + rotation_speed, y1 + rotation_speed,data);
 		i++;
 	}
 }
@@ -147,7 +148,8 @@ void	draw_line(double x0, double y0, int x1, int y1, t_cub3d *data)
 	i = 0;
 	while (i <= steps)
 	{
-		mlx_pixel_put(data->mlx, data->win, x0, y0, 0xffffff);
+		// mlx_pixel_put(data->mlx, data->win, x0, y0, 0xffffff);
+		dd_pixel(x0, y0, x1, y1, data, data->myplayer.rotation_speed);
 		x0 += x_inc; // increment in x at each step
 		y0 += y_inc; // increment in y at each step
 		i++;
