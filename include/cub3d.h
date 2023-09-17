@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/17 00:57:53 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/17 16:47:15 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef enum screen_data
 	LEFT_KEY			= 123,
 	ON_KEYDOWN			= 2,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 32,
+	TILE_SIZE			= 50,
 	MAP_NUM_ROWS		= 11,
 	MAP_NUM_COLS		= 15,
 	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
@@ -38,8 +38,8 @@ typedef enum screen_data
 
 typedef struct player
 {
-	int				x;
-	int				y;
+	double			x;
+	double			y;
 	int				turn_direction;
 	int				walk_direction;
 	double			rotation_angle;
@@ -71,7 +71,7 @@ typedef struct cub3d
 }t_cub3d;
 
 //map.c functions
-int		hasWallAt(int x, int y, t_cub3d *data);
+int		hasWallAt(double x, double y, t_cub3d *data);
 void	render_map(t_cub3d *data);
 void	fill_my_map(t_cub3d *data, int array2d[MAP_NUM_ROWS][MAP_NUM_COLS]);
 void	initialize_map(t_cub3d *data);
@@ -81,5 +81,4 @@ void	initialize_player(t_cub3d *data);
 void	render_player(t_cub3d *data);
 void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int color);
 int		move_player(int keycode, t_cub3d *data);
-void	dd_pixel(double x0, double y0, double x1, double y1, t_cub3d *data);
 #endif

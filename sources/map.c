@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/17 00:08:03 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/17 16:45:51 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ void	fill_my_map(t_cub3d *data, int array2d[MAP_NUM_ROWS][MAP_NUM_COLS])
 	}
 }
 
-int	hasWallAt(int x, int y, t_cub3d *data)
+int	hasWallAt(double x, double y, t_cub3d *data)
 {
 	int	map_grid_x;
 	int	map_grid_y;
 
 	if (x < 0 || x > WINDOW_WIDTH || y < 0 || y > WINDOW_HEIGHT)
 		return 0;
-	map_grid_x = x / TILE_SIZE;
-	map_grid_y = y / TILE_SIZE;
+	map_grid_x = floor(x / TILE_SIZE);
+	map_grid_y = floor(y / TILE_SIZE);
 	return (data->grid[map_grid_y][map_grid_x]);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:05:39 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/17 01:14:17 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/17 16:57:05 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	update(t_cub3d *data)
 	data->myplayer.rotation_angle += data->myplayer.turn_direction * data->myplayer.rotation_speed;
 	double	moveStep = data->myplayer.walk_direction * data->myplayer.move_speed;
 
-	double	newPlayerX = round(data->myplayer.x + cos(data->myplayer.rotation_angle) * moveStep);
-	double	newPlayerY = round(data->myplayer.y + sin(data->myplayer.rotation_angle) * moveStep);
+	double	newPlayerX = (data->myplayer.x + cos(data->myplayer.rotation_angle) * moveStep);
+	double	newPlayerY = (data->myplayer.y + sin(data->myplayer.rotation_angle) * moveStep);
 	if (!hasWallAt(newPlayerX, newPlayerY, data))
 	{
 		data->myplayer.x = newPlayerX;
@@ -59,7 +59,7 @@ void	key_pressed(t_cub3d *data, int key_code)
 	else if (key_code == DOWN_KEY)
 		data->myplayer.walk_direction = -1;
 	else if (key_code == RIGHT_KEY)
-		data->myplayer.turn_direction = 1;
+		data->myplayer.turn_direction = +1;
 	else if (key_code == LEFT_KEY)
 		data->myplayer.turn_direction = -1;
 }
@@ -78,27 +78,24 @@ void	key_released(t_cub3d *data, int key_code)
 
 int	move_player(int keycode, t_cub3d *data)
 {
-	double x0, y0;
 	double x1, y1;
-		
-	x0 = data->myplayer.x;
-	y0 = data->myplayer.y;
+
 	if (keycode == 53)
 		exit(0);
 	if (keycode == UP_KEY || keycode == DOWN_KEY
 		|| keycode == RIGHT_KEY || keycode == LEFT_KEY)
 	{
 		delete_player(data, 0x222222);
-		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 60;
-		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 60;
-		draw_line(x0, y0, x1, y1, data, 0x222222);
+		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
+		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
+		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0x222222);
 		key_pressed(data, keycode);
 		update(data);
-		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 60;
-		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 60;
-		draw_line(x0, y0, x1, y1, data, 0xffffff);
 		render_player(data);
 		key_released(data, keycode);
+		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
+		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
+		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0xffffff);
 	}
 	return 0;
 }
