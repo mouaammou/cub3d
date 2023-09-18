@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 01:36:54 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/18 06:28:38 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct cub3d
 	void		*mlx;
 	void		*win;
 	void		*img;
-	uint32_t	*frame;
+	unsigned int	*frame;
 	int			grid[MAP_NUM_ROWS][MAP_NUM_COLS];
 	float		scale_factor;
 	t_player	myplayer;

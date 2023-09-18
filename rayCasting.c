@@ -60,7 +60,8 @@ Ray cast(Player *player, Grid grid, double rayAngle) {
     double nextHorzTouchY = yintercept;
 
     // Increment xstep and ystep until we find a wall
-    while (nextHorzTouchX >= 0 && nextHorzTouchX <= WINDOW_WIDTH && nextHorzTouchY >= 0 && nextHorzTouchY <= WINDOW_HEIGHT) {
+    while (nextHorzTouchX >= 0 && nextHorzTouchX <= WINDOW_WIDTH
+		&& nextHorzTouchY >= 0 && nextHorzTouchY <= WINDOW_HEIGHT) {
         int wallGridContent = grid.getWallContentAt(
             nextHorzTouchX,
             nextHorzTouchY + (player->walkDirection == -1 ? -1 : 0)

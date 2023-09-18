@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:05:39 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 01:51:25 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/18 06:58:42 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,14 @@ int	move_player(int keycode, t_cub3d *data)
 	if (keycode == UP_KEY || keycode == DOWN_KEY
 		|| keycode == RIGHT_KEY || keycode == LEFT_KEY)
 	{
-		render_rays(data, 0xffffff);
+		render_rays(data, 0x222222);
 		delete_player(data, 0x222222);
 		delete_old_position(data);
 		key_pressed(data, keycode);
 		update_position_player(data);
 		render_player(data);
 		key_released(data, keycode);
+		render_rays(data, 0xffffff);
 	}
 	return 0;
 }
@@ -114,10 +115,10 @@ void	render_player(t_cub3d *data)
 	y = data->myplayer.y;
 	if (hasWallAt(x, y, data) == 0)
 	{
-		put_color(data, x, y, 0xffffff);
-		put_color(data, x + 1, y, 0xffffff);
-		put_color(data, x, y + 1, 0xffffff);
-		put_color(data, x + 1, y + 1, 0xffffff);
+		put_color(data, x, y, 0xFF0000);
+		put_color(data, x + 1, y, 0xFF0000);
+		put_color(data, x, y + 1, 0xFF0000);
+		put_color(data, x + 1, y + 1, 0xFF0000);
 
 		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
 		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;

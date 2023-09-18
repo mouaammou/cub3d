@@ -6,18 +6,17 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:56:19 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 00:43:06 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/18 07:30:30 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	normalize_ray_angle(int angle)
-{
-	angle = angle % (int)(2 * M_PI);
+double normalize_ray_angle(double angle) {
+	angle = fmod(angle, 2.0 * M_PI);
 	if (angle < 0)
-		angle += 2 * M_PI;
-	return (angle);
+		angle += 2.0 * M_PI;
+	return angle;
 }
 
 void	construct_ray(t_cub3d *data, double ray_angle)
@@ -31,7 +30,7 @@ void	construct_ray(t_cub3d *data, double ray_angle)
 	data->myray.is_ray_down = data->myray.ray_angle > 0 && data->myray.ray_angle < M_PI;
 	data->myray.is_ray_up = !data->myray.is_ray_down;
 	
-	data->myray.is_ray_right = data->myray.ray_angle < 0.5 * M_PI || data->myray.ray_angle > 1.5 * M_PI;
+	data->myray.is_ray_right = (data->myray.ray_angle < 0.5 * M_PI || data->myray.ray_angle > 1.5 * M_PI);
 	data->myray.is_ray_left = !data->myray.is_ray_right;
 }
 
@@ -39,16 +38,13 @@ void	construct_ray(t_cub3d *data, double ray_angle)
 void	render_rays(t_cub3d *data, int color)
 {
 	double ray_angle = data->myplayer.rotation_angle - (data->myplayer.fov / 2);
-	double x1, y1;
 
 	int i = 0;
 	while (i < NUM_RAYS)
 	{
-		// construct_ray(data, ray_angle);
-		// ray_casting(data);
-		x1 = data->myplayer.x + cos(ray_angle) * 30;
-		y1 = data->myplayer.y + sin(ray_angle) * 30;
-		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0xffffff);
+		construct_ray(data, ray_angle);
+		ray_casting(data);
+		draw_line(data->myplayer.x, data->myplayer.y, data->myray.wall_hit_x, data->myray.wall_hit_y, data, color);
 		ray_angle += data->myplayer.fov / NUM_RAYS;
 		i++;
 	}
@@ -62,40 +58,38 @@ void	ray_casting(t_cub3d *data)
 	double	first_p_x;
 	double	first_p_y;
 	double	xstep, ystep;
-	int	next_point_x;
-	int	next_point_y;
+	double	next_point_x;
+	double	next_point_y;
 
 	/*************************************
 			HORIZONTAL RAY-GRID INTERSECTION CODE
 	**************************************/
 	first_p_y = floor(data->myplayer.y / TILE_SIZE) * TILE_SIZE;
-	if (data->myplayer.walk_direction == 1)
+	if (data->myray.is_ray_down)
 		first_p_y += TILE_SIZE;
 
 	first_p_x = data->myplayer.x + (first_p_y - data->myplayer.y / tan(data->myray.ray_angle));
 
 	ystep = TILE_SIZE;
-	if (data->myplayer.walk_direction)
-		ystep *= data->myplayer.walk_direction;
-	xstep = ystep / tan(data->myray.ray_angle);
-
-	// printf("x: %f, y: %f, walk %d\n", xstep, ystep, data->myplayer.walk_direction);
-	// exit(0);
-	if (xstep < 0 && data->myplayer.turn_direction == 1)
+	if (data->myray.is_ray_up)
+		ystep *= -1;
+	xstep = TILE_SIZE / tan(data->myray.ray_angle);
+	if (data->myray.is_ray_left && xstep > 0)
 		xstep *= -1;
-	else if (xstep > 0 && data->myplayer.turn_direction == -1)
+	if (data->myray.is_ray_right && xstep < 0)
 		xstep *= -1;
 	
 	next_point_x = first_p_x;
 	next_point_y = first_p_y;
 
 	double	tmp_point;
-	while (next_point_x > 0 && next_point_x < WINDOW_WIDTH && next_point_y > 0 && next_point_y < WINDOW_HEIGHT)
+	while (next_point_x >= 0 && next_point_x <= WINDOW_WIDTH
+		&& next_point_y >= 0 && next_point_y <= WINDOW_HEIGHT)
 	{
 		tmp_point = next_point_y;
-		if (data->myplayer.walk_direction == -1)
+		if (data->myray.is_ray_up)
 			tmp_point += -1;
-		if (hasWallAt(next_point_x, tmp_point, data) == 1)
+		if (hasWallAt(next_point_x, next_point_y, data) == 1)
 		{
 			horz_x = next_point_x;
 			horz_y = next_point_y;
@@ -104,7 +98,6 @@ void	ray_casting(t_cub3d *data)
 		}
 		next_point_x += xstep;
 		next_point_y += ystep;
-		printf("next_x: %f, next_y: %f\n", xstep, ystep);
 	}
 
 	/*************************************
@@ -114,28 +107,30 @@ void	ray_casting(t_cub3d *data)
 	double	vert_y;
 	int		found_vert_hit = 0;
 
-	first_p_x = floor(data->myplayer.x / TILE_SIZE) * TILE_SIZE;
-	if (data->myplayer.turn_direction == 1)
-		first_p_x += TILE_SIZE;
-	first_p_y = data->myplayer.y + (first_p_x - data->myplayer.x) * tan(data->myray.ray_angle);
+	double first_p_vert_x = floor(data->myplayer.x / TILE_SIZE) * TILE_SIZE;
+	if (data->myray.is_ray_right)
+		first_p_vert_x += TILE_SIZE;
+	double first_p_vert_y = data->myplayer.y + (first_p_vert_x - data->myplayer.x) * tan(data->myray.ray_angle);
 	
 	xstep = TILE_SIZE;
-	if (data->myplayer.turn_direction)
-		xstep *= data->myplayer.turn_direction;
-	ystep = xstep * tan(data->myray.ray_angle);
+	if (data->myray.is_ray_left)
+		xstep *= -1;
+		
 
-	if (data->myplayer.walk_direction == -1 && ystep > 0)
+	ystep = TILE_SIZE * tan(data->myray.ray_angle);
+	if (data->myray.is_ray_up && ystep > 0)
 		ystep *= -1;
-	else if (data->myplayer.walk_direction == 1 && ystep < 0)
+	if (data->myray.is_ray_down && ystep < 0)
 		ystep *= -1;
 	
-	next_point_x = first_p_x;
-	next_point_y = first_p_y;
+	next_point_x = first_p_vert_x;
+	next_point_y = first_p_vert_y;
 
-	while (next_point_x >= 0 && next_point_x <= WINDOW_WIDTH && next_point_y >= 0 && next_point_y <= WINDOW_HEIGHT)
+	while (next_point_x >= 0 && next_point_x <= WINDOW_WIDTH
+		&& next_point_y >= 0 && next_point_y <= WINDOW_HEIGHT)
 	{
 		tmp_point = next_point_x;
-		if (data->myplayer.turn_direction == -1)
+		if (data->myray.is_ray_left)
 			tmp_point += -1;
 		if (hasWallAt(tmp_point, next_point_y, data) == 1)
 		{
@@ -150,22 +145,22 @@ void	ray_casting(t_cub3d *data)
 
 	// Calculate both horizontal and vertical distances and choose the smallest value
 	double horz_distance = DBL_MAX, vert_distance = DBL_MAX;
-	if (found_horz_hit)
-		horz_distance = sqrt(pow(data->myplayer.x - horz_x, 2) + pow(data->myplayer.y - horz_y, 2));
-	if (found_vert_hit)
-		vert_distance = sqrt(pow(data->myplayer.x - vert_x, 2) + pow(data->myplayer.y - vert_y, 2));
-	
+	if (found_horz_hit == 1)
+		horz_distance = sqrt(pow(horz_x - data->myplayer.x, 2) + pow(horz_y - data->myplayer.y, 2));
+	if (found_vert_hit == 1)
+		vert_distance = sqrt(pow(vert_x - data->myplayer.x, 2) + pow(vert_y - data->myplayer.y, 2));
+
 	if (vert_distance < horz_distance)
 	{
-		data->myray.wall_hit_x = vert_x;
-		data->myray.wall_hit_y = vert_y;
+		data->myray.wall_hit_x = (vert_x);
+		data->myray.wall_hit_y = (vert_y);
 		data->myray.distance = vert_distance;
 		data->myray.was_hit_vertical = 1;
 	}
 	else
 	{
-		data->myray.wall_hit_x = horz_x;
-		data->myray.wall_hit_y = horz_y;
+		data->myray.wall_hit_x = (horz_x);
+		data->myray.wall_hit_y = (horz_y);
 		data->myray.distance = horz_distance;
 		data->myray.was_hit_vertical = 0;
 	}
