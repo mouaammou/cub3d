@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:05:39 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/17 16:57:05 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/18 01:51:25 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void	initialize_player(t_cub3d *data)
 	data->myplayer.y = WINDOW_HEIGHT / 7;
 	data->myplayer.turn_direction = 0;
 	data->myplayer.walk_direction = 0;
-	data->myplayer.rotation_angle = M_PI;
+	data->myplayer.rotation_angle = 0;
 	data->myplayer.move_speed = 8;
 	data->myplayer.rotation_speed = 8 * (M_PI / 180);
+	data->myplayer.fov = 60 * (M_PI / 180);
 }
 
 void	delete_player(t_cub3d *data ,int background_color)
@@ -32,13 +33,13 @@ void	delete_player(t_cub3d *data ,int background_color)
 	y = data->myplayer.y;
 	if (hasWallAt(x, y, data) == 1)
 		return ;
-	mlx_pixel_put(data->mlx, data->win, x, y, background_color);
-	mlx_pixel_put(data->mlx, data->win, x + 1, y, background_color);
-	mlx_pixel_put(data->mlx, data->win, x, y + 1, background_color);
-	mlx_pixel_put(data->mlx, data->win, x + 1, y + 1, background_color);
+	put_color(data, x, y, background_color);
+	put_color(data, x + 1, y, background_color);
+	put_color(data, x, y + 1, background_color);
+	put_color(data, x + 1, y + 1, background_color);
 }
 
-void	update(t_cub3d *data)
+void	update_position_player(t_cub3d *data)
 {
 	data->myplayer.rotation_angle += data->myplayer.turn_direction * data->myplayer.rotation_speed;
 	double	moveStep = data->myplayer.walk_direction * data->myplayer.move_speed;
@@ -76,43 +77,51 @@ void	key_released(t_cub3d *data, int key_code)
 		data->myplayer.turn_direction = 0;
 }
 
-int	move_player(int keycode, t_cub3d *data)
+void	delete_old_position(t_cub3d *data)
 {
 	double x1, y1;
+	
+	x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
+	y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
+	draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0x222222);
+}
 
+int	move_player(int keycode, t_cub3d *data)
+{
 	if (keycode == 53)
 		exit(0);
 	if (keycode == UP_KEY || keycode == DOWN_KEY
 		|| keycode == RIGHT_KEY || keycode == LEFT_KEY)
 	{
+		render_rays(data, 0xffffff);
 		delete_player(data, 0x222222);
-		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
-		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
-		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0x222222);
+		delete_old_position(data);
 		key_pressed(data, keycode);
-		update(data);
+		update_position_player(data);
 		render_player(data);
 		key_released(data, keycode);
-		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
-		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
-		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0xffffff);
 	}
 	return 0;
 }
 
 void	render_player(t_cub3d *data)
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
+	double x1, y1;
 
 	x = data->myplayer.x;
 	y = data->myplayer.y;
 	if (hasWallAt(x, y, data) == 0)
 	{
-		mlx_pixel_put(data->mlx, data->win, x, y, 0xff0000);
-		mlx_pixel_put(data->mlx, data->win, x + 1, y, 0xff0000);
-		mlx_pixel_put(data->mlx, data->win, x, y + 1, 0xff0000);
-		mlx_pixel_put(data->mlx, data->win, x + 1, y + 1, 0xff0000);
+		put_color(data, x, y, 0xffffff);
+		put_color(data, x + 1, y, 0xffffff);
+		put_color(data, x, y + 1, 0xffffff);
+		put_color(data, x + 1, y + 1, 0xffffff);
+
+		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
+		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
+		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0xffffff);
 	}
 }
 
@@ -137,7 +146,7 @@ void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int co
 	i = 0;
 	while (i < steps)
 	{
-		mlx_pixel_put(data->mlx, data->win, x0, y0, color);
+		put_color(data, x0, y0, color);
 		x0 += x_inc; // increment in x at each step
 		y0 += y_inc; // increment in y at each step
 		i++;

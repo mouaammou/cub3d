@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/17 16:45:51 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/18 01:47:58 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
 		j = 0;
 		while (j < TILE_SIZE)
 		{
-			mlx_pixel_put(data->mlx, data->win,tile_x + i,tile_y + j,tile_color);
+			// put_color(data->mlx, data->win,tile_x + i,tile_y + j,tile_color);
+			put_color(data, tile_x + i, tile_y + j, tile_color);
 			j++;
 		}
 		i++;

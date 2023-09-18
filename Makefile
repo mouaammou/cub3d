@@ -6,9 +6,11 @@
 #    By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 12:34:07 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/14 23:01:17 by mouaammo         ###   ########.fr        #
+#    Updated: 2023/09/18 00:57:39 by mouaammo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# gcc main.c MLX42/build/libmlx42.a -Iinclude -lglfw -L"/Users/mouaammo/.brew/opt/glfw/lib/"
 
 # FLAGS 			= -Wall -Wextra -Werror
 NAME 			= cub3d

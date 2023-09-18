@@ -6,34 +6,167 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:56:19 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/14 16:57:06 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/18 00:43:06 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-// DDA Function for line generation
-// void DDA(int X0, int Y0, int X1, int Y1)
-// {
-// 	// calculate dx & dy
-// 	int dx = X1 - X0;//horizontal
-// 	int dy = Y1 - Y0;//vertical
+int	normalize_ray_angle(int angle)
+{
+	angle = angle % (int)(2 * M_PI);
+	if (angle < 0)
+		angle += 2 * M_PI;
+	return (angle);
+}
 
-// 	// calculate steps required for generating pixels
-// 	int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+void	construct_ray(t_cub3d *data, double ray_angle)
+{
+	data->myray.ray_angle = normalize_ray_angle(ray_angle);
+	data->myray.wall_hit_x = 0;
+	data->myray.wall_hit_y = 0;
+	data->myray.distance = 0;
+	data->myray.was_hit_vertical = 0;
+	
+	data->myray.is_ray_down = data->myray.ray_angle > 0 && data->myray.ray_angle < M_PI;
+	data->myray.is_ray_up = !data->myray.is_ray_down;
+	
+	data->myray.is_ray_right = data->myray.ray_angle < 0.5 * M_PI || data->myray.ray_angle > 1.5 * M_PI;
+	data->myray.is_ray_left = !data->myray.is_ray_right;
+}
 
-// 	// calculate increment in x & y for each steps
-// 	float Xinc = dx / (float)steps;
-// 	float Yinc = dy / (float)steps;
 
-// 	// Put pixel for each step
-// 	float X = X0;
-// 	float Y = Y0;
-// 	for (int i = 0; i <= steps; i++) {
-// 		// mlx_pixel_put(round(X), round(Y), RED); // put pixel at (X,Y)
-// 		X += Xinc; // increment in x at each step
-// 		Y += Yinc; // increment in y at each step
-// 		// delay(100); // for visualization of line-
-// 					// generation step by step
-// 	}
-// }
+void	render_rays(t_cub3d *data, int color)
+{
+	double ray_angle = data->myplayer.rotation_angle - (data->myplayer.fov / 2);
+	double x1, y1;
+
+	int i = 0;
+	while (i < NUM_RAYS)
+	{
+		// construct_ray(data, ray_angle);
+		// ray_casting(data);
+		x1 = data->myplayer.x + cos(ray_angle) * 30;
+		y1 = data->myplayer.y + sin(ray_angle) * 30;
+		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0xffffff);
+		ray_angle += data->myplayer.fov / NUM_RAYS;
+		i++;
+	}
+}
+
+void	ray_casting(t_cub3d *data)
+{
+	double	horz_x;
+	double	horz_y;
+	int		found_horz_hit = 0;
+	double	first_p_x;
+	double	first_p_y;
+	double	xstep, ystep;
+	int	next_point_x;
+	int	next_point_y;
+
+	/*************************************
+			HORIZONTAL RAY-GRID INTERSECTION CODE
+	**************************************/
+	first_p_y = floor(data->myplayer.y / TILE_SIZE) * TILE_SIZE;
+	if (data->myplayer.walk_direction == 1)
+		first_p_y += TILE_SIZE;
+
+	first_p_x = data->myplayer.x + (first_p_y - data->myplayer.y / tan(data->myray.ray_angle));
+
+	ystep = TILE_SIZE;
+	if (data->myplayer.walk_direction)
+		ystep *= data->myplayer.walk_direction;
+	xstep = ystep / tan(data->myray.ray_angle);
+
+	// printf("x: %f, y: %f, walk %d\n", xstep, ystep, data->myplayer.walk_direction);
+	// exit(0);
+	if (xstep < 0 && data->myplayer.turn_direction == 1)
+		xstep *= -1;
+	else if (xstep > 0 && data->myplayer.turn_direction == -1)
+		xstep *= -1;
+	
+	next_point_x = first_p_x;
+	next_point_y = first_p_y;
+
+	double	tmp_point;
+	while (next_point_x > 0 && next_point_x < WINDOW_WIDTH && next_point_y > 0 && next_point_y < WINDOW_HEIGHT)
+	{
+		tmp_point = next_point_y;
+		if (data->myplayer.walk_direction == -1)
+			tmp_point += -1;
+		if (hasWallAt(next_point_x, tmp_point, data) == 1)
+		{
+			horz_x = next_point_x;
+			horz_y = next_point_y;
+			found_horz_hit = 1;
+			break;
+		}
+		next_point_x += xstep;
+		next_point_y += ystep;
+		printf("next_x: %f, next_y: %f\n", xstep, ystep);
+	}
+
+	/*************************************
+			VERTICAL RAY-GRID INTERSECTION CODE
+	**************************************/
+	double	vert_x;
+	double	vert_y;
+	int		found_vert_hit = 0;
+
+	first_p_x = floor(data->myplayer.x / TILE_SIZE) * TILE_SIZE;
+	if (data->myplayer.turn_direction == 1)
+		first_p_x += TILE_SIZE;
+	first_p_y = data->myplayer.y + (first_p_x - data->myplayer.x) * tan(data->myray.ray_angle);
+	
+	xstep = TILE_SIZE;
+	if (data->myplayer.turn_direction)
+		xstep *= data->myplayer.turn_direction;
+	ystep = xstep * tan(data->myray.ray_angle);
+
+	if (data->myplayer.walk_direction == -1 && ystep > 0)
+		ystep *= -1;
+	else if (data->myplayer.walk_direction == 1 && ystep < 0)
+		ystep *= -1;
+	
+	next_point_x = first_p_x;
+	next_point_y = first_p_y;
+
+	while (next_point_x >= 0 && next_point_x <= WINDOW_WIDTH && next_point_y >= 0 && next_point_y <= WINDOW_HEIGHT)
+	{
+		tmp_point = next_point_x;
+		if (data->myplayer.turn_direction == -1)
+			tmp_point += -1;
+		if (hasWallAt(tmp_point, next_point_y, data) == 1)
+		{
+			vert_x = next_point_x;
+			vert_y = next_point_y;
+			found_vert_hit = 1;
+			break;
+		}
+		next_point_x += xstep;
+		next_point_y += ystep;
+	}
+
+	// Calculate both horizontal and vertical distances and choose the smallest value
+	double horz_distance = DBL_MAX, vert_distance = DBL_MAX;
+	if (found_horz_hit)
+		horz_distance = sqrt(pow(data->myplayer.x - horz_x, 2) + pow(data->myplayer.y - horz_y, 2));
+	if (found_vert_hit)
+		vert_distance = sqrt(pow(data->myplayer.x - vert_x, 2) + pow(data->myplayer.y - vert_y, 2));
+	
+	if (vert_distance < horz_distance)
+	{
+		data->myray.wall_hit_x = vert_x;
+		data->myray.wall_hit_y = vert_y;
+		data->myray.distance = vert_distance;
+		data->myray.was_hit_vertical = 1;
+	}
+	else
+	{
+		data->myray.wall_hit_x = horz_x;
+		data->myray.wall_hit_y = horz_y;
+		data->myray.distance = horz_distance;
+		data->myray.was_hit_vertical = 0;
+	}
+}
