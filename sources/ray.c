@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 15:56:19 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 18:38:27 by mouaammo         ###   ########.fr       */
+/*   Created: 2023/09/18 22:36:44 by mouaammo          #+#    #+#             */
+/*   Updated: 2023/09/18 22:37:17 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,11 @@ void	construct_ray(t_cub3d *data, double ray_angle)
 {
 	initialize_ray(data);
 	data->myray.ray_angle = normalize_ray_angle(ray_angle);
-	
 	data->myray.is_ray_down = data->myray.ray_angle > 0 && data->myray.ray_angle < M_PI;
 	data->myray.is_ray_up = !data->myray.is_ray_down;
-	
-	data->myray.is_ray_right = (data->myray.ray_angle < 0.5 * M_PI || data->myray.ray_angle > 1.5 * M_PI);
-	data->myray.is_ray_left = !data->myray.is_ray_right;
+
+	data->myray.is_ray_left = (data->myray.ray_angle > 0.5 * M_PI && data->myray.ray_angle < 1.5 * M_PI);
+	data->myray.is_ray_right = !data->myray.is_ray_left;
 }
 
 
@@ -146,7 +145,7 @@ void	ray_casting(t_cub3d *data)
 		xstep *= -1;
 	if (data->myray.is_ray_right && xstep < 0)
 		xstep *= -1;
-	
+
 	next_point_x = first_p_x;
 	next_point_y = first_p_y;
 
@@ -157,7 +156,7 @@ void	ray_casting(t_cub3d *data)
 		tmp_point = next_point_y;
 		if (data->myray.is_ray_up)
 			tmp_point += -1;
-		if (hasWallAt(next_point_x, next_point_y, data) == 1)
+		if (hasWallAt(next_point_x, tmp_point, data) == 1)
 		{
 			horz_x = (next_point_x);
 			horz_y = (next_point_y);
@@ -179,18 +178,18 @@ void	ray_casting(t_cub3d *data)
 	if (data->myray.is_ray_right)
 		first_p_vert_x += TILE_SIZE;
 	double first_p_vert_y = data->myplayer.y + (first_p_vert_x - data->myplayer.x) * tan(data->myray.ray_angle);
-	
+
 	xstep = TILE_SIZE;
 	if (data->myray.is_ray_left)
 		xstep *= -1;
-		
+
 
 	ystep = TILE_SIZE * tan(data->myray.ray_angle);
 	if (data->myray.is_ray_up && ystep > 0)
 		ystep *= -1;
 	if (data->myray.is_ray_down && ystep < 0)
 		ystep *= -1;
-	
+
 	next_point_x = first_p_vert_x;
 	next_point_y = first_p_vert_y;
 

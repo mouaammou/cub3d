@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 15:05:39 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 08:49:19 by mouaammo         ###   ########.fr       */
+/*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
+/*   Updated: 2023/09/18 22:37:25 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	key_released(t_cub3d *data, int key_code)
 void	delete_old_position(t_cub3d *data)
 {
 	double x1, y1;
-	
+
 	x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
 	y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
 	draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0x222222);
@@ -134,7 +134,7 @@ void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int co
 	double	x_inc;
 	double	y_inc;
 	int		i;
-	
+
 	dx = x1 - x0;
 	dy = y1 - y0;
 	if (fabs(dx) > fabs(dy))
