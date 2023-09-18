@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 12:34:19 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 06:58:24 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/18 08:18:08 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 int	render_img(t_cub3d *data)
 {
+	mlx_clear_window(data->mlx, data->win);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0 , 0);
+	// mlx_destroy_image(data->mlx, data->img);
 	return (0);
 }
 
-void	put_color(t_cub3d *data, int x, int y, uint32_t color)
+void	put_color(t_cub3d *data, int x, int y, int color)
 {
 	data->frame[y * WINDOW_WIDTH + x] = color; 
 }

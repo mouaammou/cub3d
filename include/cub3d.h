@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 06:28:38 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/18 08:48:41 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum screen_data
 	MAP_NUM_COLS		= 15,
 	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
 	WINDOW_HEIGHT		= MAP_NUM_ROWS * TILE_SIZE,
-	WALL_STRIP_WIDTH	= 1,
+	WALL_STRIP_WIDTH	= 8,
 	NUM_RAYS			= WINDOW_WIDTH / WALL_STRIP_WIDTH
 }t_window_data;
 
@@ -92,6 +92,7 @@ void	render_rays(t_cub3d *data, int color);
 void	ray_casting(t_cub3d *data);
 
 //put color insted of put pixel
-void	put_color(t_cub3d *data, int x, int y, uint32_t color);
+void	put_color(t_cub3d *data, int x, int y, int color);
+void	initialize_ray(t_cub3d *data);
 
 #endif

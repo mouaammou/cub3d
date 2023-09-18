@@ -6,11 +6,19 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:56:19 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 07:30:30 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/18 18:38:27 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+void	initialize_ray(t_cub3d *data)
+{
+	data->myray.wall_hit_x = 0;
+	data->myray.wall_hit_y = 0;
+	data->myray.distance = 0;
+	data->myray.was_hit_vertical = 0;
+}
 
 double normalize_ray_angle(double angle) {
 	angle = fmod(angle, 2.0 * M_PI);
@@ -21,11 +29,8 @@ double normalize_ray_angle(double angle) {
 
 void	construct_ray(t_cub3d *data, double ray_angle)
 {
+	initialize_ray(data);
 	data->myray.ray_angle = normalize_ray_angle(ray_angle);
-	data->myray.wall_hit_x = 0;
-	data->myray.wall_hit_y = 0;
-	data->myray.distance = 0;
-	data->myray.was_hit_vertical = 0;
 	
 	data->myray.is_ray_down = data->myray.ray_angle > 0 && data->myray.ray_angle < M_PI;
 	data->myray.is_ray_up = !data->myray.is_ray_down;
@@ -38,17 +43,80 @@ void	construct_ray(t_cub3d *data, double ray_angle)
 void	render_rays(t_cub3d *data, int color)
 {
 	double ray_angle = data->myplayer.rotation_angle - (data->myplayer.fov / 2);
-
+	
 	int i = 0;
 	while (i < NUM_RAYS)
 	{
 		construct_ray(data, ray_angle);
+		
 		ray_casting(data);
-		draw_line(data->myplayer.x, data->myplayer.y, data->myray.wall_hit_x, data->myray.wall_hit_y, data, color);
+		
+		draw_line(data->myplayer.x, data->myplayer.y,
+			data->myray.wall_hit_x ,
+			data->myray.wall_hit_y,
+			data, color);
+		
 		ray_angle += data->myplayer.fov / NUM_RAYS;
 		i++;
 	}
 }
+
+// void horizontal_intersection(t_cub3d *data, double *horizontal_x, double *horizontal_y, double *distance) {
+//     // Horizontal intersection calculation code here
+//     // Modify horz_x, horz_y, and horz_distance accordingly
+// 	double	horz_x;
+// 	double	horz_y;
+// 	int		found_horz_hit = 0;
+// 	double	first_p_x;
+// 	double	first_p_y;
+// 	double	xstep, ystep;
+// 	double	next_point_x;
+// 	double	next_point_y;
+
+// 	/*************************************
+// 			HORIZONTAL RAY-GRID INTERSECTION CODE
+// 	**************************************/
+// 	first_p_y = floor(data->myplayer.y / TILE_SIZE) * TILE_SIZE;
+// 	if (data->myray.is_ray_down)
+// 		first_p_y += TILE_SIZE;
+
+// 	first_p_x = data->myplayer.x + (first_p_y - data->myplayer.y / tan(data->myray.ray_angle));
+
+// 	ystep = TILE_SIZE;
+// 	if (data->myray.is_ray_up)
+// 		ystep *= -1;
+// 	xstep = TILE_SIZE / tan(data->myray.ray_angle);
+// 	if (data->myray.is_ray_left && xstep > 0)
+// 		xstep *= -1;
+// 	if (data->myray.is_ray_right && xstep < 0)
+// 		xstep *= -1;
+	
+// 	next_point_x = first_p_x;
+// 	next_point_y = first_p_y;
+
+// 	double	tmp_point;
+// 	while (next_point_x >= 0 && next_point_x <= WINDOW_WIDTH
+// 		&& next_point_y >= 0 && next_point_y <= WINDOW_HEIGHT)
+// 	{
+// 		tmp_point = next_point_y;
+// 		if (data->myray.is_ray_up)
+// 			tmp_point += -1;
+// 		if (hasWallAt(next_point_x, next_point_y, data) == 1)
+// 		{
+// 			horz_x = next_point_x;
+// 			horz_y = next_point_y;
+// 			found_horz_hit = 1;
+// 			break;
+// 		}
+// 		next_point_x += xstep;
+// 		next_point_y += ystep;
+// 	}
+// }
+
+// void vertical_intersection(t_cub3d *data) {
+//     // Vertical intersection calculation code here
+//     // Modify vert_x, vert_y, and vert_distance accordingly
+// }
 
 void	ray_casting(t_cub3d *data)
 {
@@ -91,8 +159,8 @@ void	ray_casting(t_cub3d *data)
 			tmp_point += -1;
 		if (hasWallAt(next_point_x, next_point_y, data) == 1)
 		{
-			horz_x = next_point_x;
-			horz_y = next_point_y;
+			horz_x = (next_point_x);
+			horz_y = (next_point_y);
 			found_horz_hit = 1;
 			break;
 		}

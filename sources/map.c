@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 04:26:03 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/18 08:48:39 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	initialize_map(t_cub3d *data)
 	};
 	fill_my_map(data, array2D);
 	initialize_player(data);
+	initialize_ray(data);
 }
 
 void	fill_my_map(t_cub3d *data, int array2d[MAP_NUM_ROWS][MAP_NUM_COLS])
