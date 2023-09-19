@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 10:27:31 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/19 10:50:54 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ typedef struct cub3d
 	void			*img;
 	unsigned int	*frame;
 	int			grid[MAP_NUM_ROWS][MAP_NUM_COLS];
-	float		scale_factor;
+	double		scale_factor;
 	t_player	myplayer;
-	t_ray		myrays[NUM_RAYS];
+	t_ray		myray;
 }t_cub3d;
 
 //map.c functions
@@ -114,7 +114,7 @@ void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int co
 int		move_player(int keycode, t_cub3d *data);
 
 //ray.c functions
-void    render_rays(t_cub3d *data, int color);
+void	render_rays(t_cub3d *data);
 void	ray_casting(t_cub3d *data, int i);
 
 //put color insted of put pixel
@@ -123,7 +123,6 @@ double normalize_ray_angle(double angle);
 double	distanceBetweenPoints(double x1, double y1, double x2, double y2);
 
 //test ray
-void	renderMapRays(t_cub3d *data);
-void	castAllRays(t_cub3d *data);
+void castRay(double rayAngle, t_cub3d *data);
 
 #endif
