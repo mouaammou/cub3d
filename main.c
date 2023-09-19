@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 22:38:22 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/18 22:46:39 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@ int main ()
 	initialize_map(&mygrid);
 	render_map(&mygrid);
 	render_player(&mygrid);
-	// render_rays(&mygrid, 0xffffff);
 
 	mlx_hook(mygrid.win, ON_KEYDOWN, 0, move_player, &mygrid);
 	mlx_hook(mygrid.win, ON_DESTROY, 0, destroy_window, &mygrid);
 	mlx_loop_hook(mygrid.mlx, render_img, &mygrid);
-
 	mlx_loop(mygrid.mlx);
 	return (0);
 }
