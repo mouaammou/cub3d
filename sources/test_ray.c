@@ -6,12 +6,24 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 10:01:45 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 10:53:31 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:33:05 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/cub3d.h"
+
+double	distanceBetweenPoints(double x1, double y1, double x2, double y2)
+{
+	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+}
+
+double	normalize_ray_angle(double angle) {
+	angle = fmod(angle, 2.0 * M_PI);
+	if (angle < 0)
+		angle += 2.0 * M_PI;
+	return angle;
+}
 
 int isRayFacingDown(double angle) {
 	return angle > 0 && angle < M_PI; 
@@ -37,16 +49,11 @@ void castRay(double rayAngle, t_cub3d *data)
 {
 	rayAngle = normalize_ray_angle(rayAngle);
 
-    double xintercept, yintercept;
-    double xstep, ystep;
-
-    ///////////////////////////////////////////
-    // HORIZONTAL RAY-GRID INTERSECTION CODE
-    ///////////////////////////////////////////
-    int foundHorzWallHit = 0;
-    double horzWallHitX = 0;
-    double horzWallHitY = 0;
-    int horzWallTexture = 0;
+	double xintercept, yintercept;
+	double xstep, ystep;
+	int foundHorzWallHit = 0;
+	double horzWallHitX = 0;
+	double horzWallHitY = 0; 
 
     // Find the y-coordinate of the closest horizontal grid intersection
     yintercept = floor(data->myplayer.y / TILE_SIZE) * TILE_SIZE;
@@ -155,7 +162,7 @@ void castRay(double rayAngle, t_cub3d *data)
 
 void	render_rays(t_cub3d *data)
 {
-	double ray_angle = data->myplayer.rotation_angle - (data->myplayer.fov / 2);
+	double ray_angle = data->myplayer.rotation_angle - (FOV_ANGLE / 2);
 	
 	int i = 0;
 

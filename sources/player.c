@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 09:28:21 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:29:42 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	initialize_player(t_cub3d *data)
 	data->myplayer.rotation_angle = 0;
 	data->myplayer.move_speed = 8;
 	data->myplayer.rotation_speed = 8 * (M_PI / 180);
-	data->myplayer.fov = 30 * (M_PI / 180);
 }
 
 void	update_position_player(t_cub3d *data)

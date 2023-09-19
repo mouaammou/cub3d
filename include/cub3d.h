@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 10:50:54 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/19 11:29:35 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,11 @@ typedef enum screen_data
 	MAP_NUM_COLS		= 15,
 	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
 	WINDOW_HEIGHT		= MAP_NUM_ROWS * TILE_SIZE,
-	WALL_STRIP_WIDTH	= 2,
+	WALL_STRIP_WIDTH	= 8,
 	NUM_RAYS			= WINDOW_WIDTH / WALL_STRIP_WIDTH
 }t_window_data;
 
-#define EPSILON 1e-8
-#define FOV_ANGLE (60 * (M_PI / 180))
-#define DIST_PROJ_PLANE ((WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2))
-#define PI 3.14159265
-#define TWO_PI 6.28318530
+#define FOV_ANGLE (30 * (M_PI / 180))
 
 typedef struct player
 {
@@ -53,7 +49,6 @@ typedef struct player
 	double			x;
 	double			y;
 	double			rotation_speed;
-	double			fov;
 }t_player;
 
 typedef struct s_ray_casting
