@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 08:48:41 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/19 08:50:01 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 # include <unistd.h>
 # include <math.h>
 # include <mlx.h>
+# include <limits.h>
 #include <float.h>
+
+#define EPSILON 1e-8
 
 typedef enum screen_data
 {
@@ -28,12 +31,12 @@ typedef enum screen_data
 	LEFT_KEY			= 123,
 	ON_KEYDOWN			= 2,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 64,
+	TILE_SIZE			= 50,
 	MAP_NUM_ROWS		= 11,
 	MAP_NUM_COLS		= 15,
 	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
 	WINDOW_HEIGHT		= MAP_NUM_ROWS * TILE_SIZE,
-	WALL_STRIP_WIDTH	= 8,
+	WALL_STRIP_WIDTH	= 2,
 	NUM_RAYS			= WINDOW_WIDTH / WALL_STRIP_WIDTH
 }t_window_data;
 
@@ -48,6 +51,25 @@ typedef struct player
 	double			rotation_speed;
 	double			fov;
 }t_player;
+
+typedef struct s_ray_casting
+{
+	double	_x;
+	double	_y;
+	int		found_horz_hit;
+	int		found_vert_hit;
+	double	first_p_x;
+	double	first_p_y;
+	double	xstep;
+	double	ystep;
+}t_raycasting;
+
+typedef struct distance
+{
+	double	x;
+	double	y;
+	double	distance;
+}t_distance;
 
 typedef struct ray
 {
@@ -65,14 +87,14 @@ typedef struct ray
 
 typedef struct cub3d
 {
-	void		*mlx;
-	void		*win;
-	void		*img;
+	void			*mlx;
+	void			*win;
+	void			*img;
 	unsigned int	*frame;
 	int			grid[MAP_NUM_ROWS][MAP_NUM_COLS];
 	float		scale_factor;
 	t_player	myplayer;
-	t_ray		myray;
+	t_ray		myrays[NUM_RAYS];
 }t_cub3d;
 
 //map.c functions
@@ -88,11 +110,10 @@ void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int co
 int		move_player(int keycode, t_cub3d *data);
 
 //ray.c functions
-void	render_rays(t_cub3d *data, int color);
-void	ray_casting(t_cub3d *data);
+void    render_rays(t_cub3d *data, int color);
+void	ray_casting(t_cub3d *data, int *i);
 
 //put color insted of put pixel
 void	put_color(t_cub3d *data, int x, int y, int color);
-void	initialize_ray(t_cub3d *data);
 
 #endif

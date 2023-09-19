@@ -6,14 +6,31 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 22:46:39 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/19 08:11:52 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/cub3d.h"
 
+int destroy_window(void *param)
+{
+	exit(0);
+	return (0);
+}
+
 int	render_img(t_cub3d *data)
 {
+	int	tmp;
+	mlx_destroy_image(data->mlx, data->img);
+	mlx_clear_window(data->mlx, data->win);
+	
+	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	data->frame = (unsigned int *)mlx_get_data_addr(data->img, &tmp, &tmp, &tmp);
+	
+	render_map(data);
+	render_player(data);
+	render_rays(data, 0xffffff);
+	
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0 , 0);
 	return (0);
 }
@@ -23,23 +40,17 @@ void	put_color(t_cub3d *data, int x, int y, int color)
 	data->frame[y * WINDOW_WIDTH + x] = color;
 }
 
-int destroy_window(void *param)
-{
-	exit(0);
-	return (0);
-}
 
 int main ()
 {
-	t_cub3d	mygrid;
+	t_cub3d	*data = malloc (sizeof (t_cub3d));
+	
+	initialize_map(data);
 
-	initialize_map(&mygrid);
-	render_map(&mygrid);
-	render_player(&mygrid);
-
-	mlx_hook(mygrid.win, ON_KEYDOWN, 0, move_player, &mygrid);
-	mlx_hook(mygrid.win, ON_DESTROY, 0, destroy_window, &mygrid);
-	mlx_loop_hook(mygrid.mlx, render_img, &mygrid);
-	mlx_loop(mygrid.mlx);
+	mlx_hook(data->win, ON_KEYDOWN, 0, move_player, data);
+	mlx_hook(data->win, ON_DESTROY, 0, destroy_window, data);
+	mlx_loop_hook(data->mlx, render_img, data);
+	
+	mlx_loop(data->mlx);
 	return (0);
 }

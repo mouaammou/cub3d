@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/18 22:37:25 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/19 09:28:21 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,7 @@ void	initialize_player(t_cub3d *data)
 	data->myplayer.rotation_angle = 0;
 	data->myplayer.move_speed = 8;
 	data->myplayer.rotation_speed = 8 * (M_PI / 180);
-	data->myplayer.fov = 60 * (M_PI / 180);
-}
-
-void	delete_player(t_cub3d *data ,int background_color)
-{
-	int	x;
-	int	y;
-
-	x = data->myplayer.x;
-	y = data->myplayer.y;
-	if (hasWallAt(x, y, data) == 1)
-		return ;
-	put_color(data, x, y, background_color);
-	put_color(data, x + 1, y, background_color);
-	put_color(data, x, y + 1, background_color);
-	put_color(data, x + 1, y + 1, background_color);
+	data->myplayer.fov = 30 * (M_PI / 180);
 }
 
 void	update_position_player(t_cub3d *data)
@@ -77,15 +62,6 @@ void	key_released(t_cub3d *data, int key_code)
 		data->myplayer.turn_direction = 0;
 }
 
-void	delete_old_position(t_cub3d *data)
-{
-	double x1, y1;
-
-	x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
-	y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
-	draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0x222222);
-}
-
 int	move_player(int keycode, t_cub3d *data)
 {
 	if (keycode == 53)
@@ -93,14 +69,9 @@ int	move_player(int keycode, t_cub3d *data)
 	if (keycode == UP_KEY || keycode == DOWN_KEY
 		|| keycode == RIGHT_KEY || keycode == LEFT_KEY)
 	{
-		render_rays(data, 0x222222);
-		delete_player(data, 0x222222);
-		delete_old_position(data);
 		key_pressed(data, keycode);
 		update_position_player(data);
-		render_player(data);
 		key_released(data, keycode);
-		render_rays(data, 0xffffff);
 	}
 	return 0;
 }
@@ -116,13 +87,9 @@ void	render_player(t_cub3d *data)
 	if (hasWallAt(x, y, data) == 0)
 	{
 		put_color(data, x, y, 0xFF0000);
-		put_color(data, x + 1, y, 0xFF0000);
-		put_color(data, x, y + 1, 0xFF0000);
-		put_color(data, x + 1, y + 1, 0xFF0000);
-
 		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
 		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
-		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0xffffff);
+		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0x0ff55f);
 	}
 }
 
@@ -141,13 +108,13 @@ void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int co
 		steps = fabs(dx);
 	else
 		steps = fabs(dy);
-	x_inc = (dx / (double)steps);
-	y_inc = (dy / (double)steps);
+	x_inc = (dx / steps);
+	y_inc = (dy / steps);
 
 	i = 0;
-	while (i < steps)
+	while (i <= steps)
 	{
-		put_color(data, x0, y0, color);
+		put_color(data, round(x0), round(y0), color);
 		x0 += x_inc; // increment in x at each step
 		y0 += y_inc; // increment in y at each step
 		i++;
