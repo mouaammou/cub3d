@@ -6,7 +6,7 @@
 #    By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 12:34:07 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/18 00:57:39 by mouaammo         ###   ########.fr        #
+#    Updated: 2023/09/19 10:19:49 by mouaammo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC				= cc
 RM				= rm -fr
 MLX				= -lmlx -framework OpenGL -framework AppKit
 
-FILES			= main.c $(addprefix sources/, map.c player.c ray.c)
+FILES			= main.c $(addprefix sources/, map.c ray.c player.c test_ray.c)
 HEADER_FILES	= $(addprefix include/, cub3d.h)
 OBJECT_FILES	= $(FILES:.c=.o)
 

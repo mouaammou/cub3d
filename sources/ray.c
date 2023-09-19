@@ -6,18 +6,18 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:36:44 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 09:22:39 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/19 09:59:46 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void	initialize_ray(t_cub3d *data, int *i)
+void	initialize_ray(t_cub3d *data, int i)
 {
-	data->myrays[*i].wall_hit_x = 0;
-	data->myrays[*i].wall_hit_y = 0;
-	data->myrays[*i].distance = 0;
-	data->myrays[*i].was_hit_vertical = 0;
+	data->myrays[i].wall_hit_x = 0;
+	data->myrays[i].wall_hit_y = 0;
+	data->myrays[i].distance = 0;
+	data->myrays[i].was_hit_vertical = 0;
 }
 
 double normalize_ray_angle(double angle) {
@@ -27,15 +27,15 @@ double normalize_ray_angle(double angle) {
 	return angle;
 }
 
-void	construct_ray(t_cub3d *data, double ray_angle, int *i)
+void	construct_ray(t_cub3d *data, double ray_angle, int i)
 {
 	initialize_ray(data, i);
-	data->myrays[*i].ray_angle = normalize_ray_angle(ray_angle);
-	data->myrays[*i].is_ray_down = data->myrays[*i].ray_angle > 0 && data->myrays[*i].ray_angle < M_PI;
-	data->myrays[*i].is_ray_up = !data->myrays[*i].is_ray_down;
+	data->myrays[i].ray_angle = normalize_ray_angle(ray_angle);
+	data->myrays[i].is_ray_down = data->myrays[i].ray_angle > 0 && data->myrays[i].ray_angle < M_PI;
+	data->myrays[i].is_ray_up = !data->myrays[i].is_ray_down;
 
-	data->myrays[*i].is_ray_left = (data->myrays[*i].ray_angle > 0.5 * M_PI && data->myrays[*i].ray_angle < 1.5 * M_PI);
-	data->myrays[*i].is_ray_right = !data->myrays[*i].is_ray_left;
+	data->myrays[i].is_ray_left = (data->myrays[i].ray_angle > 0.5 * M_PI && data->myrays[i].ray_angle < 1.5 * M_PI);
+	data->myrays[i].is_ray_right = !data->myrays[i].is_ray_left;
 }
 
 
@@ -47,58 +47,58 @@ void	render_rays(t_cub3d *data, int color)
 
 	while (i < NUM_RAYS)
 	{
-		construct_ray(data, ray_angle, &i);
-		ray_casting(data, &i);
+		construct_ray(data, ray_angle, i);
+		ray_casting(data, i);
 		
 		draw_line(data->myplayer.x, data->myplayer.y,
 			data->myrays[i].wall_hit_x ,
 			data->myrays[i].wall_hit_y,
 			data, color);
-		ray_angle += data->myplayer.fov / (double)NUM_RAYS;
+		ray_angle += data->myplayer.fov / NUM_RAYS;
 		i++;
 	}
 }
 
-void	horizontal_intersection(t_cub3d *data, t_raycasting *ray_info, int *i)
+void	horizontal_intersection(t_cub3d *data, t_raycasting *ray_info, int i)
 {
 	ray_info->found_horz_hit = 0;
 	
-	ray_info->first_p_y = floor(data->myplayer.y / (double) TILE_SIZE) * (double)TILE_SIZE;//found the y coordinate of first point
-	if (data->myrays[*i].is_ray_down)//check if ray is rendering down
+	ray_info->first_p_y = floor(data->myplayer.y / TILE_SIZE) * TILE_SIZE;//found the y coordinate of first point
+	if (data->myrays[i].is_ray_down)//check if ray is rendering down
 		ray_info->first_p_y += TILE_SIZE;
 	
-	ray_info->first_p_x = data->myplayer.x + (ray_info->first_p_y - data->myplayer.y / tan(data->myrays[*i].ray_angle));
+	ray_info->first_p_x = data->myplayer.x + (ray_info->first_p_y - data->myplayer.y / tan(data->myrays[i].ray_angle));
 	
 	ray_info->ystep = TILE_SIZE;//find the ystep to increment the y coordinate
-	if (data->myrays[*i].is_ray_up)//negative value for move up
+	if (data->myrays[i].is_ray_up)//negative value for move up
 		ray_info->ystep *= -1;
 	
-	ray_info->xstep = (double)TILE_SIZE / tan(data->myrays[*i].ray_angle);//find the xstep to increment the x coordinate
-	if (data->myrays[*i].is_ray_left && ray_info->xstep > 0)
+	ray_info->xstep = TILE_SIZE / tan(data->myrays[i].ray_angle);//find the xstep to increment the x coordinate
+	if (data->myrays[i].is_ray_left && ray_info->xstep > 0)
 		ray_info->xstep *= -1;
-	else if (data->myrays[*i].is_ray_right && ray_info->xstep < 0)
+	else if (data->myrays[i].is_ray_right && ray_info->xstep < 0)
 		ray_info->xstep *= -1;
 }
 
-void	vertical_intersection(t_cub3d *data, t_raycasting *ray_info, int *i)
+void	vertical_intersection(t_cub3d *data, t_raycasting *ray_info, int i)
 {
 	ray_info->found_vert_hit = 0;
 	
 	ray_info->first_p_x = floor(data->myplayer.x / TILE_SIZE) * TILE_SIZE;//found the x coordinate of first point
-	if (data->myrays[*i].is_ray_right)//check if ray is rendering left
+	if (data->myrays[i].is_ray_right)//check if ray is rendering left
 		ray_info->first_p_x += TILE_SIZE;
 	
 	//found the y coordinate of first point
-	ray_info->first_p_y = data->myplayer.y + (ray_info->first_p_x - data->myplayer.x * tan(data->myrays[*i].ray_angle));
+	ray_info->first_p_y = data->myplayer.y + (ray_info->first_p_x - data->myplayer.x * tan(data->myrays[i].ray_angle));
 
 	ray_info->xstep = TILE_SIZE;//find the xstep to increment the x coordinate
-	if (data->myrays[*i].is_ray_left)//negative value for move left
+	if (data->myrays[i].is_ray_left)//negative value for move left
 		ray_info->xstep *= -1;
 	
-	ray_info->ystep = TILE_SIZE * tan(data->myrays[*i].ray_angle);//find the xstep to increment the x coordinate
-	if (data->myrays[*i].is_ray_up && ray_info->ystep > 0)
+	ray_info->ystep = TILE_SIZE * tan(data->myrays[i].ray_angle);//find the xstep to increment the x coordinate
+	if (data->myrays[i].is_ray_up && ray_info->ystep > 0)
 		ray_info->ystep *= -1;
-	if (data->myrays[*i].is_ray_down && ray_info->ystep < 0)
+	if (data->myrays[i].is_ray_down && ray_info->ystep < 0)
 		ray_info->ystep *= -1;
 }
 
@@ -107,7 +107,7 @@ double	distanceBetweenPoints(double x1, double y1, double x2, double y2)
 	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
-void	horizontal_increment(t_cub3d *data, t_distance *horz_dist, int *i)
+void	horizontal_increment(t_cub3d *data, t_distance *horz_dist, int i)
 {
 	t_raycasting	ray_info;
 
@@ -116,7 +116,7 @@ void	horizontal_increment(t_cub3d *data, t_distance *horz_dist, int *i)
 	while (ray_info.first_p_x >= 0 && ray_info.first_p_x <= WINDOW_WIDTH
 		&& ray_info.first_p_y >= 0 && ray_info.first_p_y <= WINDOW_HEIGHT)
 	{
-		if (hasWallAt(ray_info.first_p_x, ray_info.first_p_y - data->myrays[*i].is_ray_up, data) == 1)
+		if (hasWallAt(ray_info.first_p_x, ray_info.first_p_y - data->myrays[i].is_ray_up, data) == 1)
 		{
 			ray_info._x = ray_info.first_p_x;
 			ray_info._y = ray_info.first_p_y;
@@ -135,7 +135,7 @@ void	horizontal_increment(t_cub3d *data, t_distance *horz_dist, int *i)
 		horz_dist->distance = INT_MAX;
 }
 
-void	vertical_increment(t_cub3d *data, t_distance *vert_dist, int *i)
+void	vertical_increment(t_cub3d *data, t_distance *vert_dist, int i)
 {
 	t_raycasting	ray_info;
 	double			tmp_point;
@@ -146,9 +146,9 @@ void	vertical_increment(t_cub3d *data, t_distance *vert_dist, int *i)
 		&& ray_info.first_p_y >= 0 && ray_info.first_p_y <= WINDOW_HEIGHT)
 	{
 		tmp_point = ray_info.first_p_x;
-		if (data->myrays[*i].is_ray_left)
+		if (data->myrays[i].is_ray_left)
 			tmp_point += -1;
-		// else if (data->myrays[*i].is_ray_right)
+		// else if (data->myrays[i].is_ray_right)
 		// 	tmp_point += 1;
 		if (hasWallAt(tmp_point, ray_info.first_p_y, data) == 1)
 		{
@@ -170,7 +170,7 @@ void	vertical_increment(t_cub3d *data, t_distance *vert_dist, int *i)
 }
 
 
-void	ray_casting(t_cub3d *data, int *i)
+void	ray_casting(t_cub3d *data, int i)
 {
 	t_distance horz_dist, vert_dist;
 
@@ -179,16 +179,16 @@ void	ray_casting(t_cub3d *data, int *i)
 	vertical_increment(data, &vert_dist, i);
 	if (vert_dist.distance < horz_dist.distance)
 	{
-		data->myrays[*i].wall_hit_x = vert_dist.x;
-		data->myrays[*i].wall_hit_y = vert_dist.y;
-		data->myrays[*i].distance = vert_dist.distance;
-		data->myrays[*i].was_hit_vertical = 1;
+		data->myrays[i].wall_hit_x = vert_dist.x;
+		data->myrays[i].wall_hit_y = vert_dist.y;
+		data->myrays[i].distance = vert_dist.distance;
+		data->myrays[i].was_hit_vertical = 1;
 	}
 	else
 	{
-		data->myrays[*i].wall_hit_x = horz_dist.x;
-		data->myrays[*i].wall_hit_y = horz_dist.y;
-		data->myrays[*i].distance = horz_dist.distance;
-		data->myrays[*i].was_hit_vertical = 0;
+		data->myrays[i].wall_hit_x = horz_dist.x;
+		data->myrays[i].wall_hit_y = horz_dist.y;
+		data->myrays[i].distance = horz_dist.distance;
+		data->myrays[i].was_hit_vertical = 0;
 	}
 }

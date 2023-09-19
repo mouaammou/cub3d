@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 08:11:52 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/19 10:27:09 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	render_img(t_cub3d *data)
 	
 	render_map(data);
 	render_player(data);
-	render_rays(data, 0xffffff);
-	
+	// render_rays(data, 0xffffff);
+	castAllRays(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0 , 0);
 	return (0);
 }

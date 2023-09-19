@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 08:50:01 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/19 10:27:31 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # include <mlx.h>
 # include <limits.h>
 #include <float.h>
-
-#define EPSILON 1e-8
 
 typedef enum screen_data
 {
@@ -39,6 +37,12 @@ typedef enum screen_data
 	WALL_STRIP_WIDTH	= 2,
 	NUM_RAYS			= WINDOW_WIDTH / WALL_STRIP_WIDTH
 }t_window_data;
+
+#define EPSILON 1e-8
+#define FOV_ANGLE (60 * (M_PI / 180))
+#define DIST_PROJ_PLANE ((WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2))
+#define PI 3.14159265
+#define TWO_PI 6.28318530
 
 typedef struct player
 {
@@ -100,7 +104,7 @@ typedef struct cub3d
 //map.c functions
 int		hasWallAt(double x, double y, t_cub3d *data);
 void	render_map(t_cub3d *data);
-void	fill_my_map(t_cub3d *data, int array2d[MAP_NUM_ROWS][MAP_NUM_COLS]);
+void	fill_my_map(t_cub3d *data);
 void	initialize_map(t_cub3d *data);
 
 // player functions in c
@@ -111,9 +115,15 @@ int		move_player(int keycode, t_cub3d *data);
 
 //ray.c functions
 void    render_rays(t_cub3d *data, int color);
-void	ray_casting(t_cub3d *data, int *i);
+void	ray_casting(t_cub3d *data, int i);
 
 //put color insted of put pixel
 void	put_color(t_cub3d *data, int x, int y, int color);
+double normalize_ray_angle(double angle);
+double	distanceBetweenPoints(double x1, double y1, double x2, double y2);
+
+//test ray
+void	renderMapRays(t_cub3d *data);
+void	castAllRays(t_cub3d *data);
 
 #endif

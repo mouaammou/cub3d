@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 08:07:07 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/19 09:38:12 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ void	initialize_map(t_cub3d *data)
 	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "MiniMap");
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->frame = (unsigned int *)mlx_get_data_addr(data->img, &tmp, &tmp, &tmp);
+
+	fill_my_map(data);
+	initialize_player(data);
+}
+
+void	fill_my_map(t_cub3d *data)
+{
 	int array2D[MAP_NUM_ROWS][MAP_NUM_COLS] = {
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 		{1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -34,13 +41,6 @@ void	initialize_map(t_cub3d *data)
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
-	fill_my_map(data, array2D);
-	initialize_player(data);
-	// initialize_ray(data);
-}
-
-void	fill_my_map(t_cub3d *data, int array2d[MAP_NUM_ROWS][MAP_NUM_COLS])
-{
 	//fill my grid array with array2d
 	int	i = 0;
 	int	j;
@@ -49,7 +49,7 @@ void	fill_my_map(t_cub3d *data, int array2d[MAP_NUM_ROWS][MAP_NUM_COLS])
 		j = 0;
 		while (j < MAP_NUM_COLS)
 		{
-			data->grid[i][j] = array2d[i][j];
+			data->grid[i][j] = array2D[i][j];
 			j++;
 		}
 		i++;
