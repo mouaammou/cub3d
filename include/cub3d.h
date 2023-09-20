@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 14:53:37 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:14:21 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef enum screen_data
 	A_KEY				= 0,
 	D_KEY				= 2,
 	ON_KEYDOWN			= 2,
+	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
 	TILE_SIZE			= 64,
 	MAP_NUM_ROWS		= 11,

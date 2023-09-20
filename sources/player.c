@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 15:09:26 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:13:26 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,8 @@ void	update_position_player(t_cub3d *data)
 {
 	data->myplayer.rotation_angle += data->myplayer.turn_direction * data->myplayer.rotation_speed;
 	double	moveStep = data->myplayer.walk_direction * data->myplayer.move_speed;
-
 	double	newPlayerX = data->myplayer.x;
 	double	newPlayerY = data->myplayer.y;
-
-
 	if (data->myplayer.a_flag)
 	{
 		newPlayerX += data->myplayer.move_speed * cos(data->myplayer.rotation_angle + data->myplayer.a_flag * M_PI / 2);
