@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 02:50:01 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 03:49:32 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	render_img(t_cub3d *data)
 	
 	render_map(data);
 	render_player(data);
-	render_rays(data);
+	render_rays(data);//all rays are stored in the linked list int this funcion
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0 , 0);
 	return (0);
 }

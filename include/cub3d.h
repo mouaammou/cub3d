@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 03:25:11 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 03:48:38 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include <math.h>
 # include <mlx.h>
 # include <limits.h>
-#include <float.h>
+# include <float.h>
+# include "../libft/libft.h"
 
 #define FOV_ANGLE (60 * (M_PI / 180))
 #define EPSILON 1e-9
@@ -81,10 +82,6 @@ typedef struct ray
 	double	distance;
 	int		was_hit_vertical;
 	double	hit_wall_color;
-	int		is_ray_down;
-	int		is_ray_up;
-	int		is_ray_right;
-	int		is_ray_left;
 }t_ray;
 
 typedef struct cub3d
@@ -118,7 +115,7 @@ void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int co
 int		move_player(int keycode, t_cub3d *data);
 
 //ray.c functions
-void	render_rays(t_cub3d *data);
+t_list	*render_rays(t_cub3d *data);
 void	ray_casting(t_cub3d *data, int i);
 
 //put color insted of put pixel

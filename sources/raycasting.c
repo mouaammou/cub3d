@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 01:20:08 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 02:54:57 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 03:48:27 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,11 @@ void	castRay(double rayAngle, t_cub3d *data)
 	calcul_distance(vert_wall_hit, horz_wall_hit, (t_cords){foundHorzWallHit, foundVertWallHit}, data);
 }
 
-void	render_rays(t_cub3d *data)
+t_list	*render_rays(t_cub3d *data)
 {
+	t_list	*rays_info;
+	
+	rays_info = NULL;
 	double ray_angle = data->myplayer.rotation_angle - (FOV_ANGLE / 2);
 	
 	int i = 0;
@@ -173,6 +176,8 @@ void	render_rays(t_cub3d *data)
 			data->myray.wall_hit_y,
 			data, 0xffffff);
 		ray_angle += (double)FOV_ANGLE / NUM_RAYS;
+		ft_lstadd_back(&rays_info, ft_lstnew(&data->myray));
 		i++;
 	}
+	return (rays_info);
 }
