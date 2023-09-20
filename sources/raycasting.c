@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 01:20:08 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 11:41:25 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 12:09:44 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_cords	horizontal_increment(double nextHorzTouchX, double nextHorzTouchY,t_cub3
 	while (isInsideMap(nextHorzTouchX, nextHorzTouchY))
 	{
 		double xToCheck = nextHorzTouchX;
-		double yToCheck;
+		double yToCheck = nextHorzTouchY;
 		if (isRayFacingUp(data->myray[i].ray_angle))
 			yToCheck = nextHorzTouchY - EPSILON;
 
@@ -94,7 +94,7 @@ t_cords	vertical_increment(double nextVertTouchX, double nextVertTouchY,t_cub3d 
 	
 	while (isInsideMap(nextVertTouchX, nextVertTouchY))
 	{
-		double xToCheck;
+		double xToCheck = nextVertTouchX;
 		double yToCheck = nextVertTouchY;
 		if (isRayFacingLeft(data->myray[i].ray_angle))
 			xToCheck = nextVertTouchX - EPSILON;
