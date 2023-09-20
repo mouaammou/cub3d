@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 13:28:34 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:02:08 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	put_color(t_cub3d *data, int x, int y, int color)
 
 int	render_img(t_cub3d *data)
 {
+	update_position_player(data);
+
 	int	tmp;
 
 	if (data->img)
@@ -52,6 +54,8 @@ int main ()
 	initialize_map(data);
 
 	mlx_hook(data->win, ON_KEYDOWN, 0, move_player, data);
+	// int (*f)(int keycode, void *param)
+	mlx_hook(data->win, 3, 0, key_released, data);
 	mlx_hook(data->win, ON_DESTROY, 0, destroy_window, data);
 	mlx_loop_hook(data->mlx, render_img, data);
 	

@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 13:27:47 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:09:26 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ void	initialize_player(t_cub3d *data)
 	data->myplayer.y = WINDOW_HEIGHT / 7;
 	data->myplayer.turn_direction = 0;
 	data->myplayer.walk_direction = 0;
+	data->myplayer.a_flag = 0;
+	
 	data->myplayer.rotation_angle = 0;
-	data->myplayer.move_speed = 8;
-	data->myplayer.rotation_speed = 8 * (M_PI / 180);
+	data->myplayer.move_speed = 6;
+	data->myplayer.rotation_speed = 2 * (M_PI / 180);
 }
 
 void	update_position_player(t_cub3d *data)
@@ -28,8 +30,20 @@ void	update_position_player(t_cub3d *data)
 	data->myplayer.rotation_angle += data->myplayer.turn_direction * data->myplayer.rotation_speed;
 	double	moveStep = data->myplayer.walk_direction * data->myplayer.move_speed;
 
-	double	newPlayerX = (data->myplayer.x + cos(data->myplayer.rotation_angle) * moveStep);
-	double	newPlayerY = (data->myplayer.y + sin(data->myplayer.rotation_angle) * moveStep);
+	double	newPlayerX = data->myplayer.x;
+	double	newPlayerY = data->myplayer.y;
+
+
+	if (data->myplayer.a_flag)
+	{
+		newPlayerX += data->myplayer.move_speed * cos(data->myplayer.rotation_angle + data->myplayer.a_flag * M_PI / 2);
+		newPlayerY += data->myplayer.move_speed * sin(data->myplayer.rotation_angle + data->myplayer.a_flag * M_PI / 2);
+	}
+	else
+	{
+		newPlayerX = (data->myplayer.x + cos(data->myplayer.rotation_angle) * moveStep);
+		newPlayerY = (data->myplayer.y + sin(data->myplayer.rotation_angle) * moveStep);
+	}
 	if (!hasWallAt(newPlayerX, newPlayerY, data))
 	{
 		data->myplayer.x = newPlayerX;
@@ -47,9 +61,14 @@ void	key_pressed(t_cub3d *data, int key_code)
 		data->myplayer.turn_direction = +1;
 	else if (key_code == LEFT_KEY)
 		data->myplayer.turn_direction = -1;
+	else if (key_code == A_KEY)
+		data->myplayer.a_flag = -1;
+	else if (key_code == D_KEY)
+		data->myplayer.a_flag = +1;
+		
 }
 
-void	key_released(t_cub3d *data, int key_code)
+int	key_released(int key_code, t_cub3d *data)
 {
 	if (key_code == UP_KEY)
 		data->myplayer.walk_direction = 0;
@@ -59,20 +78,13 @@ void	key_released(t_cub3d *data, int key_code)
 		data->myplayer.turn_direction = 0;
 	else if (key_code == LEFT_KEY)
 		data->myplayer.turn_direction = 0;
+	else if (key_code == A_KEY || key_code == D_KEY)
+		data->myplayer.a_flag = 0;
+	return 0;
 }
 
-void	right_left_move(t_cub3d *data, int key)
+void	right_left_move(t_cub3d *data)
 {
-	if (key == A_KEY)
-	{
-		if (!hasWallAt(data->myplayer.x - data->myplayer.move_speed, data->myplayer.y, data))
-			data->myplayer.x -= data->myplayer.move_speed;
-	}
-	else if (key == D_KEY)
-	{
-		if (!hasWallAt(data->myplayer.x + data->myplayer.move_speed, data->myplayer.y, data))
-			data->myplayer.x += data->myplayer.move_speed;
-	}
 
 }
 
@@ -80,14 +92,7 @@ int	move_player(int keycode, t_cub3d *data)
 {
 	if (keycode == 53)
 		exit(0);
-	right_left_move(data, keycode);
-	if (keycode == UP_KEY || keycode == DOWN_KEY
-		|| keycode == RIGHT_KEY || keycode == LEFT_KEY)
-	{
-		key_pressed(data, keycode);
-		update_position_player(data);
-		key_released(data, keycode);
-	}
+	key_pressed(data, keycode);
 	return 0;
 }
 
