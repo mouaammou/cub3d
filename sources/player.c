@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 11:29:42 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 02:53:29 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,7 @@ void	render_player(t_cub3d *data)
 	x = data->myplayer.x;
 	y = data->myplayer.y;
 	if (hasWallAt(x, y, data) == 0)
-	{
 		put_color(data, x, y, 0xFF0000);
-		x1 = data->myplayer.x + cos(data->myplayer.rotation_angle) * 30;
-		y1 = data->myplayer.y + sin(data->myplayer.rotation_angle) * 30;
-		draw_line(data->myplayer.x, data->myplayer.y, x1, y1, data, 0x0ff55f);
-	}
 }
 
 void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int color)

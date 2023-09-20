@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 11:29:35 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 02:36:29 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <mlx.h>
 # include <limits.h>
 #include <float.h>
+
+#define FOV_ANGLE (30 * (M_PI / 180))
+#define EPSILON 1e-9
 
 typedef enum screen_data
 {
@@ -37,8 +40,6 @@ typedef enum screen_data
 	WALL_STRIP_WIDTH	= 8,
 	NUM_RAYS			= WINDOW_WIDTH / WALL_STRIP_WIDTH
 }t_window_data;
-
-#define FOV_ANGLE (30 * (M_PI / 180))
 
 typedef struct player
 {
@@ -96,6 +97,12 @@ typedef struct cub3d
 	t_ray		myray;
 }t_cub3d;
 
+typedef struct x
+{
+	double x;
+	double y;
+}t_cords;
+
 //map.c functions
 int		hasWallAt(double x, double y, t_cub3d *data);
 void	render_map(t_cub3d *data);
@@ -119,5 +126,14 @@ double	distanceBetweenPoints(double x1, double y1, double x2, double y2);
 
 //test ray
 void castRay(double rayAngle, t_cub3d *data);
+
+//normalize angle
+double	normalize_ray_angle(double angle);
+int		isRayFacingDown(double angle);
+int		isRayFacingUp(double angle);
+int		isRayFacingRight(double angle);
+int		isRayFacingLeft(double angle);
+double	distanceBetweenPoints(double x1, double y1, double x2, double y2);
+int		isInsideMap(double x, double y);
 
 #endif

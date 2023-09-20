@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 10:47:22 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 02:50:01 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int destroy_window(void *param)
 int	render_img(t_cub3d *data)
 {
 	int	tmp;
-	mlx_destroy_image(data->mlx, data->img);
+
+	if (data->img)
+		mlx_destroy_image(data->mlx, data->img);
 	mlx_clear_window(data->mlx, data->win);
 	
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -39,10 +41,11 @@ void	put_color(t_cub3d *data, int x, int y, int color)
 	data->frame[y * WINDOW_WIDTH + x] = color;
 }
 
-
 int main ()
 {
 	t_cub3d	*data = malloc (sizeof (t_cub3d));
+	if (!data)
+		return (1);
 	
 	initialize_map(data);
 

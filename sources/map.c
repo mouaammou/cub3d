@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/19 09:38:12 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 02:54:00 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,17 @@
 
 void	initialize_map(t_cub3d *data)
 {
-	// Initialize your grid data->here
-	int tmp;
-	
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "MiniMap");
-	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	data->frame = (unsigned int *)mlx_get_data_addr(data->img, &tmp, &tmp, &tmp);
-
 	fill_my_map(data);
 	initialize_player(data);
 }
 
 void	fill_my_map(t_cub3d *data)
 {
+	int	i = 0;
+	int	j;
+
 	int array2D[MAP_NUM_ROWS][MAP_NUM_COLS] = {
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 		{1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -41,9 +38,6 @@ void	fill_my_map(t_cub3d *data)
 		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
-	//fill my grid array with array2d
-	int	i = 0;
-	int	j;
 	while (i < MAP_NUM_ROWS)
 	{
 		j = 0;
@@ -79,7 +73,6 @@ void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
 		j = 0;
 		while (j < TILE_SIZE)
 		{
-			// put_color(data->mlx, data->win,tile_x + i,tile_y + j,tile_color);
 			put_color(data, tile_x + i, tile_y + j, tile_color);
 			j++;
 		}
