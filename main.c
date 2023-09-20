@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 11:29:10 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 13:28:34 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int destroy_window(void *param)
 
 void	put_color(t_cub3d *data, int x, int y, int color)
 {
-	data->frame[y * WINDOW_WIDTH + x] = color;
+	if (x >= 0 && x < WINDOW_WIDTH && y >= 0 && y < WINDOW_HEIGHT)
+		data->frame[y * WINDOW_WIDTH + x] = color;
 }
 
 int	render_img(t_cub3d *data)
@@ -37,7 +38,7 @@ int	render_img(t_cub3d *data)
 	render_map(data);
 	render_player(data);
 	render_rays(data);//all rays are stored in the table in this funcion
-
+	render_cube_3d(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0 , 0);
 	return (0);
 }

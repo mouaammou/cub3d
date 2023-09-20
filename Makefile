@@ -6,7 +6,7 @@
 #    By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 12:34:07 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/20 04:06:24 by mouaammo         ###   ########.fr        #
+#    Updated: 2023/09/20 13:18:57 by mouaammo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBFT_FILES = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_strlen.c \
 			ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 			ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
-FILES			= main.c $(addprefix sources/, map.c player.c raycasting.c normalize_angle.c)
+FILES			= main.c $(addprefix sources/, map.c player.c raycasting.c normalize_angle.c render_3d.c)
 HEADER_FILES	= $(addprefix include/, cub3d.h)
 OBJECT_FILES	= $(FILES:.c=.o)
 

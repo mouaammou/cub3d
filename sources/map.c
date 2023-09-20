@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 11:37:15 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 12:15:11 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
 	int	j;
 
 	i = 0;
-	while (i < TILE_SIZE)
+	while (i < SCALE_MAP * TILE_SIZE)
 	{
 		j = 0;
-		while (j < TILE_SIZE)
+		while (j < SCALE_MAP * TILE_SIZE)
 		{
 			put_color(data, tile_x + i, tile_y + j, tile_color);
 			j++;
@@ -96,7 +96,7 @@ void	render_map(t_cub3d *data)
 
 			if (data->grid[i][j] == 1)
 				tile_color = 0x2fff001;
-			draw_case(data, tile_x, tile_y, tile_color);
+			draw_case(data, SCALE_MAP * tile_x, SCALE_MAP * tile_y, tile_color);
 			j++;
 		}
 		i++;

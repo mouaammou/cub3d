@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 04:12:32 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 13:37:05 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 #define FOV_ANGLE (60 * (M_PI / 180))
 #define EPSILON 1e-9
+#define SCALE_MAP 0.2
 
 typedef enum screen_data
 {
@@ -35,7 +36,7 @@ typedef enum screen_data
 	D_KEY				= 2,
 	ON_KEYDOWN			= 2,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 50,
+	TILE_SIZE			= 64,
 	MAP_NUM_ROWS		= 11,
 	MAP_NUM_COLS		= 15,
 	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
@@ -134,5 +135,8 @@ int		isRayFacingRight(double angle);
 int		isRayFacingLeft(double angle);
 double	distanceBetweenPoints(double x1, double y1, double x2, double y2);
 int		isInsideMap(double x, double y);
+
+//render cube 3d projection
+void	render_cube_3d(t_cub3d *data);
 
 #endif
