@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 01:20:08 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 04:12:38 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 11:41:25 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ t_cords	x_y_intercept(int flag, t_cub3d *data, int i)
 	if (flag == 1)
 	{
 		result.y = floor(data->myplayer.y / TILE_SIZE) * TILE_SIZE;
-		result.y += isRayFacingDown(data->myray[i].ray_angle) ? TILE_SIZE : 0;
+		if (isRayFacingDown(data->myray[i].ray_angle))
+			result.y += TILE_SIZE;
 		result.x = data->myplayer.x + (result.y - data->myplayer.y) / tan(data->myray[i].ray_angle);
 	}
 	else if (flag == 2)
 	{
 		result.x = floor(data->myplayer.x / TILE_SIZE) * TILE_SIZE;
-		result.x += isRayFacingRight(data->myray[i].ray_angle) ? TILE_SIZE : 0;
+		if (isRayFacingRight(data->myray[i].ray_angle))
+			result.x += TILE_SIZE;
 		result.y = data->myplayer.y + (result.x - data->myplayer.x) * tan(data->myray[i].ray_angle);
 	}
 	return (result);
@@ -39,32 +41,38 @@ t_cords	x_y_steps(int flag, t_cub3d *data, int i)
 	if (flag == 1)
 	{
 		ystep = TILE_SIZE;
-		ystep *= isRayFacingUp(data->myray[i].ray_angle) ? -1 : 1;
-
+		if (isRayFacingUp(data->myray[i].ray_angle))
+			ystep *= -1;
 		xstep = TILE_SIZE / tan(data->myray[i].ray_angle);
-		xstep *= (isRayFacingLeft(data->myray[i].ray_angle) && xstep > 0) ? -1 : 1;
-		xstep *= (isRayFacingRight(data->myray[i].ray_angle) && xstep < 0) ? -1 : 1;
+		if (isRayFacingLeft(data->myray[i].ray_angle) && xstep > 0)
+			xstep *= -1;
+		if (isRayFacingRight(data->myray[i].ray_angle) && xstep < 0)
+			xstep *= -1;
 	}
 	else if (flag == 2)
 	{
 		xstep = TILE_SIZE;
-		xstep *= isRayFacingLeft(data->myray[i].ray_angle) ? -1 : 1;
-
+		if (isRayFacingLeft(data->myray[i].ray_angle))
+			xstep *= -1;
 		ystep = TILE_SIZE * tan(data->myray[i].ray_angle);
-		ystep *= (isRayFacingUp(data->myray[i].ray_angle) && ystep > 0) ? -1 : 1;
-		ystep *= (isRayFacingDown(data->myray[i].ray_angle) && ystep < 0) ? -1 : 1;
+		if (isRayFacingUp(data->myray[i].ray_angle) && ystep > 0)
+			ystep *= -1;
+		if (isRayFacingDown(data->myray[i].ray_angle) && ystep < 0)
+			ystep *= -1;
 	}
 	return ((t_cords){xstep, ystep});
 }
 
 t_cords	horizontal_increment(double nextHorzTouchX, double nextHorzTouchY,t_cub3d *data,
-		int *foundHorzWallHit, t_cords result, int i)
+		int *foundHorzWallHit, t_cords step, int i)
 {
 	t_cords	wall_hit;
 	while (isInsideMap(nextHorzTouchX, nextHorzTouchY))
 	{
 		double xToCheck = nextHorzTouchX;
-		double yToCheck = nextHorzTouchY + (isRayFacingUp(data->myray[i].ray_angle) ? -EPSILON : 0);
+		double yToCheck;
+		if (isRayFacingUp(data->myray[i].ray_angle))
+			yToCheck = nextHorzTouchY - EPSILON;
 
 		if (hasWallAt(xToCheck, yToCheck, data))
 		{
@@ -73,13 +81,8 @@ t_cords	horizontal_increment(double nextHorzTouchX, double nextHorzTouchY,t_cub3
 			*foundHorzWallHit = 1;
 			break;
 		}
-		else
-		{
-			nextHorzTouchX += result.x;
-			nextHorzTouchY += result.y;
-			wall_hit.x = -1;
-			wall_hit.y = -1;
-		}
+		nextHorzTouchX += step.x;
+		nextHorzTouchY += step.y;
 	}
 	return (wall_hit);
 }
@@ -91,9 +94,10 @@ t_cords	vertical_increment(double nextVertTouchX, double nextVertTouchY,t_cub3d 
 	
 	while (isInsideMap(nextVertTouchX, nextVertTouchY))
 	{
-		double xToCheck = nextVertTouchX + (isRayFacingLeft(data->myray[i].ray_angle) ? -EPSILON : 0);
+		double xToCheck;
 		double yToCheck = nextVertTouchY;
-
+		if (isRayFacingLeft(data->myray[i].ray_angle))
+			xToCheck = nextVertTouchX - EPSILON;
 		if (hasWallAt(xToCheck, yToCheck, data))
 		{
 			wall_hit.x = nextVertTouchX;
@@ -101,25 +105,21 @@ t_cords	vertical_increment(double nextVertTouchX, double nextVertTouchY,t_cub3d 
 			*foundVertWallHit = 1;
 			break;
 		}
-		else
-		{
-			nextVertTouchX += result.x;
-			nextVertTouchY += result.y;
-			wall_hit.x = -1;
-			wall_hit.y = -1;
-		}
+		nextVertTouchX += result.x;
+		nextVertTouchY += result.y;
 	}
 	return (wall_hit);
 }
 
 void	calcul_distance(t_cords vert, t_cords horz, t_cords found_wall_hit, t_cub3d *data, int i)
 {
-	double horzHitDistance = found_wall_hit.x
-		? distanceBetweenPoints(data->myplayer.x, data->myplayer.y, horz.x, horz.y)
-		: FLT_MAX;
-	double vertHitDistance = found_wall_hit.y
-		? distanceBetweenPoints(data->myplayer.x, data->myplayer.y, vert.x, vert.y)
-		: FLT_MAX;
+	double horzHitDistance = FLT_MAX;
+	double vertHitDistance = FLT_MAX;
+
+	if (found_wall_hit.x)
+		horzHitDistance = distanceBetweenPoints(data->myplayer.x, data->myplayer.y, horz.x, horz.y);
+	if (found_wall_hit.y)
+		vertHitDistance = distanceBetweenPoints(data->myplayer.x, data->myplayer.y, vert.x, vert.y);
 
 	if (vertHitDistance < horzHitDistance) {
 		data->myray[i].distance = vertHitDistance;
@@ -172,7 +172,7 @@ void	render_rays(t_cub3d *data)
 			data->myray[i].wall_hit_x,
 			data->myray[i].wall_hit_y,
 			data, 0xffffff);
-		ray_angle += (double)FOV_ANGLE / NUM_RAYS;
+		ray_angle += FOV_ANGLE / NUM_RAYS;
 		i++;
 	}
 }
