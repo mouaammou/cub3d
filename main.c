@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 03:49:32 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 04:16:31 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int	render_img(t_cub3d *data)
 	
 	render_map(data);
 	render_player(data);
-	render_rays(data);//all rays are stored in the linked list int this funcion
+	render_rays(data);//all rays are stored in the table in this funcion
+
+	//display ray(x, y) and distance
+	printf("(%f, %f), distance: %f\n", data->myray[0].wall_hit_x, data->myray[0].wall_hit_y, data->myray[0].distance);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0 , 0);
 	return (0);
 }
@@ -52,7 +55,7 @@ int main ()
 	mlx_hook(data->win, ON_KEYDOWN, 0, move_player, data);
 	mlx_hook(data->win, ON_DESTROY, 0, destroy_window, data);
 	mlx_loop_hook(data->mlx, render_img, data);
-	
+
 	mlx_loop(data->mlx);
 	return (0);
 }
