@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 02:53:29 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 03:18:26 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,26 @@ void	key_released(t_cub3d *data, int key_code)
 		data->myplayer.turn_direction = 0;
 }
 
+void	right_left_move(t_cub3d *data, int key)
+{
+	if (key == A_KEY)
+	{
+		if (!hasWallAt(data->myplayer.x - data->myplayer.move_speed, data->myplayer.y, data))
+			data->myplayer.x -= data->myplayer.move_speed;
+	}
+	else if (key == D_KEY)
+	{
+		if (!hasWallAt(data->myplayer.x + data->myplayer.move_speed, data->myplayer.y, data))
+			data->myplayer.x += data->myplayer.move_speed;
+	}
+
+}
+
 int	move_player(int keycode, t_cub3d *data)
 {
 	if (keycode == 53)
 		exit(0);
+	right_left_move(data, keycode);
 	if (keycode == UP_KEY || keycode == DOWN_KEY
 		|| keycode == RIGHT_KEY || keycode == LEFT_KEY)
 	{

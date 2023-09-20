@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 02:36:29 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/20 03:25:11 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,17 @@
 # include <limits.h>
 #include <float.h>
 
-#define FOV_ANGLE (30 * (M_PI / 180))
+#define FOV_ANGLE (60 * (M_PI / 180))
 #define EPSILON 1e-9
 
 typedef enum screen_data
 {
-	UP_KEY				= 126,
-	DOWN_KEY			= 125,
+	UP_KEY				= 13,
+	DOWN_KEY			= 1,
 	RIGHT_KEY			= 124,
 	LEFT_KEY			= 123,
+	A_KEY				= 0,
+	D_KEY				= 2,
 	ON_KEYDOWN			= 2,
 	ON_DESTROY			= 17,
 	TILE_SIZE			= 50,
@@ -37,7 +39,7 @@ typedef enum screen_data
 	MAP_NUM_COLS		= 15,
 	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
 	WINDOW_HEIGHT		= MAP_NUM_ROWS * TILE_SIZE,
-	WALL_STRIP_WIDTH	= 8,
+	WALL_STRIP_WIDTH	= 1,
 	NUM_RAYS			= WINDOW_WIDTH / WALL_STRIP_WIDTH
 }t_window_data;
 
