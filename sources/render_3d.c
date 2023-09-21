@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:58:50 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/21 10:46:44 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:48:09 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	render_cube_3d(t_cub3d *data)
 			wall3d_height = WINDOW_HEIGHT;
 		while (a < wall3d_height)
 		{
-			put_color(data->frame, i * WALL_STRIP_WIDTH, a + WINDOW_HEIGHT / 2 - wall3d_height / 2, color);
+			put_color(data->frame, i * WALL_STRIP_WIDTH, a +( WINDOW_HEIGHT / 2) - (wall3d_height / 2), color);
 			a++;
 		}
 		i++;

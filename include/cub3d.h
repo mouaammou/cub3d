@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/21 10:50:39 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/21 13:16:27 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
-# define CUB3D_H 
+# define CUB3D_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -56,7 +56,7 @@ typedef struct player
 	double			x;
 	double			y;
 	double			rotation_speed;
-	
+
 }t_player;
 
 typedef struct s_ray_casting

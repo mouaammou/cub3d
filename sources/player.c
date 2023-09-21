@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/21 10:32:58 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/21 21:56:17 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void	initialize_player(t_cub3d *data)
 {
 	data->myplayer.x = WINDOW_WIDTH / 2;
-	data->myplayer.y = WINDOW_HEIGHT / 7;
+	data->myplayer.y = WINDOW_HEIGHT / 2;
 	data->myplayer.turn_direction = 0;
 	data->myplayer.walk_direction = 0;
 	data->myplayer.a_flag = 0;
-	
-	data->myplayer.rotation_angle = 0;
+
+	data->myplayer.rotation_angle = M_PI / 2;
 	data->myplayer.move_speed = 6;
 	data->myplayer.rotation_speed = 2 * (M_PI / 180);
 }
@@ -41,7 +41,10 @@ void	update_position_player(t_cub3d *data)
 		newPlayerX = (data->myplayer.x + cos(data->myplayer.rotation_angle) * moveStep);
 		newPlayerY = (data->myplayer.y + sin(data->myplayer.rotation_angle) * moveStep);
 	}
-	if (!hasWallAt(newPlayerX, newPlayerY, data))
+	if (!hasWallAt(newPlayerX + 3, newPlayerY, data)
+		&& !hasWallAt(newPlayerX - 3, newPlayerY, data)
+		&& !hasWallAt(newPlayerX, newPlayerY + 3, data)
+		&& !hasWallAt(newPlayerX, newPlayerY - 3, data))
 	{
 		data->myplayer.x = newPlayerX;
 		data->myplayer.y = newPlayerY;
@@ -62,7 +65,7 @@ void	key_pressed(t_cub3d *data, int key_code)
 		data->myplayer.a_flag = -1;
 	else if (key_code == D_KEY)
 		data->myplayer.a_flag = +1;
-		
+
 }
 
 int	key_released(int key_code, t_cub3d *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/21 10:17:20 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/21 21:40:23 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,50 @@ void	put_color_map(unsigned int *frame, int x, int y, int color)
 		frame[y * w + x] = color;
 }
 
+void	render_textures(t_cub3d *data)
+{
+	int height;
+	int width;
+	int i = 0;
+	int	x_in_map;
+	int	x_in_texture;
+	int	y = 0;
+	int color;
+	int	y_in_texture;
+	double	distance;
+	double	wall3d_height;
+	double	wall3d_distance;
+	char	*texture_ptr;
+	uint32_t *cast_texture;
+	int tmp;
+	 texture_ptr = mlx_xpm_file_to_image(data->mlx, "said.xpm", &width, &height);
+	 cast_texture = (uint32_t *)mlx_get_data_addr(texture_ptr, &tmp, &tmp, &tmp);
+	 while (i < NUM_RAYS)
+	 {
+		distance = data->myray[i].distance * cos(data->myray[i].ray_angle - data->myplayer.rotation_angle);
+		wall3d_distance = (WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2);
+		wall3d_height = (TILE_SIZE / distance) * wall3d_distance;
+		y = (WINDOW_HEIGHT / 2) - (wall3d_height / 2);
+		//find x
+		if (data->myray[i].was_hit_vertical)
+			x_in_map = (int)data->myray[i].wall_hit_y % TILE_SIZE;
+		else
+			x_in_map = (int)data->myray[i].wall_hit_x % TILE_SIZE;
+		x_in_texture = (x_in_map * width) / WINDOW_WIDTH;
+		// find y
+		while (y < wall3d_height + (WINDOW_HEIGHT / 2) - (wall3d_height / 2))
+		{
+			int	distance_from_top = y + (wall3d_height / 2) - (WINDOW_HEIGHT / 2);
+			y_in_texture = (distance_from_top * height) / wall3d_height;
+			color = cast_texture[y_in_texture * width + x_in_texture];
+			put_color(data->frame, i, y, color);
+			y++;
+		}
+		i++;
+	 }
+}
+
+
 int	render_img(t_cub3d *data)
 {
 	int	tmp;
@@ -52,7 +96,8 @@ int	render_img(t_cub3d *data)
 	render_player(data);
 	render_rays(data);//all rays are stored in the table in this funcion
 	render_cube_3d(data);
-	
+	render_textures(data);
+
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0 , 0);
 	mlx_put_image_to_window(data->mlx, data->win, data->map_img, 0 , 0);
 	return (0);
@@ -63,14 +108,14 @@ int main ()
 	t_cub3d	*data = malloc (sizeof (t_cub3d));
 	if (!data)
 		return (1);
-	
+
 	initialize_map(data);
 
 	mlx_hook(data->win, ON_KEYDOWN, 0, move_player, data);
 	mlx_hook(data->win, ON_KEYUP, 0, key_released, data);
 	mlx_hook(data->win, ON_DESTROY, 0, destroy_window, data);
 	mlx_loop_hook(data->mlx, render_img, data);
-	
+
 	mlx_loop(data->mlx);
 	return (0);
 }
