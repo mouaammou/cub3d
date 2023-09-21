@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/21 06:27:17 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/21 10:32:58 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	initialize_player(t_cub3d *data)
 
 void	update_position_player(t_cub3d *data)
 {
-	data->myplayer.rotation_angle += data->myplayer.turn_direction * data->myplayer.rotation_speed;
-	double	moveStep = data->myplayer.walk_direction * data->myplayer.move_speed;
 	double	newPlayerX = data->myplayer.x;
 	double	newPlayerY = data->myplayer.y;
+	data->myplayer.rotation_angle += data->myplayer.turn_direction * data->myplayer.rotation_speed;
+	double	moveStep = data->myplayer.walk_direction * data->myplayer.move_speed;
 	if (data->myplayer.a_flag)
 	{
 		newPlayerX += data->myplayer.move_speed * cos(data->myplayer.rotation_angle + data->myplayer.a_flag * M_PI / 2);
@@ -102,7 +102,7 @@ void	render_player(t_cub3d *data)
 	x = data->myplayer.x;
 	y = data->myplayer.y;
 	if (hasWallAt(x, y, data) == 0)
-		put_color_map(data->frame_map, SCALE_MAP * x, SCALE_MAP * y, 0xFF0000);
+		put_color_map(data->frame_map, x, y, 0xFF0000);
 }
 
 void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int color)

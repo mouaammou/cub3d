@@ -6,7 +6,7 @@
 #    By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 12:34:07 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/20 13:18:57 by mouaammo         ###   ########.fr        #
+#    Updated: 2023/09/21 10:36:20 by mouaammo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ OBJECT_FILES	= $(FILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJECT_FILES)
-	$(MAKE) bonus -C libft
+	@$(MAKE) bonus -C libft
 	@$(CC) $(FLAGS) libft/libft.a $(MLX) $(OBJECT_FILES) -o $(NAME)
 	@echo "CC " $(NAME)
 
@@ -42,11 +42,11 @@ $(NAME): $(OBJECT_FILES)
 	$(CC) $(FLAGS)  -c $< -o $@
 
 clean:
-	$(MAKE) clean -C libft
+	@$(MAKE) clean -C libft
 	$(RM) $(OBJECT_FILES)
 
 fclean: clean
-	$(MAKE) fclean -C libft
+	@$(MAKE) fclean -C libft
 	$(RM) $(NAME)
 
 re: fclean all

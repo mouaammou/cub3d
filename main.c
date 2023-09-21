@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/21 06:46:08 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/21 10:17:20 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,25 @@ void	put_color_map(unsigned int *frame, int x, int y, int color)
 int	render_img(t_cub3d *data)
 {
 	int	tmp;
-	int	tmp1;
-	update_position_player(data);
 
 	if (data->img)
 		mlx_destroy_image(data->mlx, data->img);
 	if (data->map_img)
 		mlx_destroy_image(data->mlx, data->map_img);
 	mlx_clear_window(data->mlx, data->win);
-	
-	//for minimap
-	data->map_img = mlx_new_image(data->mlx, WINDOW_WIDTH * SCALE_MAP, WINDOW_HEIGHT * SCALE_MAP);
-	data->frame_map = (unsigned int *)mlx_get_data_addr(data->map_img, &tmp1, &tmp1, &tmp1);
 
-	//for rendering 3d
+	data->map_img = mlx_new_image(data->mlx, WINDOW_WIDTH * SCALE_MAP, WINDOW_HEIGHT * SCALE_MAP);
+	data->frame_map = (unsigned int *)mlx_get_data_addr(data->map_img, &tmp, &tmp, &tmp);
+
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->frame = (unsigned int *)mlx_get_data_addr(data->img, &tmp, &tmp, &tmp);
+
+	update_position_player(data);
 	render_map(data);
 	render_player(data);
 	render_rays(data);//all rays are stored in the table in this funcion
 	render_cube_3d(data);
+	
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0 , 0);
 	mlx_put_image_to_window(data->mlx, data->win, data->map_img, 0 , 0);
 	return (0);
