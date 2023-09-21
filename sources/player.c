@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 15:13:26 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/21 06:27:17 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	render_player(t_cub3d *data)
 	x = data->myplayer.x;
 	y = data->myplayer.y;
 	if (hasWallAt(x, y, data) == 0)
-		put_color(data, SCALE_MAP * x, SCALE_MAP * y, 0xFF0000);
+		put_color_map(data->frame_map, SCALE_MAP * x, SCALE_MAP * y, 0xFF0000);
 }
 
 void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int color)
@@ -126,7 +126,7 @@ void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int co
 	i = 0;
 	while (i <= steps)
 	{
-		put_color(data, (x0), (y0), color);
+		put_color_map(data->frame_map, (x0), (y0), color);
 		x0 += x_inc; // increment in x at each step
 		y0 += y_inc; // increment in y at each step
 		i++;

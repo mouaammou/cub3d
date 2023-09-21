@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/20 15:14:21 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/21 06:34:36 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef enum screen_data
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
 	TILE_SIZE			= 64,
-	MAP_NUM_ROWS		= 11,
-	MAP_NUM_COLS		= 15,
+	MAP_NUM_ROWS		= 20,
+	MAP_NUM_COLS		= 30,
 	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
 	WINDOW_HEIGHT		= MAP_NUM_ROWS * TILE_SIZE,
 	WALL_STRIP_WIDTH	= 1,
@@ -93,7 +93,9 @@ typedef struct cub3d
 	void			*mlx;
 	void			*win;
 	void			*img;
+	void			*map_img;
 	unsigned int	*frame;
+	unsigned int	*frame_map;
 	int			grid[MAP_NUM_ROWS][MAP_NUM_COLS];
 	double		scale_factor;
 	t_player	myplayer;
@@ -111,6 +113,7 @@ int		hasWallAt(double x, double y, t_cub3d *data);
 void	render_map(t_cub3d *data);
 void	fill_my_map(t_cub3d *data);
 void	initialize_map(t_cub3d *data);
+void	put_color_map(unsigned int *frame, int x, int y, int color);
 
 void	right_left_move(t_cub3d *data);
 
@@ -127,7 +130,7 @@ void	render_rays(t_cub3d *data);
 void	ray_casting(t_cub3d *data, int i);
 
 //put color insted of put pixel
-void	put_color(t_cub3d *data, int x, int y, int color);
+void	put_color(unsigned int *frame, int x, int y, int color);
 double normalize_ray_angle(double angle);
 double	distanceBetweenPoints(double x1, double y1, double x2, double y2);
 
