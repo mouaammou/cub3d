@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/22 12:10:25 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/22 20:35:44 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef enum screen_data
 	ON_KEYDOWN			= 2,
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 64,
+	TILE_SIZE			= 50,
 	MAP_NUM_ROWS		= 20,
 	MAP_NUM_COLS		= 30,
 	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
@@ -87,6 +87,14 @@ typedef struct ray
 	int		was_hit_vertical;
 	double	hit_wall_color;
 }t_ray;
+
+typedef struct texture
+{
+	uint32_t *cast_texture;
+	int		width;
+	int		height;
+}t_texture;
+
 
 typedef struct x
 {
