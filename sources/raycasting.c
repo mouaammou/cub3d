@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 01:20:08 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/21 10:34:21 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/22 12:29:53 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,143 +35,142 @@ t_cords	x_y_intercept(int flag, t_cub3d *data, int i)
 
 t_cords	x_y_steps(int flag, t_cub3d *data, int i)
 {
-	double	xstep;
-	double	ystep;
+	t_cords	step;
 
 	if (flag == 1)
 	{
-		ystep = TILE_SIZE;
+		step.y = TILE_SIZE;
 		if (isRayFacingUp(data->myray[i].ray_angle))
-			ystep *= -1;
-		xstep = TILE_SIZE / tan(data->myray[i].ray_angle);
-		if (isRayFacingLeft(data->myray[i].ray_angle) && xstep > 0)
-			xstep *= -1;
-		if (isRayFacingRight(data->myray[i].ray_angle) && xstep < 0)
-			xstep *= -1;
+			step.y *= -1;
+		step.x = TILE_SIZE / tan(data->myray[i].ray_angle);
+		if (isRayFacingLeft(data->myray[i].ray_angle) && step.x > 0)
+			step.x *= -1;
+		if (isRayFacingRight(data->myray[i].ray_angle) && step.x < 0)
+			step.x *= -1;
 	}
 	else if (flag == 2)
 	{
-		xstep = TILE_SIZE;
+		step.x = TILE_SIZE;
 		if (isRayFacingLeft(data->myray[i].ray_angle))
-			xstep *= -1;
-		ystep = TILE_SIZE * tan(data->myray[i].ray_angle);
-		if (isRayFacingUp(data->myray[i].ray_angle) && ystep > 0)
-			ystep *= -1;
-		if (isRayFacingDown(data->myray[i].ray_angle) && ystep < 0)
-			ystep *= -1;
+			step.x *= -1;
+		step.y = TILE_SIZE * tan(data->myray[i].ray_angle);
+		if (isRayFacingUp(data->myray[i].ray_angle) && step.y > 0)
+			step.y *= -1;
+		if (isRayFacingDown(data->myray[i].ray_angle) && step.y < 0)
+			step.y *= -1;
 	}
-	return ((t_cords){xstep, ystep});
+	return (step);
 }
 
-t_cords	horizontal_increment(double nextHorzTouchX, double nextHorzTouchY,t_cub3d *data,
-		int *foundHorzWallHit, t_cords step, int i)
+t_cords	horizontal_increment(t_cub3d *data, int *found_hit, t_cords step, int i)
 {
 	t_cords	wall_hit;
-	while (isInsideMap(nextHorzTouchX, nextHorzTouchY))
-	{
-		double xToCheck = nextHorzTouchX;
-		double yToCheck = nextHorzTouchY;
-		if (isRayFacingUp(data->myray[i].ray_angle))
-			yToCheck = nextHorzTouchY - EPSILON;
+	t_cords	check;
 
-		if (hasWallAt(xToCheck, yToCheck, data))
+	while (isInsideMap(data->pos.x, data->pos.y))
+	{
+		check.x = data->pos.x;
+		check.y = data->pos.y;
+		if (isRayFacingUp(data->myray[i].ray_angle))
+			check.y = data->pos.y - EPSILON;
+		if (hasWallAt(check.x, check.y, data))
 		{
-			wall_hit.x = nextHorzTouchX;
-			wall_hit.y = nextHorzTouchY;
-			*foundHorzWallHit = 1;
+			wall_hit.x = data->pos.x;
+			wall_hit.y = data->pos.y;
+			*found_hit = 1;
 			break;
 		}
-		nextHorzTouchX += step.x;
-		nextHorzTouchY += step.y;
+		data->pos.x += step.x;
+		data->pos.y += step.y;
 	}
 	return (wall_hit);
 }
 
-t_cords	vertical_increment(double nextVertTouchX, double nextVertTouchY,t_cub3d *data,
-		int *foundVertWallHit, t_cords result, int i)
+t_cords	vertical_increment(t_cub3d *data, int *found_hit, t_cords result, int i)
 {
 	t_cords	wall_hit;
+	t_cords	check;
 	
-	while (isInsideMap(nextVertTouchX, nextVertTouchY))
+	while (isInsideMap(data->pos.x, data->pos.y))
 	{
-		double xToCheck = nextVertTouchX;
-		double yToCheck = nextVertTouchY;
+		check.x = data->pos.x;
+		check.y = data->pos.y;
 		if (isRayFacingLeft(data->myray[i].ray_angle))
-			xToCheck = nextVertTouchX - EPSILON;
-		if (hasWallAt(xToCheck, yToCheck, data))
+			check.x = data->pos.x - EPSILON;
+		if (hasWallAt(check.x, check.y, data))
 		{
-			wall_hit.x = nextVertTouchX;
-			wall_hit.y = nextVertTouchY;
-			*foundVertWallHit = 1;
+			wall_hit.x = data->pos.x;
+			wall_hit.y = data->pos.y;
+			*found_hit = 1;
 			break;
 		}
-		nextVertTouchX += result.x;
-		nextVertTouchY += result.y;
+		data->pos.x += result.x;
+		data->pos.y += result.y;
 	}
 	return (wall_hit);
 }
 
 void	calcul_distance(t_cords vert, t_cords horz, t_cords found_wall_hit, t_cub3d *data, int i)
 {
-	double horzHitDistance = FLT_MAX;
-	double vertHitDistance = FLT_MAX;
+	t_cords	dist;
 
+	dist.x = DBL_MAX;
+	dist.y = DBL_MAX;
 	if (found_wall_hit.x)
-		horzHitDistance = distanceBetweenPoints(data->myplayer.x, data->myplayer.y, horz.x, horz.y);
+		dist.x = distanceBetweenPoints(data->myplayer.x, data->myplayer.y, horz.x, horz.y);
 	if (found_wall_hit.y)
-		vertHitDistance = distanceBetweenPoints(data->myplayer.x, data->myplayer.y, vert.x, vert.y);
+		dist.y = distanceBetweenPoints(data->myplayer.x, data->myplayer.y, vert.x, vert.y);
 
-	if (vertHitDistance < horzHitDistance) {
-		data->myray[i].distance = vertHitDistance;
+	if (dist.y < dist.x) {
+		data->myray[i].distance = dist.y;
 		data->myray[i].wall_hit_x = vert.x;
 		data->myray[i].wall_hit_y = vert.y;
 		data->myray[i].was_hit_vertical = 1;
 	} else {
-		data->myray[i].distance = horzHitDistance;
+		data->myray[i].distance = dist.x;
 		data->myray[i].wall_hit_x = horz.x;
 		data->myray[i].wall_hit_y = horz.y;
 		data->myray[i].was_hit_vertical = 0;
 	}
 }
 
-void	castRay(double rayAngle, t_cub3d *data, int i)
+void	castRay(double ray_angle, t_cub3d *data, int i)
 {
-	// HORIZONTAL
-	int	foundHorzWallHit = 0;
-	int foundVertWallHit = 0;
-	rayAngle = normalize_ray_angle(rayAngle);
-	data->myray[i].ray_angle = rayAngle;
-
-	t_cords	horz_data, vert_data;
 	t_cords	steps;
-	t_cords	horz_wall_hit, vert_wall_hit;
+	t_cords	horz_wall_hit;
+	t_cords	vert_wall_hit;
+	t_cords	found_hit;
 
-	horz_data = x_y_intercept(1, data, i);
+	found_hit.x = 0;
+	found_hit.y = 0;
+	data->myray[i].ray_angle = normalize_ray_angle(ray_angle);
+	data->pos = x_y_intercept(1, data, i);
 	steps = x_y_steps(1, data, i);
-	horz_wall_hit = horizontal_increment(horz_data.x, horz_data.y, data, &foundHorzWallHit, steps, i);
-	
-	// VERTICAL
-	vert_data =  x_y_intercept(2, data, i);
+	horz_wall_hit = horizontal_increment(data, (int *)&found_hit.x, steps, i);
+	data->pos =  x_y_intercept(2, data, i);
 	steps = x_y_steps(2, data, i);
-	vert_wall_hit = vertical_increment(vert_data.x, vert_data.y, data, &foundVertWallHit, steps, i);
-	
-	// Calculate both horizontal and vertical hit distances and choose the smallest one
-	calcul_distance(vert_wall_hit, horz_wall_hit, (t_cords){foundHorzWallHit, foundVertWallHit}, data, i);
+	vert_wall_hit = vertical_increment(data, (int *)&found_hit.y, steps, i);
+	calcul_distance(vert_wall_hit, horz_wall_hit, found_hit, data, i);
 }
+
 
 void	render_rays(t_cub3d *data)
 {
-	double ray_angle = data->myplayer.rotation_angle - (FOV_ANGLE / 2);
-	
-	int i = 0;
+	double	ray_angle;
+	int		i;
+	t_cords	p0;
+	t_cords	p1;
+
+	ray_angle = data->myplayer.rotation_angle - (FOV_ANGLE / 2);
+	i = 0;
 	while (i < NUM_RAYS)
 	{
 		castRay(ray_angle, data, i);
-		draw_line(SCALE_MAP * data->myplayer.x,
-			SCALE_MAP * data->myplayer.y,
-			SCALE_MAP * data->myray[i].wall_hit_x,
-			SCALE_MAP * data->myray[i].wall_hit_y,
-			data, 0xffffff);
+		p0.x = SCALE_MAP * data->myplayer.x;
+		p0.y = SCALE_MAP * data->myplayer.y;
+		p1.x = SCALE_MAP * data->myray[i].wall_hit_x;
+		p1.y = SCALE_MAP * data->myray[i].wall_hit_y;
+		draw_line(p0, p1, data, 0xffffff);
 		ray_angle += FOV_ANGLE / NUM_RAYS;
 		i++;
 	}

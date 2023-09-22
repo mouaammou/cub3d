@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:58:50 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/21 18:48:09 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/22 12:31:57 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	color_sky(t_cub3d *data)
 {
-	//     rect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT/2);
 	int i = 0;
 	while (i < NUM_RAYS)
 	{
@@ -30,7 +29,6 @@ void	color_sky(t_cub3d *data)
 
 void	color_floor(t_cub3d *data)
 {
-	//     rect(0, WINDOW_HEIGHT/2, WINDOW_WIDTH, WINDOW_HEIGHT)
 	int i = 0;
 	while (i < NUM_RAYS)
 	{

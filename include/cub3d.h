@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/21 13:16:27 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/22 12:10:25 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "../libft/libft.h"
 
 #define FOV_ANGLE (60 * (M_PI / 180))
-#define EPSILON 1e-9
+#define EPSILON 1
 #define SCALE_MAP 0.2
 
 typedef enum screen_data
@@ -88,6 +88,12 @@ typedef struct ray
 	double	hit_wall_color;
 }t_ray;
 
+typedef struct x
+{
+	double x;
+	double y;
+}t_cords;
+
 typedef struct cub3d
 {
 	void			*mlx;
@@ -100,13 +106,8 @@ typedef struct cub3d
 	double		scale_factor;
 	t_player	myplayer;
 	t_ray		myray[NUM_RAYS];
+	t_cords		pos;
 }t_cub3d;
-
-typedef struct x
-{
-	double x;
-	double y;
-}t_cords;
 
 //map.c functions
 int		hasWallAt(double x, double y, t_cub3d *data);
@@ -120,7 +121,7 @@ void	right_left_move(t_cub3d *data);
 // player functions in c
 void	initialize_player(t_cub3d *data);
 void	render_player(t_cub3d *data);
-void	draw_line(double x0, double y0, double x1, double y1, t_cub3d *data, int color);
+void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color);
 int		move_player(int keycode, t_cub3d *data);
 void	update_position_player(t_cub3d *data);
 int		key_released(int key_code, t_cub3d *data);
@@ -128,6 +129,8 @@ int		key_released(int key_code, t_cub3d *data);
 //ray.c functions
 void	render_rays(t_cub3d *data);
 void	ray_casting(t_cub3d *data, int i);
+void	color_sky(t_cub3d *data);
+void	color_floor(t_cub3d *data);
 
 //put color insted of put pixel
 void	put_color(unsigned int *frame, int x, int y, int color);
