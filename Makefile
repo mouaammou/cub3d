@@ -6,7 +6,7 @@
 #    By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 12:34:07 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/22 08:04:30 by mouaammo         ###   ########.fr        #
+#    Updated: 2023/09/23 12:57:13 by mouaammo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 # FLAGS 			= -Wall -Wextra -Werror
 NAME 			= cub3d
-CC				= cc  -Ofast #-g -fsanitize=address
+CC				= cc  -Ofast -g #-fsanitize=address
 RM				= rm -fr
 MLX				= -lmlx -framework OpenGL -framework AppKit
 LIBFT_FILES = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_strlen.c \
@@ -28,18 +28,21 @@ LIBFT_FILES = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_strlen.c \
 			ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
 FILES			= main.c $(addprefix sources/, map.c player.c raycasting.c normalize_angle.c render_3d.c)
-HEADER_FILES	= $(addprefix include/, cub3d.h)
+HEADER_FILES	= $(addprefix include/, cub3d.h) libft/libft.h
 OBJECT_FILES	= $(FILES:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJECT_FILES)
-	@$(MAKE) bonus -C libft
+$(NAME): lib $(HEADER_FILES) $(OBJECT_FILES)
 	@$(CC) $(FLAGS) libft/libft.a $(MLX) $(OBJECT_FILES) -o $(NAME)
 	@echo "CC " $(NAME)
 
-%.o:%.c $(HEADER_FILES)
-	$(CC) $(FLAGS)  -c $< -o $@
+lib:
+	@$(MAKE) -C libft
+	@$(MAKE) bonus -C libft
+
+%.o:%.c lib $(HEADER_FILES) $(LIBFT_FILES)
+	$(CC) $(FLAGS) libft/libft.a  -c $< -o $@
 
 clean:
 	@$(MAKE) clean -C libft

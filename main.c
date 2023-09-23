@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/23 01:40:18 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/23 12:55:49 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,30 @@ void	put_color_map(unsigned int *frame, int x, int y, int color)
 		frame[y * w + x] = color;
 }
 
-void	fill_texture(t_texture *texture1, t_texture *texture2, t_texture *texture3, t_texture *texture4, t_cub3d *data)
+void	get_textures(t_cub3d *data)
 {
-	char	*texture_ptr1;
-	char	*texture_ptr2;
-	char	*texture_ptr3;
-	char	*texture_ptr4;
+	char	*t1[4];
 	int tmp;
-	texture_ptr1 = mlx_xpm_file_to_image(data->mlx, "textures/wall_1.xpm", &(*texture1).width, &(*texture1).height);
-	texture_ptr2 = mlx_xpm_file_to_image(data->mlx, "textures/wall_2.xpm", &(*texture2).width, &(*texture2).height);
-	texture_ptr3 = mlx_xpm_file_to_image(data->mlx, "textures/wall_3.xpm", &(*texture3).width, &(*texture3).height);
-	texture_ptr4 = mlx_xpm_file_to_image(data->mlx, "textures/stone_2.xpm", &(*texture4).width, &(*texture4).height);
-	(*texture1).cast_texture = (uint32_t *)mlx_get_data_addr(texture_ptr1, &tmp, &tmp, &tmp);
-	(*texture2).cast_texture = (uint32_t *)mlx_get_data_addr(texture_ptr2, &tmp, &tmp, &tmp);
-	(*texture3).cast_texture = (uint32_t *)mlx_get_data_addr(texture_ptr3, &tmp, &tmp, &tmp);
-	(*texture4).cast_texture = (uint32_t *)mlx_get_data_addr(texture_ptr4, &tmp, &tmp, &tmp);
+	data->texture = malloc(sizeof(t_texture) * 4);
+	if (!data->texture)
+	{
+		ft_putstr_fd("Error\n", 2);
+		return ;
+	}
+	t1[0] = mlx_xpm_file_to_image(data->mlx, "textures/wood0.xpm", &data->texture[0].width, &data->texture[0].height);
+	t1[1] = mlx_xpm_file_to_image(data->mlx, "textures/wood1.xpm", &data->texture[1].width, &data->texture[1].height);
+	t1[2] = mlx_xpm_file_to_image(data->mlx, "textures/wood2.xpm", &data->texture[2].width, &data->texture[2].height);
+	t1[3] = mlx_xpm_file_to_image(data->mlx, "textures/wood3.xpm", &data->texture[3].width, &data->texture[3].height);
+
+	if (!t1[0] || !t1[1] || !t1[2] || !t1[3])
+	{
+		ft_putstr_fd("Error\n", 2);
+		return ;
+	}
+	data->texture[0].cast_texture = (uint32_t *)mlx_get_data_addr(t1[0], &tmp, &tmp, &tmp);
+	data->texture[1].cast_texture = (uint32_t *)mlx_get_data_addr(t1[1], &tmp, &tmp, &tmp);
+	data->texture[2].cast_texture = (uint32_t *)mlx_get_data_addr(t1[2], &tmp, &tmp, &tmp);
+	data->texture[3].cast_texture = (uint32_t *)mlx_get_data_addr(t1[3], &tmp, &tmp, &tmp);
 }
 
 
@@ -66,17 +75,8 @@ void	render_textures(t_cub3d *data)
 	double	distance;
 	double	wall3d_height;
 	double	wall3d_distance;
-	char	*texture_ptr;
-	char	*texture_ptr1;
-	char	*texture_ptr2;
-	char	*texture_ptr3;
-	t_texture texture1;
-	t_texture texture2;
-	t_texture texture3;
-	t_texture texture4;
 	uint32_t *cast;
-	int tmp;
-	fill_texture(&texture1, &texture2, &texture3, &texture4, data);
+	get_textures(data);
 	color_sky(data);
 	color_floor(data);
 	i = 0;
@@ -84,27 +84,27 @@ void	render_textures(t_cub3d *data)
 	{
 		if (isRayFacingUp(data->myray[i].ray_angle) && !data->myray[i].was_hit_vertical)
 		{
-			cast = texture1.cast_texture;
-			cast_width = texture1.width;
-			cast_height = texture1.height;
+			cast = data->texture[0].cast_texture;
+			cast_width = data->texture[0].width;
+			cast_height = data->texture[0].height;
 		}
 		else if (isRayFacingDown(data->myray[i].ray_angle) && !data->myray[i].was_hit_vertical)
 		{
-			cast = texture2.cast_texture;
-			cast_width = texture2.width;
-			cast_height = texture2.height;
+			cast = data->texture[1].cast_texture;
+			cast_width = data->texture[1].width;
+			cast_height = data->texture[1].height;
 		}
 		else if (isRayFacingRight(data->myray[i].ray_angle) && data->myray[i].was_hit_vertical)
 		{
-			cast = texture3.cast_texture;
-			cast_width = texture3.width;
-			cast_height = texture3.height;
+			cast = data->texture[2].cast_texture;
+			cast_width = data->texture[2].width;
+			cast_height = data->texture[2].height;
 		}
 		else if (isRayFacingLeft(data->myray[i].ray_angle) && data->myray[i].was_hit_vertical)
 		{
-			cast = texture4.cast_texture;
-			cast_width = texture4.width;
-			cast_height = texture4.height;
+			cast = data->texture[3].cast_texture;
+			cast_width = data->texture[3].width;
+			cast_height = data->texture[3].height;
 		}
 		distance = data->myray[i].distance * cos(data->myray[i].ray_angle - data->myplayer.rotation_angle);
 		wall3d_distance = (WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2);
@@ -112,9 +112,9 @@ void	render_textures(t_cub3d *data)
 		y = (WINDOW_HEIGHT / 2) - (wall3d_height / 2);
 		//find x
 		if (data->myray[i].was_hit_vertical)
-			x_in_map = (fmod(data->myray[i].wall_hit_y, TILE_SIZE));
+			x_in_map = fmod(data->myray[i].wall_hit_y, TILE_SIZE);
 		else
-			x_in_map = (fmod(data->myray[i].wall_hit_x ,TILE_SIZE));
+			x_in_map = fmod(data->myray[i].wall_hit_x ,TILE_SIZE);
 		x_in_texture = (x_in_map * cast_width) / TILE_SIZE;
 		while (y < wall3d_height + (WINDOW_HEIGHT / 2) - (wall3d_height / 2))
 		{

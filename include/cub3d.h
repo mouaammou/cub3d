@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/23 00:55:03 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/23 13:01:59 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef enum screen_data
 	ON_KEYDOWN			= 2,
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 60,
+	TILE_SIZE			= 32,
 	MAP_NUM_ROWS		= 20,
 	MAP_NUM_COLS		= 30,
 	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
@@ -115,6 +115,7 @@ typedef struct cub3d
 	t_player	myplayer;
 	t_ray		myray[NUM_RAYS];
 	t_cords		pos;
+	t_texture	*texture;
 }t_cub3d;
 
 //map.c functions
@@ -159,5 +160,6 @@ int		isInsideMap(double x, double y);
 
 //render cube 3d projection
 void	render_cube_3d(t_cub3d *data);
+void	get_textures(t_cub3d *data);
 
 #endif

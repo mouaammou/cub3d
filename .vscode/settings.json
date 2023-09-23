@@ -8,6 +8,7 @@
 		"vector": "c",
 		"mlx42.h": "c",
 		"float.h": "c",
-		"chrono": "c"
+		"chrono": "c",
+		"libft.h": "c"
 	}
 }

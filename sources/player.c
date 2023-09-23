@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/22 12:34:23 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/23 02:36:59 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	update_position_player(t_cub3d *data)
 	data->myplayer.rotation_angle += data->myplayer.turn_direction * data->myplayer.rotation_speed;
 	move_step = data->myplayer.walk_direction * data->myplayer.move_speed;
 	update_x_y(data, &next_cords, move_step);
-	if (!hasWallAt(next_cords.x + 3, next_cords.y, data)
-		&& !hasWallAt(next_cords.x - 3, next_cords.y, data)
-		&& !hasWallAt(next_cords.x, next_cords.y + 3, data)
-		&& !hasWallAt(next_cords.x, next_cords.y - 3, data))
+	if (!hasWallAt(next_cords.x + 2, next_cords.y, data)
+		&& !hasWallAt(next_cords.x - 2, next_cords.y, data)
+		&& !hasWallAt(next_cords.x, next_cords.y + 2, data)
+		&& !hasWallAt(next_cords.x, next_cords.y - 2, data))
 	{
 		data->myplayer.x = next_cords.x;
 		data->myplayer.y = next_cords.y;
