@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/22 20:35:44 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/23 00:55:03 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef enum screen_data
 	ON_KEYDOWN			= 2,
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 50,
+	TILE_SIZE			= 60,
 	MAP_NUM_ROWS		= 20,
 	MAP_NUM_COLS		= 30,
 	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
