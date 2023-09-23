@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/23 01:14:02 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/23 01:40:18 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ void	fill_texture(t_texture *texture1, t_texture *texture2, t_texture *texture3,
 	char	*texture_ptr3;
 	char	*texture_ptr4;
 	int tmp;
-	texture_ptr1 = mlx_xpm_file_to_image(data->mlx, "textures/bluestone.xpm", &(*texture1).width, &(*texture1).height);
-	texture_ptr2 = mlx_xpm_file_to_image(data->mlx, "textures/eagle.xpm", &(*texture2).width, &(*texture2).height);
-	texture_ptr3 = mlx_xpm_file_to_image(data->mlx, "textures/purplestone.xpm", &(*texture3).width, &(*texture3).height);
-	texture_ptr4 = mlx_xpm_file_to_image(data->mlx, "textures/pillar.xpm", &(*texture4).width, &(*texture4).height);
+	texture_ptr1 = mlx_xpm_file_to_image(data->mlx, "textures/wall_1.xpm", &(*texture1).width, &(*texture1).height);
+	texture_ptr2 = mlx_xpm_file_to_image(data->mlx, "textures/wall_2.xpm", &(*texture2).width, &(*texture2).height);
+	texture_ptr3 = mlx_xpm_file_to_image(data->mlx, "textures/wall_3.xpm", &(*texture3).width, &(*texture3).height);
+	texture_ptr4 = mlx_xpm_file_to_image(data->mlx, "textures/stone_2.xpm", &(*texture4).width, &(*texture4).height);
 	(*texture1).cast_texture = (uint32_t *)mlx_get_data_addr(texture_ptr1, &tmp, &tmp, &tmp);
 	(*texture2).cast_texture = (uint32_t *)mlx_get_data_addr(texture_ptr2, &tmp, &tmp, &tmp);
 	(*texture3).cast_texture = (uint32_t *)mlx_get_data_addr(texture_ptr3, &tmp, &tmp, &tmp);
