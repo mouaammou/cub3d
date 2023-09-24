@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 02:16:43 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/24 11:28:44 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	fill_my_map(t_cub3d *data)
 	data->grid[i] = NULL;
 }
 
-char	hasWallAt(double x, double y, t_cub3d *data)
+char	has_wall(double x, double y, t_cub3d *data)
 {
 	int	map_grid_x;
 	int	map_grid_y;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 01:45:14 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/24 11:42:58 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,7 @@ typedef enum screen_data
 	ON_KEYDOWN			= 2,
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 32,
-	MAP_NUM_ROWS		= 20,
-	MAP_NUM_COLS		= 30,
-	WINDOW_WIDTH		= MAP_NUM_COLS * TILE_SIZE,
-	WINDOW_HEIGHT		= MAP_NUM_ROWS * TILE_SIZE,
-	WALL_STRIP_WIDTH	= 1,
-	NUM_RAYS			= WINDOW_WIDTH / WALL_STRIP_WIDTH
+	TILE_SIZE			= 40,
 }t_window_data;
 
 typedef struct player
@@ -146,7 +140,7 @@ typedef struct cub3d
 }t_cub3d;
 
 //map.c functions
-char		hasWallAt(double x, double y, t_cub3d *data);
+char	has_wall(double x, double y, t_cub3d *data);
 void	render_map(t_cub3d *data);
 void	fill_my_map(t_cub3d *data);
 void	initialize_map(t_cub3d *data, t_list *list);
@@ -169,19 +163,19 @@ void	color_floor(t_cub3d *data);
 //put color insted of put pixel
 void	put_color(t_cub3d *data, int x, int y, int color);
 double normalize_ray_angle(double angle);
-double	distanceBetweenPoints(double x1, double y1, double x2, double y2);
+double	distance(double x1, double y1, double x2, double y2);
 
 //test ray
-void castRay(double rayAngle, t_cub3d *data, int i);
+void casting(double rayAngle, t_cub3d *data, int i);
 
 //normalize angle
 double	normalize_ray_angle(double angle);
-int		isRayFacingDown(double angle);
-int		isRayFacingUp(double angle);
-int		isRayFacingRight(double angle);
-int		isRayFacingLeft(double angle);
-double	distanceBetweenPoints(double x1, double y1, double x2, double y2);
-int		isInsideMap(t_cub3d *data, double x, double y);
+int		is_ray_down(double angle);
+int		is_ray_up(double angle);
+int		is_ray_right(double angle);
+int		is_ray_left(double angle);
+double	distance(double x1, double y1, double x2, double y2);
+int		is_in_map(t_cub3d *data, double x, double y);
 
 //render cube 3d projection
 void	render_cube_3d(t_cub3d *data);
