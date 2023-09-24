@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 11:31:55 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/24 14:46:24 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	initialize_player(t_cub3d *data)
 {
-	data->myplayer.x = data->list->player_y * TILE_SIZE;
-	data->myplayer.y = data->list->player_x * TILE_SIZE;
+	data->myplayer.x = data->list->player_x * TILE_SIZE;
+	data->myplayer.y = data->list->player_y * TILE_SIZE;
 	data->myplayer.turn_direction = 0;
 	data->myplayer.walk_direction = 0;
 	data->myplayer.a_flag = 0;

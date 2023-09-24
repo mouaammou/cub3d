@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+         #
+#    By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 12:34:07 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/24 02:48:12 by rennacir         ###   ########.fr        #
+#    Updated: 2023/09/24 14:30:54 by mouaammo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 # FLAGS 			= -Wall -Wextra -Werror
 NAME 			= cub3d
-CC				= cc -O3 #-g -fsanitize=address
+CC				= cc -O3  #-g -fsanitize=address
 RM				= rm -fr
 MLX				= -lmlx -framework OpenGL -framework AppKit
 LIBFT			= $(addprefix libft/, ft_atoi.c ft_putstr_fd.c ft_split.c ft_strcmp.c ft_strlen.c ft_substr.c is_white_space.c)

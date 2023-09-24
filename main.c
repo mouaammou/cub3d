@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 11:58:47 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/24 13:26:21 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	get_textures(t_cub3d *data)
 		ft_putstr_fd("Error\n", 2);
 		return ;
 	}
-	t1[0] = mlx_xpm_file_to_image(data->mlx, "textures/wood0.xpm", &data->texture[0].width, &data->texture[0].height);
+	t1[0] = mlx_xpm_file_to_image(data->mlx, "textures/said.xpm", &data->texture[0].width, &data->texture[0].height);
 	t1[1] = mlx_xpm_file_to_image(data->mlx, "textures/wood1.xpm", &data->texture[1].width, &data->texture[1].height);
 	t1[2] = mlx_xpm_file_to_image(data->mlx, "textures/wood2.xpm", &data->texture[2].width, &data->texture[2].height);
 	t1[3] = mlx_xpm_file_to_image(data->mlx, "textures/wood3.xpm", &data->texture[3].width, &data->texture[3].height);

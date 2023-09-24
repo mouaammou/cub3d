@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 11:28:44 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/24 14:47:47 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,21 @@ void	fill_my_map(t_cub3d *data)
 	int	j;
 
 	i = -1;
-	data->grid = malloc (sizeof(char *) * (data->list->num_col + 1));
+	data->grid = malloc (sizeof(char *) * (data->list->num_row + 1));
 	if (!data->grid)
 		puts("haaaa");
 	i = -1;
 	while (data->list->map[++i])
 	{
-			data->grid[i] = ft_strdup(data->list->map[i]);
+		data->grid[i] = ft_strdup(data->list->map[i]);
 	}
 	data->grid[i] = NULL;
+	i = 0;
+	while (data->grid[i])
+	{
+		printf("[%s]\n", data->grid[i]);
+		i++;
+	}
 }
 
 char	has_wall(double x, double y, t_cub3d *data)
@@ -49,10 +55,20 @@ char	has_wall(double x, double y, t_cub3d *data)
 	int	map_grid_y;
 
 	if (x < 0 || x > data->list->win_width || y < 0 || y > data->list->win_height)
-		return -1;
+		error("Error\n");
 	map_grid_x = floor(x / TILE_SIZE);
 	map_grid_y = floor(y / TILE_SIZE);
-	return (data->grid[map_grid_y][map_grid_x]);
+
+
+	// printf("%c\n", data->grid[27][30]);
+	
+	// printf("rows: %d,cols: %d\n", data->list->num_row, data->list->num_col);
+	if (map_grid_x < 0 || map_grid_x >= data->list->num_col || map_grid_y < 0 || map_grid_y >= data->list->num_row)
+		error("Error: X or Y depasse la limite de map\n");
+	if (data->grid[map_grid_y][map_grid_x] == '1')
+		return '1';
+	else
+		return '0';
 }
 
 void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
