@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 11:42:58 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/24 16:26:49 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 
 #define FOV_ANGLE (60 * (M_PI / 180))
-#define EPSILON 1
+#define EPSILON 1e-9
 #define SCALE_MAP 0.2
 
 typedef enum screen_data

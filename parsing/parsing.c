@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 22:57:16 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/24 02:22:44 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/24 16:12:54 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -477,7 +477,7 @@ int	*return_dim(char **map)
 		while (map[row][col])
 		{
 			if (map[row][col] == 'N' || map[row][col] == 'S'
-				|| map[row][col] == 'E' || map[row][col] == 'W'	)
+				|| map[row][col] == 'E' || map[row][col] == 'W')
 			{
 				dim[0] = row;
 				dim[1] = col;

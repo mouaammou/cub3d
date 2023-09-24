@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 14:47:47 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/24 16:29:44 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,14 @@ char	has_wall(double x, double y, t_cub3d *data)
 	int	map_grid_x;
 	int	map_grid_y;
 
+	if (y < 0)
+		y = 0;
+	if (x < 0)
+		x = 0;
 	if (x < 0 || x > data->list->win_width || y < 0 || y > data->list->win_height)
 		error("Error\n");
 	map_grid_x = floor(x / TILE_SIZE);
 	map_grid_y = floor(y / TILE_SIZE);
-
-
-	// printf("%c\n", data->grid[27][30]);
-	
-	// printf("rows: %d,cols: %d\n", data->list->num_row, data->list->num_col);
-	if (map_grid_x < 0 || map_grid_x >= data->list->num_col || map_grid_y < 0 || map_grid_y >= data->list->num_row)
-		error("Error: X or Y depasse la limite de map\n");
 	if (data->grid[map_grid_y][map_grid_x] == '1')
 		return '1';
 	else

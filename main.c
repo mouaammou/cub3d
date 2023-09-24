@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 13:26:21 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/24 16:35:02 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,10 @@ void	render_textures(t_cub3d *data)
 {
 	int i = 0;
 	int	x_in_map;
-	int	x_in_texture;
+	double	x_in_texture;
 	int	y = 0;
 	int color;
-	int	y_in_texture;
+	double	y_in_texture;
 	double	distance;
 	double	wall3d_height;
 	double	wall3d_distance;
@@ -143,7 +143,7 @@ void	render_textures(t_cub3d *data)
 		{
 			int	distance_from_top = y + (wall3d_height / 2) - (data->list->win_height / 2);
 			y_in_texture = (distance_from_top * texture.height) / wall3d_height;
-			color = texture.cast_texture[y_in_texture * texture.width + x_in_texture];
+			color = texture.cast_texture[(int)y_in_texture * texture.width + (int)x_in_texture];
 			put_color(data, i, y, color);
 			y++;
 		}

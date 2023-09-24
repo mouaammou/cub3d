@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 01:20:08 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 11:45:21 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/24 16:24:01 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,29 @@ t_cords	x_y_steps(int flag, t_cub3d *data, int i)
 			step.y *= -1;
 	}
 	return (step);
+}
+
+char	has_wall_ray(double x, double y, t_cub3d *data)
+{
+	int	map_grid_x;
+	int	map_grid_y;
+
+	if (x < 0 || x > data->list->win_width || y < 0 || y > data->list->win_height)
+		error("Error\n");
+	if (x > data->list->win_width)
+		map_grid_x--;
+	if (y > data->list->win_height)
+		map_grid_y--;
+	map_grid_x = floor(x / TILE_SIZE);
+	map_grid_y = floor(y / TILE_SIZE);
+	if (map_grid_x >= data->list->num_col)
+		map_grid_x--;
+	if (map_grid_y >= data->list->num_row)
+		map_grid_y--;
+	if (data->grid[map_grid_y][map_grid_x] == '1')
+		return '1';
+	else
+		return '0';
 }
 
 t_cords	horizontal_increment(t_cub3d *data, int *found_hit, t_cords step, int i)
