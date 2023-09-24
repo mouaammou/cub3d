@@ -3,55 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 08:19:25 by mouaammo          #+#    #+#             */
-/*   Updated: 2022/10/24 18:22:17 by mouaammo         ###   ########.fr       */
+/*   Created: 2023/09/08 01:06:05 by rennacir          #+#    #+#             */
+/*   Updated: 2023/09/23 13:23:30 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	ft_isspace(char c)
+#include "../include/cub3d.h"
+
+static long	count_nbr(const char *str, long nbr)
 {
-	if (c == 32 || (c >= 9 && c <= 13))
-		return (1);
-	return (0);
+	while (*str >= '0' && *str <= '9')
+	{
+		nbr = nbr * 10 + (*str - 48);
+		str++;
+	}
+	return (nbr);
 }
 
-static int	atoi_counter(const char *str, int i, int sign)
+long	ft_atoi(const char *str)
 {
-	long	result;
-	long	max;
-	long	min;
+	long	nbr;
 
-	max = 9223372036854775807;
-	min = -9223372036854775807;
-	result = 0;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = (str[i++] - '0') + result * 10;
-	}
-	if (result > max && sign == -1)
-		return (0);
-	else if (result < min && sign == 1)
-		return (-1);
-	return (result * sign);
-}
-
-int	ft_atoi(const char *str)
-{
-	int		i;
-	int		sign;
-
-	i = 0;
-	sign = 1;
-	while (ft_isspace(str[i]))
-		i++;
-	if (str[i] == '-')
-	{
-		sign = -1;
-		i++;
-	}
-	else if (str[i] == '+')
-		i++;
-	return (atoi_counter(str, i, sign));
+	nbr = 0;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '+')
+		str++;
+	nbr = count_nbr(str, nbr);
+	return (nbr);
 }

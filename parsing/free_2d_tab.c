@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   free_2d_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 20:00:34 by mouaammo          #+#    #+#             */
-/*   Updated: 2022/10/27 14:49:51 by mouaammo         ###   ########.fr       */
+/*   Created: 2023/09/07 13:13:39 by rennacir          #+#    #+#             */
+/*   Updated: 2023/09/23 14:22:43 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/cub3d.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	free_2d_tab(char **tab)
 {
-	char	*str;
-	char	*dest;
-	size_t	i;
+	int	i;
 
-	if (!dst && !src)
-		return (NULL);
-	str = (char *)src;
-	dest = (char *)dst;
 	i = 0;
-	while (i < n)
+	while (tab[i])
 	{
-		dest[i] = str[i];
+		free(tab[i]);
 		i++;
 	}
-	return (dst);
+	free(tab);
 }

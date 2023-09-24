@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 01:20:08 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/22 12:29:53 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/24 00:40:53 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ t_cords	horizontal_increment(t_cub3d *data, int *found_hit, t_cords step, int i)
 	t_cords	wall_hit;
 	t_cords	check;
 
-	while (isInsideMap(data->pos.x, data->pos.y))
+	while (isInsideMap(data, data->pos.x, data->pos.y))
 	{
 		check.x = data->pos.x;
 		check.y = data->pos.y;
 		if (isRayFacingUp(data->myray[i].ray_angle))
 			check.y = data->pos.y - EPSILON;
-		if (hasWallAt(check.x, check.y, data))
+		if (hasWallAt(check.x, check.y, data) == '1')
 		{
 			wall_hit.x = data->pos.x;
 			wall_hit.y = data->pos.y;
@@ -90,14 +90,14 @@ t_cords	vertical_increment(t_cub3d *data, int *found_hit, t_cords result, int i)
 {
 	t_cords	wall_hit;
 	t_cords	check;
-	
-	while (isInsideMap(data->pos.x, data->pos.y))
+
+	while (isInsideMap(data, data->pos.x, data->pos.y))
 	{
 		check.x = data->pos.x;
 		check.y = data->pos.y;
 		if (isRayFacingLeft(data->myray[i].ray_angle))
 			check.x = data->pos.x - EPSILON;
-		if (hasWallAt(check.x, check.y, data))
+		if (hasWallAt(check.x, check.y, data) == '1')
 		{
 			wall_hit.x = data->pos.x;
 			wall_hit.y = data->pos.y;
@@ -160,10 +160,9 @@ void	render_rays(t_cub3d *data)
 	int		i;
 	t_cords	p0;
 	t_cords	p1;
-
 	ray_angle = data->myplayer.rotation_angle - (FOV_ANGLE / 2);
 	i = 0;
-	while (i < NUM_RAYS)
+	while (i < data->num_ray)
 	{
 		castRay(ray_angle, data, i);
 		p0.x = SCALE_MAP * data->myplayer.x;
@@ -171,7 +170,7 @@ void	render_rays(t_cub3d *data)
 		p1.x = SCALE_MAP * data->myray[i].wall_hit_x;
 		p1.y = SCALE_MAP * data->myray[i].wall_hit_y;
 		draw_line(p0, p1, data, 0xffffff);
-		ray_angle += FOV_ANGLE / NUM_RAYS;
+		ray_angle += FOV_ANGLE / data->num_ray;
 		i++;
 	}
 }

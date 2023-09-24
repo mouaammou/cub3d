@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/23 02:36:59 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/24 02:27:20 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	initialize_player(t_cub3d *data)
 {
-	data->myplayer.x = WINDOW_WIDTH / 2;
-	data->myplayer.y = WINDOW_HEIGHT / 2;
+	data->myplayer.x = data->list->player_y * TILE_SIZE;
+	data->myplayer.y = data->list->player_x * TILE_SIZE;
 	data->myplayer.turn_direction = 0;
 	data->myplayer.walk_direction = 0;
 	data->myplayer.a_flag = 0;
@@ -53,10 +53,10 @@ void	update_position_player(t_cub3d *data)
 	data->myplayer.rotation_angle += data->myplayer.turn_direction * data->myplayer.rotation_speed;
 	move_step = data->myplayer.walk_direction * data->myplayer.move_speed;
 	update_x_y(data, &next_cords, move_step);
-	if (!hasWallAt(next_cords.x + 2, next_cords.y, data)
-		&& !hasWallAt(next_cords.x - 2, next_cords.y, data)
-		&& !hasWallAt(next_cords.x, next_cords.y + 2, data)
-		&& !hasWallAt(next_cords.x, next_cords.y - 2, data))
+	if (hasWallAt(next_cords.x + 3, next_cords.y, data) == '0'
+		&& hasWallAt(next_cords.x - 3, next_cords.y, data) == '0'
+		&& hasWallAt(next_cords.x, next_cords.y + 3, data) == '0'
+		&& hasWallAt(next_cords.x, next_cords.y - 3, data) == '0')
 	{
 		data->myplayer.x = next_cords.x;
 		data->myplayer.y = next_cords.y;
@@ -105,8 +105,8 @@ void	render_player(t_cub3d *data)
 
 	x = data->myplayer.x;
 	y = data->myplayer.y;
-	if (hasWallAt(x, y, data) == 0)
-		put_color_map(data->frame_map, x, y, 0xFF0000);
+	if (hasWallAt(x, y, data) == '0')
+		put_color_map(data, x, y, 0xFF0000);
 }
 
 void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color)
@@ -127,7 +127,7 @@ void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color)
 	i = 0;
 	while (i <= steps)
 	{
-		put_color_map(data->frame_map, p0.x, p0.y, color);
+		put_color_map(data, p0.x, p0.y, color);
 		p0.x += inc.x;
 		p0.y += inc.y;
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/23 13:01:59 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/24 01:45:14 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,14 @@
 # include <mlx.h>
 # include <limits.h>
 # include <float.h>
-# include "../libft/libft.h"
+# include <sys/types.h>
+# include <fcntl.h>
+# include <string.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4096
+# endif
+
 
 #define FOV_ANGLE (60 * (M_PI / 180))
 #define EPSILON 1
@@ -102,6 +109,23 @@ typedef struct x
 	double y;
 }t_cords;
 
+typedef struct s_list
+{
+	char			**map;
+	char			*NO;
+	char			*WE;
+	char			*EA;
+	char			*SO;
+	int				F;
+	int				C;
+	int				num_col;
+	int				num_row;
+	int				win_width;
+	int				win_height;
+	int				player_x;
+	int				player_y;
+}t_list;
+
 typedef struct cub3d
 {
 	void			*mlx;
@@ -110,22 +134,23 @@ typedef struct cub3d
 	void			*map_img;
 	unsigned int	*frame;
 	unsigned int	*frame_map;
-	int			grid[MAP_NUM_ROWS][MAP_NUM_COLS];
+	char			**grid;
 	double		scale_factor;
 	t_player	myplayer;
-	t_ray		myray[NUM_RAYS];
+	t_ray		*myray;
 	t_cords		pos;
+	int			num_ray;
+	int			wall_strip_width;
 	t_texture	*texture;
+	t_list *list;
 }t_cub3d;
 
 //map.c functions
-int		hasWallAt(double x, double y, t_cub3d *data);
+char		hasWallAt(double x, double y, t_cub3d *data);
 void	render_map(t_cub3d *data);
 void	fill_my_map(t_cub3d *data);
-void	initialize_map(t_cub3d *data);
-void	put_color_map(unsigned int *frame, int x, int y, int color);
-
-void	right_left_move(t_cub3d *data);
+void	initialize_map(t_cub3d *data, t_list *list);
+void	put_color_map(t_cub3d *data, int x, int y, int color);
 
 // player functions in c
 void	initialize_player(t_cub3d *data);
@@ -142,7 +167,7 @@ void	color_sky(t_cub3d *data);
 void	color_floor(t_cub3d *data);
 
 //put color insted of put pixel
-void	put_color(unsigned int *frame, int x, int y, int color);
+void	put_color(t_cub3d *data, int x, int y, int color);
 double normalize_ray_angle(double angle);
 double	distanceBetweenPoints(double x1, double y1, double x2, double y2);
 
@@ -156,10 +181,30 @@ int		isRayFacingUp(double angle);
 int		isRayFacingRight(double angle);
 int		isRayFacingLeft(double angle);
 double	distanceBetweenPoints(double x1, double y1, double x2, double y2);
-int		isInsideMap(double x, double y);
+int		isInsideMap(t_cub3d *data, double x, double y);
 
 //render cube 3d projection
 void	render_cube_3d(t_cub3d *data);
 void	get_textures(t_cub3d *data);
+
+//libft
+long	ft_atoi(const char *str);
+void	ft_putstr_fd(char *s, int fd);
+char	**ft_split(char const *s, char c);
+int		ft_strcmp(const char *first, const char *second);
+size_t	ft_strlen(const char *str);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+int		is_white_space(char c);
+char	*ft_strjoin(char *s1, char *s2);
+int		ft_strchr(char *str, char c);
+char	*ft_strdup(char *s1);
+char	*get_next_line(int fd);
+void	error(char *str);
+void	free_2d_tab(char **tab);
+
+// parsing
+
+void	free_list(t_list *list);
+t_list	*parsing(int argc, char **argv);
 
 #endif

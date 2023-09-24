@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   is_white_space.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/21 17:33:24 by mouaammo          #+#    #+#             */
-/*   Updated: 2022/10/27 10:54:49 by mouaammo         ###   ########.fr       */
+/*   Created: 2023/09/04 17:43:01 by rennacir          #+#    #+#             */
+/*   Updated: 2023/09/23 13:23:57 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/cub3d.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void*))
+int	is_white_space(char c)
 {
-	t_list	*temp;
-
-	if (!lst)
-		return ;
-	while ((*lst))
-	{
-		if (del)
-			del((*lst)->content);
-		temp = *lst;
-		(*lst) = (*lst)->next;
-		free(temp);
-	}
-	*lst = NULL;
+	if (c == ' ' || c == '\t' || c == '\v' || c == '\f' || c == '\r')
+		return (1);
+	return (0);
 }
