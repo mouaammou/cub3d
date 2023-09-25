@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:58:50 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 19:32:29 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/25 19:58:07 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ void	render_textures(t_cub3d *data)
 		distance = data->myray[i].distance * cos(data->myray[i].ray_angle - data->myplayer.rotation_angle);
 		wall3d_distance = (WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2);
 		wall3d_height = (TILE_SIZE / distance) * wall3d_distance;
-
 		y = (WINDOW_HEIGHT / 2) - (wall3d_height / 2);
 		if (data->myray[i].was_hit_vertical)
 			x_in_map = (int)data->myray[i].wall_hit_y % TILE_SIZE;

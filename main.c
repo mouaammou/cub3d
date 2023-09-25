@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 19:12:29 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/25 20:05:38 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	render_img(t_cub3d *data)
 	get_imgs_data(data);
 	update_position_player(data);
 	render_map(data);
-	render_player(data);
+	// render_player(data);
 	render_rays(data);
 	render_textures(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0 , 0);

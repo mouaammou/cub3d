@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 19:13:48 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/25 20:06:14 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef enum screen_data
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
 	TILE_SIZE			= 2000,
-	MAP_SIZE			= 4
+	MAP_SIZE			= 10
 }t_window_data;
 
 typedef struct player
@@ -126,10 +126,10 @@ typedef struct s_list
 
 typedef struct minimap
 {
-	int	move;
-	int	angle;
-	int	px;
-	int	py;
+	double	ray_x;
+	double	ray_y;
+	int		px;
+	int		py;
 }t_minimap;
 
 typedef struct cub3d
@@ -159,6 +159,7 @@ void	fill_my_map(t_cub3d *data);
 void	initialize_map(t_cub3d *data, t_list *list);
 void	put_color_map(t_cub3d *data, int x, int y, int color);
 void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color);
+void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color);
 
 // player functions in c
 void	initialize_player(t_cub3d *data);
