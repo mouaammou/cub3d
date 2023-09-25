@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 19:59:01 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/25 20:22:10 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	initialize_player(t_cub3d *data)
 	data->myplayer.x = data->list->player_y * TILE_SIZE + (TILE_SIZE / 2);
 	data->myplayer.y = data->list->player_x * TILE_SIZE + (TILE_SIZE / 2);
 
-	data->map.px = data->list->player_y * MAP_SIZE + (MAP_SIZE / 2);
-	data->map.py = data->list->player_x * MAP_SIZE + (MAP_SIZE / 2);
+	data->map.px = data->list->player_y * data->map.size + (data->map.size / 2);
+	data->map.py = data->list->player_x * data->map.size + (data->map.size / 2);
 
 	data->myplayer.turn_direction = 0;
 	data->myplayer.walk_direction = 0;
@@ -89,8 +89,8 @@ void	update_position_player(t_cub3d *data)
 	{
 		data->myplayer.x = next_cords.x;
 		data->myplayer.y = next_cords.y;
-		data->map.px = data->myplayer.x / TILE_SIZE * MAP_SIZE;
-		data->map.py = data->myplayer.y / TILE_SIZE * MAP_SIZE;
+		data->map.px = data->myplayer.x / TILE_SIZE * data->map.size;
+		data->map.py = data->myplayer.y / TILE_SIZE * data->map.size;
 	}
 }
 

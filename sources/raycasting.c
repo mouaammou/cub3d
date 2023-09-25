@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 01:20:08 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 20:03:59 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/25 20:22:10 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,10 +193,10 @@ void	render_rays(t_cub3d *data)
 	while (i < data->num_ray)
 	{
 		casting(ray_angle, data, i);
-		p0.x = data->myplayer.x / TILE_SIZE * MAP_SIZE;
-		p0.y = data->myplayer.y / TILE_SIZE * MAP_SIZE;
-		p1.x = data->myray[i].wall_hit_x / TILE_SIZE * MAP_SIZE;
-		p1.y = data->myray[i].wall_hit_y / TILE_SIZE * MAP_SIZE;
+		p0.x = data->myplayer.x / TILE_SIZE * data->map.size;
+		p0.y = data->myplayer.y / TILE_SIZE * data->map.size;
+		p1.x = data->myray[i].wall_hit_x / TILE_SIZE * data->map.size;
+		p1.y = data->myray[i].wall_hit_y / TILE_SIZE * data->map.size;
 		
 		draw_line(p0, p1, data, 0xffffff);
 		

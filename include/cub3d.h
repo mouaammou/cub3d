@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 20:06:14 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/25 20:24:27 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef enum screen_data
 	A_KEY				= 0,
 	D_KEY				= 2,
 	ON_KEYDOWN			= 2,
-	WINDOW_HEIGHT		= 1100,
-	WINDOW_WIDTH		= 2000,
+	WINDOW_HEIGHT		= 1200,
+	WINDOW_WIDTH		= 2400,
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
 	TILE_SIZE			= 2000,
@@ -126,10 +126,9 @@ typedef struct s_list
 
 typedef struct minimap
 {
-	double	ray_x;
-	double	ray_y;
 	int		px;
 	int		py;
+	int		size;
 }t_minimap;
 
 typedef struct cub3d
