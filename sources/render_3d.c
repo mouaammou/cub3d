@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_3d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:58:50 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 19:11:05 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/25 19:32:29 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ void	get_textures(t_cub3d *data)
 		ft_putstr_fd("Error\n", 2);
 		return ;
 	}
-	data->texture[0].tex = mlx_xpm_file_to_image(data->mlx, "textures/01.xpm", &data->texture[0].width, &data->texture[0].height);
-	data->texture[1].tex = mlx_xpm_file_to_image(data->mlx, "textures/02.xpm", &data->texture[1].width, &data->texture[1].height);
-	data->texture[2].tex = mlx_xpm_file_to_image(data->mlx, "textures/03.xpm", &data->texture[2].width, &data->texture[2].height);
-	data->texture[3].tex = mlx_xpm_file_to_image(data->mlx, "textures/04.xpm", &data->texture[3].width, &data->texture[3].height);
+	data->texture[0].tex = mlx_xpm_file_to_image(data->mlx, "textures/1.xpm", &data->texture[0].width, &data->texture[0].height);
+	data->texture[1].tex = mlx_xpm_file_to_image(data->mlx, "textures/2.xpm", &data->texture[1].width, &data->texture[1].height);
+	data->texture[2].tex = mlx_xpm_file_to_image(data->mlx, "textures/3.xpm", &data->texture[2].width, &data->texture[2].height);
+	data->texture[3].tex = mlx_xpm_file_to_image(data->mlx, "textures/4.xpm", &data->texture[3].width, &data->texture[3].height);
 
 	if (!data->texture[0].tex || !data->texture[1].tex || !data->texture[2].tex || !data->texture[3].tex)
 	{
@@ -124,7 +124,7 @@ void	render_textures(t_cub3d *data)
 	color_floor(data);
 	t_texture	texture;
 	i = 0;
-	
+
 	while (i < data->num_ray)
 	{
 		texture = what_direction(data, i);
@@ -140,7 +140,7 @@ void	render_textures(t_cub3d *data)
 			x_in_map = (int)data->myray[i].wall_hit_x % TILE_SIZE;
 
 		x_in_texture = (double)(x_in_map * texture.width) / TILE_SIZE;
-		
+
 		while (y < wall3d_height + (WINDOW_HEIGHT / 2) - (wall3d_height / 2))
 		{
 			int	distance_from_top = y + (wall3d_height / 2) - (WINDOW_HEIGHT / 2);
