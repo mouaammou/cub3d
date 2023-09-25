@@ -1,7 +1,7 @@
-NO north
-EA east
-SO rida
-WE west
+NO textures/1.xpm
+SO textures/2.xpm
+EA textures/3.xpm
+WE textures/4.xpm
 F       150,110,12
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 01:20:08 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 20:22:10 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/25 21:23:18 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,17 +166,17 @@ void	casting(double ray_angle, t_cub3d *data, int i)
 
 	found_hit.x = 0;
 	found_hit.y = 0;
-	
+
 	data->myray[i].ray_angle = normalize_ray_angle(ray_angle);
-	
+
 	data->pos = x_y_intercept(1, data, i);
 	steps = x_y_steps(1, data, i);
 	horz_wall_hit = horizontal_increment(data, (int *)&found_hit.x, steps, i);
-	
+
 	data->pos =  x_y_intercept(2, data, i);
 	steps = x_y_steps(2, data, i);
 	vert_wall_hit = vertical_increment(data, (int *)&found_hit.y, steps, i);
-	
+
 	calcul_distance(vert_wall_hit, horz_wall_hit, found_hit, data, i);
 }
 
@@ -197,9 +197,8 @@ void	render_rays(t_cub3d *data)
 		p0.y = data->myplayer.y / TILE_SIZE * data->map.size;
 		p1.x = data->myray[i].wall_hit_x / TILE_SIZE * data->map.size;
 		p1.y = data->myray[i].wall_hit_y / TILE_SIZE * data->map.size;
-		
 		draw_line(p0, p1, data, 0xffffff);
-		
+
 		ray_angle += FOV_ANGLE / data->num_ray;
 		i++;
 	}

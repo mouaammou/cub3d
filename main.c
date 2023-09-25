@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 20:28:37 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/25 23:13:11 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	get_imgs_data(t_cub3d *data)
 	mlx_clear_window(data->mlx, data->win);
 
 	if (data->list->win_height > WINDOW_WIDTH * 50)
-		data->map.size = 4;
+		data->map.size = 3;
 	else
 		data->map.size = MAP_SIZE;
 
@@ -70,7 +70,7 @@ int	render_img(t_cub3d *data)
 	render_rays(data);
 	render_textures(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0 , 0);
-	mlx_put_image_to_window(data->mlx, data->win, data->map_img, 0 , 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->map_img, 0  , 0);
 	return (0);
 }
 
@@ -86,8 +86,7 @@ int main (int argc, char **argv)
 	data->map_img = NULL;
 	list = parsing(argc, argv);
 	initialize_map(data, list);
-	
-	printf("w: %d, h: %d\n", data->list->win_width, data->list->win_height);
+
 	mlx_hook(data->win, ON_KEYDOWN, 0, move_player, data);
 	mlx_hook(data->win, ON_KEYUP, 0, key_released, data);
 	mlx_hook(data->win, ON_DESTROY, 0, destroy_window, data);
