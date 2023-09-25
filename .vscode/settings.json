@@ -1,5 +1,7 @@
 {
 	"files.associations": {
+		"*.excalidraw": "json",
+		"*.excalidrawlib": "json",
 		"cub3d.h": "c",
 		"array": "c",
 		"iterator": "c",
@@ -9,6 +11,7 @@
 		"mlx42.h": "c",
 		"float.h": "c",
 		"chrono": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"algorithm": "c"
 	}
 }

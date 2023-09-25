@@ -3,23 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 14:46:24 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/24 19:54:13 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+double	return_rotation_angle(t_cub3d *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (data->list->map[i])
+	{
+		j = 0;
+		while (data->list->map[i][j])
+		{
+			if (data->list->map[i][j] == 'N')
+				return 1.5;
+			if (data->list->map[i][j] == 'S')
+				return 0.5;
+			if (data->list->map[i][j] == 'E')
+				return 0;
+			if (data->list->map[i][j] == 'W')
+				return 1;
+			j++;
+		}
+		i++;
+	}
+	return 4;
+}
+
 void	initialize_player(t_cub3d *data)
 {
-	data->myplayer.x = data->list->player_x * TILE_SIZE;
-	data->myplayer.y = data->list->player_y * TILE_SIZE;
+	data->myplayer.x = data->list->player_y * TILE_SIZE + (TILE_SIZE / 2);
+	data->myplayer.y = data->list->player_x * TILE_SIZE + (TILE_SIZE / 2);
 	data->myplayer.turn_direction = 0;
 	data->myplayer.walk_direction = 0;
 	data->myplayer.a_flag = 0;
-	data->myplayer.rotation_angle = M_PI / 2;
+	data->myplayer.rotation_angle = M_PI * return_rotation_angle(data);
 	data->myplayer.move_speed = 4;
 	data->myplayer.rotation_speed = 3 * (M_PI / 180);
 }

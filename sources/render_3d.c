@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:58:50 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 02:48:46 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/24 23:01:43 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	color_sky(t_cub3d *data)
 	while (i < data->num_ray)
 	{
 		int a = 0;
-		while (a < data->list->win_height / 2)
+		while (a < WINDOW_HEIGHT / 2)
 		{
 			put_color(data, i * data->wall_strip_width, a, data->list->C);
 			a++;
@@ -33,9 +33,9 @@ void	color_floor(t_cub3d *data)
 	while (i < data->num_ray)
 	{
 		int a = 0;
-		while (a < data->list->win_height / 2)
+		while (a < WINDOW_HEIGHT / 2)
 		{
-			put_color(data, i * data->wall_strip_width, a + data->list->win_height / 2, data->list->F);
+			put_color(data, i * data->wall_strip_width, a + WINDOW_HEIGHT / 2, data->list->F);
 			a++;
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 16:29:44 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/25 09:04:31 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	initialize_map(t_cub3d *data, t_list *list)
 {
 	data->mlx = mlx_init();
 	data->list = list;
-	data->win = mlx_new_window(data->mlx, data->list->win_width, data->list->win_height, "cub3d");
+	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
 	data->wall_strip_width = 1;
-	data->num_ray = data->list->win_width / data->wall_strip_width;
+	data->num_ray = WINDOW_WIDTH / data->wall_strip_width;
 	data->myray = malloc (sizeof(t_ray) * data->num_ray);
 	if (!data->myray)
 		return ;
@@ -41,12 +41,6 @@ void	fill_my_map(t_cub3d *data)
 		data->grid[i] = ft_strdup(data->list->map[i]);
 	}
 	data->grid[i] = NULL;
-	i = 0;
-	while (data->grid[i])
-	{
-		printf("[%s]\n", data->grid[i]);
-		i++;
-	}
 }
 
 char	has_wall(double x, double y, t_cub3d *data)
@@ -58,10 +52,15 @@ char	has_wall(double x, double y, t_cub3d *data)
 		y = 0;
 	if (x < 0)
 		x = 0;
-	if (x < 0 || x > data->list->win_width || y < 0 || y > data->list->win_height)
-		error("Error\n");
+	if ( x > data->list->win_width || y > data->list->win_height)
+		error("Error****\n");
 	map_grid_x = floor(x / TILE_SIZE);
 	map_grid_y = floor(y / TILE_SIZE);
+
+	if (map_grid_x >= data->list->num_col)
+		map_grid_x = data->list->num_col - 1;
+	if (map_grid_y >= data->list->num_row)
+		map_grid_y = data->list->num_row - 1;
 	if (data->grid[map_grid_y][map_grid_x] == '1')
 		return '1';
 	else
