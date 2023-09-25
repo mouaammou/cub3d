@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 19:54:13 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/25 19:08:05 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,16 @@ void	initialize_player(t_cub3d *data)
 {
 	data->myplayer.x = data->list->player_y * TILE_SIZE + (TILE_SIZE / 2);
 	data->myplayer.y = data->list->player_x * TILE_SIZE + (TILE_SIZE / 2);
+
+	data->map.px = data->list->player_y * MAP_SIZE + (MAP_SIZE / 2);
+	data->map.py = data->list->player_x * MAP_SIZE + (MAP_SIZE / 2);
+
 	data->myplayer.turn_direction = 0;
 	data->myplayer.walk_direction = 0;
 	data->myplayer.a_flag = 0;
 	data->myplayer.rotation_angle = M_PI * return_rotation_angle(data);
-	data->myplayer.move_speed = 4;
-	data->myplayer.rotation_speed = 3 * (M_PI / 180);
+	data->myplayer.move_speed = TILE_SIZE / 10;
+	data->myplayer.rotation_speed = 2 * (M_PI / 180);
 }
 
 void	update_x_y(t_cub3d *data, t_cords *next, double move_step)
@@ -85,6 +89,8 @@ void	update_position_player(t_cub3d *data)
 	{
 		data->myplayer.x = next_cords.x;
 		data->myplayer.y = next_cords.y;
+		data->map.px = data->myplayer.x / TILE_SIZE * MAP_SIZE;
+		data->map.py = data->myplayer.y / TILE_SIZE * MAP_SIZE;
 	}
 }
 
@@ -128,33 +134,7 @@ void	render_player(t_cub3d *data)
 	double	x;
 	double	y;
 
-	x = data->myplayer.x;
-	y = data->myplayer.y;
-	if (has_wall(x, y, data) == '0')
-		put_color_map(data, x, y, 0xFF0000);
-}
-
-void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color)
-{
-	t_cords		delta;
-	t_cords		inc;
-	double		steps;
-	int			i;
-
-	delta.x = p1.x - p0.x;
-	delta.y = p1.y - p0.y;
-	if (fabs(delta.x) > fabs(delta.y))
-		steps = fabs(delta.x);
-	else
-		steps = fabs(delta.y);
-	inc.x = (delta.x / steps);
-	inc.y = (delta.y / steps);
-	i = 0;
-	while (i <= steps)
-	{
-		put_color_map(data, p0.x, p0.y, color);
-		p0.x += inc.x;
-		p0.y += inc.y;
-		i++;
-	}
+	x = data->map.px;
+	y = data->map.py;
+	draw_case(data, x, y, 0xFF0000);
 }

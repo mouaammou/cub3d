@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 01:20:08 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 16:24:01 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:38:21 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,16 +193,7 @@ void	render_rays(t_cub3d *data)
 	while (i < data->num_ray)
 	{
 		casting(ray_angle, data, i);
-
-		p0.x = SCALE_MAP * data->myplayer.x;
-		p0.y = SCALE_MAP * data->myplayer.y;
-		p1.x = SCALE_MAP * data->myray[i].wall_hit_x;
-		p1.y = SCALE_MAP * data->myray[i].wall_hit_y;
-		
-		draw_line(p0, p1, data, 0xffffff);
-
 		ray_angle += FOV_ANGLE / data->num_ray;
-		
 		i++;
 	}
 }

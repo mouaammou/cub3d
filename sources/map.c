@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 09:04:31 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:39:27 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
 	int	j;
 
 	i = 0;
-	while (i < SCALE_MAP * TILE_SIZE)
+	while (i <MAP_SIZE)
 	{
 		j = 0;
-		while (j < SCALE_MAP * TILE_SIZE)
+		while (j <MAP_SIZE)
 		{
-			put_color_map(data, (tile_x + i), tile_y + j, tile_color);
+				put_color_map(data, (tile_x + i), tile_y + j, tile_color);
 			j++;
 		}
 		i++;
@@ -95,8 +95,8 @@ void	render_map(t_cub3d *data)
 		j = 0;
 		while (j < data->list->num_col)
 		{
-			int tile_x = j * TILE_SIZE * SCALE_MAP;
-			int tile_y = i * TILE_SIZE * SCALE_MAP;
+			int tile_x = j * MAP_SIZE;
+			int tile_y = i * MAP_SIZE;
 			int tile_color =  0x222222;
 
 			if (data->grid[i][j] == '1')

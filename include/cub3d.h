@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/24 21:32:07 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/25 19:13:48 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ typedef enum screen_data
 	A_KEY				= 0,
 	D_KEY				= 2,
 	ON_KEYDOWN			= 2,
-	WINDOW_HEIGHT		= 720,
-	WINDOW_WIDTH		= 1080,
+	WINDOW_HEIGHT		= 1100,
+	WINDOW_WIDTH		= 2000,
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 40,
+	TILE_SIZE			= 2000,
+	MAP_SIZE			= 4
 }t_window_data;
 
 typedef struct player
@@ -94,6 +95,7 @@ typedef struct ray
 typedef struct texture
 {
 	uint32_t *cast_texture;
+	char	*tex;
 	int		width;
 	int		height;
 }t_texture;
@@ -122,6 +124,14 @@ typedef struct s_list
 	int				player_y;
 }t_list;
 
+typedef struct minimap
+{
+	int	move;
+	int	angle;
+	int	px;
+	int	py;
+}t_minimap;
+
 typedef struct cub3d
 {
 	void			*mlx;
@@ -131,14 +141,15 @@ typedef struct cub3d
 	unsigned int	*frame;
 	unsigned int	*frame_map;
 	char			**grid;
-	double		scale_factor;
-	t_player	myplayer;
-	t_ray		*myray;
-	t_cords		pos;
-	int			num_ray;
-	int			wall_strip_width;
-	t_texture	*texture;
-	t_list *list;
+	double			scale_factor;
+	t_player		myplayer;
+	t_ray			*myray;
+	t_cords			pos;
+	int				num_ray;
+	int				wall_strip_width;
+	t_texture		*texture;
+	t_list			*list;
+	t_minimap		map;
 }t_cub3d;
 
 //map.c functions
@@ -147,6 +158,7 @@ void	render_map(t_cub3d *data);
 void	fill_my_map(t_cub3d *data);
 void	initialize_map(t_cub3d *data, t_list *list);
 void	put_color_map(t_cub3d *data, int x, int y, int color);
+void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color);
 
 // player functions in c
 void	initialize_player(t_cub3d *data);
@@ -157,6 +169,7 @@ void	update_position_player(t_cub3d *data);
 int		key_released(int key_code, t_cub3d *data);
 
 //ray.c functions
+void	render_textures(t_cub3d *data);
 void	render_rays(t_cub3d *data);
 void	ray_casting(t_cub3d *data, int i);
 void	color_sky(t_cub3d *data);
