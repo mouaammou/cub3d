@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:48:00 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 15:25:57 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:36:42 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4096
-# endif
-
 
 #define FOV_ANGLE (60 * (M_PI / 180))
 #define EPSILON 1e-9
@@ -196,7 +191,6 @@ double	distance(double x1, double y1, double x2, double y2);
 int		is_in_map(t_cub3d *data, double x, double y);
 
 //render cube 3d projection
-void	render_cube_3d(t_cub3d *data);
 void	get_textures(t_cub3d *data);
 
 //libft
@@ -215,7 +209,32 @@ void	free_2d_tab(char **tab);
 
 // parsing
 
-void	free_list(t_list **list);
 t_list	*parsing(int argc, char **argv);
-
+void	free_list(t_list **list);
+void	check_number_of_args(int argc);
+void	check_extension(char **argv);
+char 	**read_map(char **argv, int count);
+int		count_lines(int fd);
+char	**get_map(char **argv);
+t_list	*create_and_initialize_list();
+int		line_of_white_spaces(char *s);
+char	*get_value_of_elmnts(char *line, int j);
+void	check_is_digit(char *s);
+void	check_f_and_c(char *value);
+void	add_value(t_list *list, char *value, int flag);
+int		create_trgb(int t, int r, int g, int b);
+int		get_rgb_value(char *value);
+void	check_elem_and_value(char *line, char *sub, int j, t_list *list);
+int		count_max_size(char **map);
+char	*al_spaces(int len);
+char	**join_line_with_spaces(char **map, int count);
+void	check_first_and_last_line(char *s);
+void	check_elements(char **m);
+int		check_four_sides(char **map, int i, int j);
+void	check_middle_lines(char **m);
+void	pars_map(t_list *list, char **map);
+void	fill_struct(char **argv, t_list *list);
+int		*return_dim(char **map);
+void	continue_filling_struct(t_list *list);
+void	free_data(t_cub3d **data);
 #endif

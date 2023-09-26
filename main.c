@@ -6,17 +6,11 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 15:57:30 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:24:46 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/cub3d.h"
-
-void	error(	char *str)
-{
-	ft_putstr_fd(str, 2);
-	exit(1);
-}
 
 int destroy_window(void *param)
 {
@@ -76,11 +70,6 @@ int	render_img(t_cub3d *data)
 void func()
 {
 	system("leaks cub3d");
-}
-
-void	free_data(t_cub3d **data)
-{
-	free_2d_tab((*data)->grid);
 }
 
 int main (int argc, char **argv)
