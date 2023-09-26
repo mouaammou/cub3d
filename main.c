@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:34:38 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 16:34:40 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:36:20 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int main (int argc, char **argv)
 	t_cub3d	*data;
 	t_cub3d	*data1 = malloc (sizeof (t_cub3d));
 	t_list	*list;
-	atexit(func);
+	// atexit(func);
 	data = malloc (sizeof (t_cub3d));
 	if (!data)
 		return (1);
