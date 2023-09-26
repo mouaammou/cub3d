@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 20:49:26 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:17:01 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ void	free_2d_tab(char **tab);
 
 // parsing
 
-void	free_list(t_list *list);
+void	free_list(t_list **list);
 t_list	*parsing(int argc, char **argv);
 
 #endif

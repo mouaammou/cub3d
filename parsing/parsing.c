@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 22:57:16 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/25 23:13:02 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:16:48 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,7 +396,7 @@ void	check_middle_lines(char **m)
 	while (m[i] && line_of_white_spaces(m[i]))
 		i++;
 	if (m[i])
-		error("an error occured considering map\n");
+		error("Error : considering map\n");
 }
 
 
@@ -507,14 +507,14 @@ void	continue_filling_struct(t_list *list)
 	list->player_y = dem[1];
 }
 
-void	free_list(t_list *list)
+void	free_list(t_list **list)
 {
-	free_2d_tab(list->map);
-	free(list->NO);
-	free(list->WE);
-	free(list->EA);
-	free(list->SO);
-	free(list);
+	free_2d_tab((*list)->map);
+	free((*list)->NO);
+	free((*list)->WE);
+	free((*list)->EA);
+	free((*list)->SO);
+	free((*list));
 }
 
 t_list	*parsing(int argc, char **argv)

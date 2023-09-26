@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 23:13:11 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:35:27 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,27 @@ int	render_img(t_cub3d *data)
 	return (0);
 }
 
+// void	func()
+// {
+// 	system("leaks cub3d");
+// }
+
+
+// void	free_cub(t_cub3d *data)
+// {
+// 	free_2d_tab(data->grid);
+// 	free(data->img);
+// 	free(data->map_img);
+// 	free(data->mlx);
+// 	free(data->win);
+// }
+
+
 int main (int argc, char **argv)
 {
 	t_cub3d	*data;
 	t_list	*list;
-
+	// atexit(func);
 	data = malloc (sizeof (t_cub3d));
 	if (!data)
 		return (1);
@@ -93,5 +109,7 @@ int main (int argc, char **argv)
 	get_textures(data);
 	mlx_loop_hook(data->mlx, render_img, data);
 	mlx_loop(data->mlx);
+	// free_list(&list);
+	// free_cub(data);
 	return (0);
 }
