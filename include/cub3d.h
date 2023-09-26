@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:48:00 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 17:36:42 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:51:15 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,13 @@
 # include <math.h>
 # include <mlx.h>
 # include <limits.h>
-# include <float.h>
 # include <sys/types.h>
 # include <fcntl.h>
 # include <string.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 
-#define FOV_ANGLE (60 * (M_PI / 180))
-#define EPSILON 1e-9
-#define SCALE_MAP 0.2
+# define FOV_ANGLE 1.0471975512
+# define EPSILON 1e-9
+# define SCALE_MAP 0.2
 
 typedef enum screen_data
 {
@@ -43,8 +40,8 @@ typedef enum screen_data
 	WINDOW_WIDTH		= 2400,
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 1500,
-	MAP_SIZE			= 7
+	TILE_SIZE			= 1000,
+	MAP_SIZE			= 6
 }t_window_data;
 
 typedef struct player
@@ -57,7 +54,6 @@ typedef struct player
 	double			x;
 	double			y;
 	double			rotation_speed;
-
 }t_player;
 
 typedef struct s_ray_casting
@@ -91,28 +87,33 @@ typedef struct ray
 
 typedef struct texture
 {
-	uint32_t *cast_texture;
-	char	*tex;
-	int		width;
-	int		height;
+	uint32_t	*cast_texture;
+	char		*tex;
+	int			width;
+	int			height;
 }t_texture;
-
 
 typedef struct x
 {
-	double x;
-	double y;
+	double	x;
+	double	y;
 }t_cords;
+
+typedef struct hit
+{
+	t_cords	horz;
+	t_cords	vert;
+}t_hit;
 
 typedef struct s_list
 {
 	char			**map;
-	char			*NO;
-	char			*WE;
-	char			*EA;
-	char			*SO;
-	int				F;
-	int				C;
+	char			*no;
+	char			*we;
+	char			*ea;
+	char			*so;
+	int				f;
+	int				c;
 	int				num_col;
 	int				num_row;
 	int				win_width;
@@ -149,19 +150,25 @@ typedef struct cub3d
 }t_cub3d;
 
 //map.c functions
+t_cords	horizontal_increment(t_cub3d *data, int *found_hit,
+			t_cords step, int i);
+t_cords	vertical_increment(t_cub3d *data, int *found_hit,
+			t_cords result, int i);
 char	has_wall(double x, double y, t_cub3d *data);
+void	free_data(t_cub3d **data);
 void	render_map(t_cub3d *data);
 void	fill_my_map(t_cub3d *data);
 void	initialize_map(t_cub3d *data, t_list *list);
 void	put_color_map(t_cub3d *data, int x, int y, int color);
 void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color);
 void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color);
+double	return_rotation_angle(t_cub3d *data);
+int		destroy_window(void *param);
 
 // player functions in c
 void	initialize_player(t_cub3d *data);
-void	render_player(t_cub3d *data);
 void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color);
-int		move_player(int keycode, t_cub3d *data);
+int		key_pressed(int key_code, t_cub3d *data);
 void	update_position_player(t_cub3d *data);
 int		key_released(int key_code, t_cub3d *data);
 
@@ -174,17 +181,17 @@ void	color_floor(t_cub3d *data);
 
 //put color insted of put pixel
 void	put_color(t_cub3d *data, int x, int y, int color);
-double normalize_ray_angle(double angle);
+double	normalize_ray_angle(double angle);
 double	distance(double x1, double y1, double x2, double y2);
 
 //test ray
-void casting(double rayAngle, t_cub3d *data, int i);
+void	casting(double rayAngle, t_cub3d *data, int i);
 
 //normalize angle
 double	normalize_ray_angle(double angle);
 int		is_ray_down(double angle);
 int		is_ray_up(double angle);
-int	count_lines(int fd);
+int		count_lines(int fd);
 int		is_ray_right(double angle);
 int		is_ray_left(double angle);
 double	distance(double x1, double y1, double x2, double y2);

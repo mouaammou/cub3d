@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:20:29 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 17:36:23 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:54:51 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,27 @@ void	add_value(t_list *list, char *value, int flag)
 {
 	if (flag == 1)
 	{
-		if (list->NO)
+		if (list->no)
 			error("Error : NO is duplicated\n");
-		list->NO = ft_strdup(value);
+		list->no = ft_strdup(value);
 	}
 	else if (flag == 2)
 	{
-		if (list->EA)
+		if (list->ea)
 			error("Error : EA is duplicated\n");
-		list->EA = ft_strdup(value);
+		list->ea = ft_strdup(value);
 	}
 	else if (flag == 3)
 	{
-		if (list->WE)
-			error("Error : WE is duplicated\n");
-		list->WE = ft_strdup(value);
+		if (list->we)
+			error("Error : we is duplicated\n");
+		list->we = ft_strdup(value);
 	}
 	else if (flag == 4)
 	{
-		if (list->SO)
-			error("Error : SO is duplicated\n");
-		list->SO = ft_strdup(value);
+		if (list->so)
+			error("Error : so is duplicated\n");
+		list->so = ft_strdup(value);
 	}
 }
 
@@ -75,12 +75,12 @@ void	check_elem_and_value(char *line, char *sub, int j, t_list *list)
 	else if (!ft_strcmp(sub, "F") && k < 6)
 	{
 		check_f_and_c(value);
-		list->F = get_rgb_value(value);
+		list->f = get_rgb_value(value);
 	}
-	else if (!ft_strcmp(sub, "C") && k < 6 && list->C == -1)
+	else if (!ft_strcmp(sub, "C") && k < 6 && list->c == -1)
 	{
 		check_f_and_c(value);
-		list->C = get_rgb_value(value);
+		list->c = get_rgb_value(value);
 	}
 	free(value);
 	k++;

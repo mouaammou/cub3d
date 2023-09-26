@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:23:42 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 18:35:20 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:55:43 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,11 @@
 void	free_list(t_list **list)
 {
 	free_2d_tab((*list)->map);
-	free((*list)->NO);
-	free((*list)->WE);
-	free((*list)->EA);
-	free((*list)->SO);
+	free((*list)->no);
+	free((*list)->we);
+	free((*list)->ea);
+	free((*list)->so);
 	free((*list));
-}
-
-void	error(	char *str)
-{
-	ft_putstr_fd(str, 2);
-	exit(1);
-}
-
-void	free_data(t_cub3d **data)
-{
-	free_2d_tab((*data)->grid);
 }
 
 int	*return_dim(char **map)

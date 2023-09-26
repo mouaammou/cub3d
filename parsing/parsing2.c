@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:16:37 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 17:34:48 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:54:05 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ t_list	*create_and_initialize_list(void)
 	if (!list)
 		return (NULL);
 	list->map = NULL;
-	list->NO = NULL;
-	list->SO = NULL;
-	list->EA = NULL;
-	list->WE = NULL;
-	list->C = -1;
-	list->F = -1;
+	list->no = NULL;
+	list->so = NULL;
+	list->ea = NULL;
+	list->we = NULL;
+	list->c = -1;
+	list->f = -1;
 	list->num_col = -1;
 	list->num_row = -1;
 	list->win_height = -1;

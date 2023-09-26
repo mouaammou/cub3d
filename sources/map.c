@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 15:46:19 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:54:53 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,18 @@ char	has_wall(double x, double y, t_cub3d *data)
 		y = 0;
 	if (x < 0)
 		x = 0;
-	if ( x > data->list->win_width || y > data->list->win_height)
+	if (x > data->list->win_width || y > data->list->win_height)
 		error("Error****\n");
 	map_grid_x = floor(x / TILE_SIZE);
 	map_grid_y = floor(y / TILE_SIZE);
-
 	if (map_grid_x >= data->list->num_col)
 		map_grid_x = data->list->num_col - 1;
 	if (map_grid_y >= data->list->num_row)
 		map_grid_y = data->list->num_row - 1;
 	if (data->grid[map_grid_y][map_grid_x] == '1')
-		return '1';
+		return ('1');
 	else
-		return '0';
+		return ('0');
 }
 
 void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
@@ -73,12 +72,12 @@ void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
 	int	j;
 
 	i = 0;
-	while (i <data->map.size)
+	while (i < data->map.size)
 	{
 		j = 0;
-		while (j <data->map.size)
+		while (j < data->map.size)
 		{
-				put_color_map(data, (tile_x + i), tile_y + j, tile_color);
+			put_color_map(data, (tile_x + i), tile_y + j, tile_color);
 			j++;
 		}
 		i++;
@@ -87,7 +86,11 @@ void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
 
 void	render_map(t_cub3d *data)
 {
-	int i, j;
+	int	i;
+	int	j;
+	int	tile_x;
+	int	tile_y;
+	int	tile_color;
 
 	i = 0;
 	while (i < data->list->num_row)
@@ -95,10 +98,9 @@ void	render_map(t_cub3d *data)
 		j = 0;
 		while (j < data->list->num_col)
 		{
-			int tile_x = j * data->map.size;
-			int tile_y = i * data->map.size;
-			int tile_color = 0xc0c0c0;
-
+			tile_x = j * data->map.size;
+			tile_y = i * data->map.size;
+			tile_color = 0xc0c0c0;
 			if (data->grid[i][j] == '1')
 				tile_color = 0x808080;
 			draw_case(data, tile_x, tile_y, tile_color);

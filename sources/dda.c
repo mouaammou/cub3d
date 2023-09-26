@@ -6,11 +6,17 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:58:34 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 17:58:50 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:29:51 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+int destroy_window(void *param)
+{
+	exit(0);
+	return (0);
+}
 
 void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color)
 {
