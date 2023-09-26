@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 11:48:46 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:59:01 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	initialize_player(t_cub3d *data)
 	data->myplayer.walk_direction = 0;
 	data->myplayer.a_flag = 0;
 	data->myplayer.rotation_angle = M_PI * return_rotation_angle(data);
-	data->myplayer.move_speed = TILE_SIZE / 8;
+	data->myplayer.move_speed = TILE_SIZE / 10;
 	data->myplayer.rotation_speed = 2 * (M_PI / 180);
 }
 

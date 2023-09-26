@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 11:47:26 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 12:03:41 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	get_imgs_data(t_cub3d *data)
 	mlx_clear_window(data->mlx, data->win);
 
 	if (data->list->win_height > WINDOW_WIDTH * 50)
-		data->map.size = 3;
+		data->map.size = 4;
 	else
 		data->map.size = MAP_SIZE;
 

@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:48:00 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 11:48:03 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 12:02:57 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef enum screen_data
 	WINDOW_WIDTH		= 2400,
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 2000,
+	TILE_SIZE			= 1500,
 	MAP_SIZE			= 7
 }t_window_data;
 
