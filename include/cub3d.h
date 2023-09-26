@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 13:38:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 11:18:40 by mouaammo         ###   ########.fr       */
+/*   Created: 2023/09/26 11:48:00 by mouaammo          #+#    #+#             */
+/*   Updated: 2023/09/26 11:48:03 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef enum screen_data
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
 	TILE_SIZE			= 2000,
-	MAP_SIZE			= 10
+	MAP_SIZE			= 7
 }t_window_data;
 
 typedef struct player
@@ -213,7 +213,7 @@ void	free_2d_tab(char **tab);
 
 // parsing
 
-void	free_list(t_list *list);
+void	free_list(t_list **list);
 t_list	*parsing(int argc, char **argv);
 
 #endif

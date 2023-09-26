@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 11:29:16 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:48:46 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	initialize_player(t_cub3d *data)
 	data->myplayer.walk_direction = 0;
 	data->myplayer.a_flag = 0;
 	data->myplayer.rotation_angle = M_PI * return_rotation_angle(data);
-	data->myplayer.move_speed = TILE_SIZE / 10;
+	data->myplayer.move_speed = TILE_SIZE / 8;
 	data->myplayer.rotation_speed = 2 * (M_PI / 180);
 }
 
@@ -82,10 +82,10 @@ void	update_position_player(t_cub3d *data)
 	data->myplayer.rotation_angle += data->myplayer.turn_direction * data->myplayer.rotation_speed;
 	move_step = data->myplayer.walk_direction * data->myplayer.move_speed;
 	update_x_y(data, &next_cords, move_step);
-	if (has_wall(next_cords.x + TILE_SIZE / 10, next_cords.y, data) == '0'
-		&& has_wall(next_cords.x - TILE_SIZE / 10, next_cords.y, data) == '0'
-		&& has_wall(next_cords.x, next_cords.y + TILE_SIZE / 10, data) == '0'
-		&& has_wall(next_cords.x, next_cords.y - TILE_SIZE / 10, data) == '0')
+	if (has_wall(next_cords.x + TILE_SIZE / 6, next_cords.y, data) == '0'
+		&& has_wall(next_cords.x - TILE_SIZE / 6, next_cords.y, data) == '0'
+		&& has_wall(next_cords.x, next_cords.y + TILE_SIZE / 6, data) == '0'
+		&& has_wall(next_cords.x, next_cords.y - TILE_SIZE / 6, data) == '0')
 	{
 		data->myplayer.x = next_cords.x;
 		data->myplayer.y = next_cords.y;
