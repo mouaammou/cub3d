@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:07 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 20:22:10 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:29:16 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,14 +127,4 @@ int	move_player(int keycode, t_cub3d *data)
 		exit(0);
 	key_pressed(data, keycode);
 	return (0);
-}
-
-void	render_player(t_cub3d *data)
-{
-	double	x;
-	double	y;
-
-	x = data->map.px;
-	y = data->map.py;
-	draw_case(data, x, y, 0xFF0000);
 }

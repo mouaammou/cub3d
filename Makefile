@@ -6,7 +6,7 @@
 #    By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 12:34:07 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/25 20:04:46 by mouaammo         ###   ########.fr        #
+#    Updated: 2023/09/26 11:31:56 by mouaammo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 # FLAGS 			= -Wall -Wextra -Werror
 NAME 			= cub3d
-CC				= cc -O3 # -g -fsanitize=address
+CC				= cc -O3 #-g -fsanitize=address
 RM				= rm -fr
 MLX				= -lmlx -framework OpenGL -framework AppKit
 LIBFT			= $(addprefix libft/, ft_atoi.c ft_putstr_fd.c ft_split.c ft_strcmp.c ft_strlen.c ft_substr.c is_white_space.c)
@@ -28,11 +28,11 @@ all: $(NAME)
 
 $(NAME): $(HEADER_FILES) $(OBJECT_FILES)
 	@$(CC) $(FLAGS) $(MLX) $(OBJECT_FILES) -o $(NAME)
-	@echo  $(NAME) "Created"
+	@printf "\n\033[1;36m ───────────── Done ──────────── \033[0m\n\n"
 
-%.o:%.c $(HEADER_FILES)
-	$(CC) $(FLAGS) -c $< -o $@
-
+%.o:%.c $(HEADER_FILES) Makefile
+	@$(CC) $(FLAGS) -c $< -o $@
+	@printf "\033[1;36m Compiling \033[0m $< \033[1;36m√\033[0m\n"
 clean:
 	@$(RM) $(OBJECT_FILES)
 

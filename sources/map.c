@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/25 20:22:10 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 11:17:06 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	render_map(t_cub3d *data)
 		{
 			int tile_x = j * data->map.size;
 			int tile_y = i * data->map.size;
-			int tile_color =  0x222222;
+			int tile_color =  0x000000;
 
 			if (data->grid[i][j] == '1')
 				tile_color = 0x2fff001;
