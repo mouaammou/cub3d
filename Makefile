@@ -5,10 +5,11 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/13 12:34:07 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/26 14:06:55 by mouaammo         ###   ########.fr        #
+#    Created: 2023/09/26 16:34:46 by mouaammo          #+#    #+#              #
+#    Updated: 2023/09/26 16:34:49 by mouaammo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 # gcc main.c MLX42/build/libmlx42.a -Iinclude -lglfw -L"/Users/mouaammo/.brew/opt/glfw/lib/"
 
@@ -27,7 +28,7 @@ OBJECT_FILES	= $(FILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(HEADER_FILES) $(OBJECT_FILES)
-	@$(CC) $(FLAGS) $(MLX) $(OBJECT_FILES) -o $(NAME)
+	@$(CC) $(FLAGS) $(MLX) $(OBJECT_FILES) -o $(NAME) -lreadline
 	@printf "\n\033[1;36m ───────────── Done ──────────── \033[0m\n\n"
 
 %.o:%.c $(HEADER_FILES) Makefile

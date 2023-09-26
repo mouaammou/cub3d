@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/26 11:48:00 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 15:21:16 by mouaammo         ###   ########.fr       */
+/*   Created: 2023/09/26 16:34:56 by mouaammo          #+#    #+#             */
+/*   Updated: 2023/09/26 16:34:58 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <sys/types.h>
 # include <fcntl.h>
 # include <string.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
@@ -186,6 +188,7 @@ void casting(double rayAngle, t_cub3d *data, int i);
 double	normalize_ray_angle(double angle);
 int		is_ray_down(double angle);
 int		is_ray_up(double angle);
+int	count_lines(int fd);
 int		is_ray_right(double angle);
 int		is_ray_left(double angle);
 double	distance(double x1, double y1, double x2, double y2);
@@ -204,7 +207,6 @@ size_t	ft_strlen(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		is_white_space(char c);
 char	*ft_strjoin(char *s1, char *s2);
-int		ft_strchr(char *str, char c);
 char	*ft_strdup(char *s1);
 char	*get_next_line(int fd);
 void	error(char *str);

@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 15:58:18 by mouaammo         ###   ########.fr       */
+/*   Created: 2023/09/26 16:34:38 by mouaammo          #+#    #+#             */
+/*   Updated: 2023/09/26 16:34:40 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "include/cub3d.h"
 
@@ -75,11 +76,22 @@ int	render_img(t_cub3d *data)
 	return (0);
 }
 
+void func()
+{
+	system("leaks cub3d");
+}
+
+void	free_data(t_cub3d **data)
+{
+	free_2d_tab((*data)->grid);
+}
+
 int main (int argc, char **argv)
 {
 	t_cub3d	*data;
+	t_cub3d	*data1 = malloc (sizeof (t_cub3d));
 	t_list	*list;
-
+	atexit(func);
 	data = malloc (sizeof (t_cub3d));
 	if (!data)
 		return (1);
@@ -95,5 +107,7 @@ int main (int argc, char **argv)
 	get_textures(data);
 	mlx_loop_hook(data->mlx, render_img, data);
 	mlx_loop(data->mlx);
+	free_list(&list);
+	free_data(&data);
 	return (0);
 }

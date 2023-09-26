@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 22:57:16 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 11:16:48 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:45:53 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ char **read_map(char **argv, int count)
 	gnl = get_next_line(fd);
 	while(gnl)
 	{
-		map[i] = ft_strdup(gnl);
-		free(gnl);
+		map[i] = gnl;
 		i++;
 		gnl = get_next_line(fd);
 	}
@@ -56,7 +55,6 @@ int	count_lines(int fd)
 {
 	char	*gnl;
 	int		count;
-
 	count = 0;
 	gnl = get_next_line(fd);
 	while (gnl)
@@ -175,9 +173,9 @@ void	check_f_and_c(char *value)
 		check_is_digit(split[i]);
 		i++;
 	}
+	free_2d_tab(split);
 	if (i != 3)
 		error("Error : about F or C element\n");
-	free_2d_tab(split);
 }
 
 void	add_value(t_list *list, char *value, int flag)
@@ -459,7 +457,7 @@ void	fill_struct(char **argv, t_list *list)
 	while (g_map[i] && (!ft_strcmp(g_map[i], "") || line_of_white_spaces(g_map[i])))
 		i++;
 	pars_map(list, g_map + i);
-	free(g_map);
+	free_2d_tab(g_map);
 }
 
 int	*return_dim(char **map)
@@ -505,6 +503,7 @@ void	continue_filling_struct(t_list *list)
 	dem = return_dim(list->map);
 	list->player_x = dem[0];
 	list->player_y = dem[1];
+	free(dem);
 }
 
 void	free_list(t_list **list)
