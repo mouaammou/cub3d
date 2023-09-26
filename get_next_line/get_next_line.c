@@ -6,34 +6,35 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 16:35:11 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 15:44:31 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:23:36 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	int		i;
 	int		rd;
-	char	character;
-	char	*buffer;
+	char	c;
+	char	*buf;
 
 	i = 0;
 	rd = 0;
-	buffer = malloc(100000);
-	if (!buffer)
+	buf = malloc(100000);
+	if (!buf)
 		return (NULL);
-	while ((rd = read(fd, &character, 1)) > 0)
+	while (1)
 	{
-		if (character == '\n')
-			break;
-		buffer[i++] = character;
+		rd = read(fd, &c, 1);
+		if (c == '\n' || rd <= 0)
+			break ;
+		buf[i++] = c;
 	}
-	buffer[i] = '\0';
-	if (rd == -1 || (!buffer[i - 1] && !rd))
+	buf[i] = '\0';
+	if (rd == -1 || (!buf[i - 1] && !rd))
 	{
-		return (free(buffer), NULL);
+		return (free(buf), NULL);
 	}
-	return (buffer);
+	return (buf);
 }

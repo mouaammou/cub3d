@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 16:54:53 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:35:35 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	initialize_map(t_cub3d *data, t_list *list)
 void	fill_my_map(t_cub3d *data)
 {
 	int	i;
-	int	j;
 
 	i = -1;
 	data->grid = malloc (sizeof(char *) * (data->list->num_row + 1));

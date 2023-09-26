@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:49:02 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 17:26:58 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:48:09 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_cords	x_y_intercept(int flag, t_cub3d *data, int i)
 {
 	t_cords	result;
 
+	result.x = 0;
+	result.y = 0;
 	if (flag == 1)
 	{
 		result.y = floor(data->myplayer.y / TILE_SIZE) * TILE_SIZE;
@@ -39,28 +41,12 @@ t_cords	x_y_steps(int flag, t_cub3d *data, int i)
 {
 	t_cords	step;
 
+	step.x = 0;
+	step.y = 0;
 	if (flag == 1)
-	{
-		step.y = TILE_SIZE;
-		if (is_ray_up(data->myray[i].ray_angle))
-			step.y *= -1;
-		step.x = TILE_SIZE / tan(data->myray[i].ray_angle);
-		if (is_ray_left(data->myray[i].ray_angle) && step.x > 0)
-			step.x *= -1;
-		if (is_ray_right(data->myray[i].ray_angle) && step.x < 0)
-			step.x *= -1;
-	}
+		step = x_step(data, i);
 	else if (flag == 2)
-	{
-		step.x = TILE_SIZE;
-		if (is_ray_left(data->myray[i].ray_angle))
-			step.x *= -1;
-		step.y = TILE_SIZE * tan(data->myray[i].ray_angle);
-		if (is_ray_up(data->myray[i].ray_angle) && step.y > 0)
-			step.y *= -1;
-		if (is_ray_down(data->myray[i].ray_angle) && step.y < 0)
-			step.y *= -1;
-	}
+		step = y_step(data, i);
 	return (step);
 }
 
@@ -72,10 +58,6 @@ char	has_wall_ray(double x, double y, t_cub3d *data)
 	if (x < 0 || x > data->list->win_width || y < 0
 		|| y > data->list->win_height)
 		error("Error\n");
-	if (x > data->list->win_width)
-		map_grid_x--;
-	if (y > data->list->win_height)
-		map_grid_y--;
 	map_grid_x = floor(x / TILE_SIZE);
 	map_grid_y = floor(y / TILE_SIZE);
 	if (map_grid_x >= data->list->num_col)

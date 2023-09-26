@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:20:29 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 18:54:51 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:53:50 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,26 @@ int	get_rgb_value(char *value)
 	return (val);
 }
 
+void	check_elem_and_value_help(char *sub, int k, char *value, t_list *list)
+{
+	if (!ft_strcmp(sub, "F") && k < 6)
+	{
+		check_f_and_c(value);
+		list->f = get_rgb_value(value);
+	}
+	else if (!ft_strcmp(sub, "C") && k < 6)
+	{
+		check_f_and_c(value);
+		list->c = get_rgb_value(value);
+	}
+}
+
 void	check_elem_and_value(char *line, char *sub, int j, t_list *list)
 {
 	char		*value;
 	static int	k;
 
+	value = NULL;
 	if (k < 6)
 		value = get_value_of_elmnts(line, j);
 	if (!ft_strcmp(sub, "NO") && k < 6)
@@ -72,16 +87,8 @@ void	check_elem_and_value(char *line, char *sub, int j, t_list *list)
 		add_value(list, value, 3);
 	else if (!ft_strcmp(sub, "SO") && k < 6)
 		add_value(list, value, 4);
-	else if (!ft_strcmp(sub, "F") && k < 6)
-	{
-		check_f_and_c(value);
-		list->f = get_rgb_value(value);
-	}
-	else if (!ft_strcmp(sub, "C") && k < 6 && list->c == -1)
-	{
-		check_f_and_c(value);
-		list->c = get_rgb_value(value);
-	}
+	else if ((!ft_strcmp(sub, "F") || !ft_strcmp(sub, "C")) && k < 6)
+		check_elem_and_value_help(sub, k, value, list);
 	free(value);
 	k++;
 }

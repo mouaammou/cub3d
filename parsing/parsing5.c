@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:22:02 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 18:42:23 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:39:39 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	check_middle_lines_help(char **m, int *i)
 void	check_middle_lines(char **m)
 {
 	int		i;
-	int		j;
 
 	i = 1;
 	check_middle_lines_help(m, &i);

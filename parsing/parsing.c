@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 22:57:16 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 18:49:41 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:38:51 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	fill_struct_help(t_list *list, char **g_map, int *i)
 {
 	int		k;
 	int		j;
-	int		start;
 	char	*sub;
 
 	k = 0;

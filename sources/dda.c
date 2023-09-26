@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:58:34 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 17:29:51 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:35:26 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int destroy_window(void *param)
+int	destroy_window(void *param)
 {
+	(void)param;
 	exit(0);
 	return (0);
 }
