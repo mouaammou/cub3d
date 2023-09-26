@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 22:57:16 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 16:47:33 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:47:58 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ t_list	*create_and_initialize_list()
 	if (!list)
 		return (NULL);
 	list->map = NULL;
-	list->NO = NULL;
-	list->SO = NULL;
-	list->EA = NULL;
-	list->WE = NULL;
-	list->C = -1;
-	list->F = -1;
+	list->no = NULL;
+	list->so = NULL;
+	list->ea = NULL;
+	list->we = NULL;
+	list->c = -1;
+	list->f = -1;
 	list->num_col = -1;
 	list->num_row = -1;
 	list->win_height = -1;
@@ -182,27 +182,27 @@ void	add_value(t_list *list, char *value, int flag)
 {
 	if (flag == 1)
 	{
-		if (list->NO)
+		if (list->no)
 			error("Error : NO is duplicated\n");
-		list->NO = ft_strdup(value);
+		list->no = ft_strdup(value);
 	}
 	else if (flag == 2)
 	{
-		if (list->EA)
+		if (list->ea)
 			error("Error : EA is duplicated\n");
-		list->EA = ft_strdup(value);
+		list->ea = ft_strdup(value);
 	}
 	else if (flag == 3)
 	{
-		if (list->WE)
+		if (list->we)
 			error("Error : WE is duplicated\n");
-		list->WE = ft_strdup(value);
+		list->we = ft_strdup(value);
 	}
 	else if (flag == 4)
 	{
-		if (list->SO)
+		if (list->so)
 			error("Error : SO is duplicated\n");
-		list->SO = ft_strdup(value);
+		list->so = ft_strdup(value);
 	}
 }
 
@@ -238,12 +238,12 @@ void	check_elem_and_value(char *line, char *sub, int j, t_list *list)
 	else if (!ft_strcmp(sub, "F") && k < 6)
 	{
 		check_f_and_c(value);
-		list->F = get_rgb_value(value);
+		list->f = get_rgb_value(value);
 	}
-	else if (!ft_strcmp(sub, "C") && k < 6 && list->C == -1)
+	else if (!ft_strcmp(sub, "C") && k < 6 && list->c == -1)
 	{
 		check_f_and_c(value);
-		list->C = get_rgb_value(value);
+		list->c = get_rgb_value(value);
 	}
 	free(value);
 	k++;
@@ -509,10 +509,10 @@ void	continue_filling_struct(t_list *list)
 void	free_list(t_list **list)
 {
 	free_2d_tab((*list)->map);
-	free((*list)->NO);
-	free((*list)->WE);
-	free((*list)->EA);
-	free((*list)->SO);
+	free((*list)->no);
+	free((*list)->we);
+	free((*list)->ea);
+	free((*list)->so);
 	free((*list));
 }
 

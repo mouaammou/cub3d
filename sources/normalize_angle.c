@@ -6,11 +6,16 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 01:12:49 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 17:00:54 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:29:34 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+void	free_data(t_cub3d **data)
+{
+	free_2d_tab((*data)->grid);
+}
 
 double	return_rotation_angle(t_cub3d *data)
 {

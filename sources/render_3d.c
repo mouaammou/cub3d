@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:49:13 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 15:32:23 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:46:56 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	color_sky(t_cub3d *data)
 		int a = 0;
 		while (a < WINDOW_HEIGHT / 2)
 		{
-			put_color(data, i * data->wall_strip_width, a, data->list->C);
+			put_color(data, i * data->wall_strip_width, a, data->list->c);
 			a++;
 		}
 		i++;
@@ -35,7 +35,7 @@ void	color_floor(t_cub3d *data)
 		int a = 0;
 		while (a < WINDOW_HEIGHT / 2)
 		{
-			put_color(data, i * data->wall_strip_width, a + WINDOW_HEIGHT / 2, data->list->F);
+			put_color(data, i * data->wall_strip_width, a + WINDOW_HEIGHT / 2, data->list->f);
 			a++;
 		}
 		i++;
@@ -89,10 +89,10 @@ void	get_textures(t_cub3d *data)
 	data->texture = malloc(sizeof(t_texture) * 4);
 	if (!data->texture)
 		error("Error\n");
-	data->texture[0].tex = mlx_xpm_file_to_image(data->mlx, data->list->NO, &data->texture[0].width, &data->texture[0].height);
-	data->texture[1].tex = mlx_xpm_file_to_image(data->mlx, data->list->SO, &data->texture[1].width, &data->texture[1].height);
-	data->texture[2].tex = mlx_xpm_file_to_image(data->mlx, data->list->EA, &data->texture[2].width, &data->texture[2].height);
-	data->texture[3].tex = mlx_xpm_file_to_image(data->mlx, data->list->WE, &data->texture[3].width, &data->texture[3].height);
+	data->texture[0].tex = mlx_xpm_file_to_image(data->mlx, data->list->no, &data->texture[0].width, &data->texture[0].height);
+	data->texture[1].tex = mlx_xpm_file_to_image(data->mlx, data->list->so, &data->texture[1].width, &data->texture[1].height);
+	data->texture[2].tex = mlx_xpm_file_to_image(data->mlx, data->list->ea, &data->texture[2].width, &data->texture[2].height);
+	data->texture[3].tex = mlx_xpm_file_to_image(data->mlx, data->list->we, &data->texture[3].width, &data->texture[3].height);
 	if (!data->texture[0].tex || !data->texture[1].tex || !data->texture[2].tex || !data->texture[3].tex)
 		error("Error \n");
 	data->texture[0].cast_texture = (uint32_t *)mlx_get_data_addr(data->texture[0].tex, &tmp, &tmp, &tmp);
