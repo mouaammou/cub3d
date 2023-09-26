@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:34:56 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 16:34:58 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:26:44 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <math.h>
 # include <mlx.h>
 # include <limits.h>
-# include <float.h>
+
 # include <sys/types.h>
 # include <fcntl.h>
 # include <string.h>
@@ -49,7 +49,7 @@ typedef enum screen_data
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
 	TILE_SIZE			= 1000,
-	MAP_SIZE			= 8
+	MAP_SIZE			= 6
 }t_window_data;
 
 typedef struct player
@@ -62,7 +62,6 @@ typedef struct player
 	double			x;
 	double			y;
 	double			rotation_speed;
-
 }t_player;
 
 typedef struct s_ray_casting
@@ -109,6 +108,12 @@ typedef struct x
 	double y;
 }t_cords;
 
+typedef struct hit
+{
+	t_cords	horz;
+	t_cords	vert;
+}t_hit;
+
 typedef struct s_list
 {
 	char			**map;
@@ -154,6 +159,8 @@ typedef struct cub3d
 }t_cub3d;
 
 //map.c functions
+t_cords	horizontal_increment(t_cub3d *data, int *found_hit, t_cords step, int i);
+t_cords	vertical_increment(t_cub3d *data, int *found_hit, t_cords result, int i);
 char	has_wall(double x, double y, t_cub3d *data);
 void	render_map(t_cub3d *data);
 void	fill_my_map(t_cub3d *data);
@@ -161,11 +168,12 @@ void	initialize_map(t_cub3d *data, t_list *list);
 void	put_color_map(t_cub3d *data, int x, int y, int color);
 void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color);
 void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color);
+double	return_rotation_angle(t_cub3d *data);
 
 // player functions in c
 void	initialize_player(t_cub3d *data);
 void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color);
-int		move_player(int keycode, t_cub3d *data);
+int		key_pressed(int key_code, t_cub3d *data);
 void	update_position_player(t_cub3d *data);
 int		key_released(int key_code, t_cub3d *data);
 

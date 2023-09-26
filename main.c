@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:34:38 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 16:36:20 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:01:14 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int main (int argc, char **argv)
 	list = parsing(argc, argv);
 	initialize_map(data, list);
 
-	mlx_hook(data->win, ON_KEYDOWN, 0, move_player, data);
+	mlx_hook(data->win, ON_KEYDOWN, 0, key_pressed, data);
 	mlx_hook(data->win, ON_KEYUP, 0, key_released, data);
 	mlx_hook(data->win, ON_DESTROY, 0, destroy_window, data);
 

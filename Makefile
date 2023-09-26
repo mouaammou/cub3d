@@ -6,7 +6,7 @@
 #    By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/26 16:34:46 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/26 16:34:49 by mouaammo         ###   ########.fr        #
+#    Updated: 2023/09/26 17:08:07 by mouaammo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ RM				= rm -fr
 MLX				= -lmlx -framework OpenGL -framework AppKit
 LIBFT			= $(addprefix libft/, ft_atoi.c ft_putstr_fd.c ft_split.c ft_strcmp.c ft_strlen.c ft_substr.c is_white_space.c)
 GNL				= $(addprefix get_next_line/, get_next_line_utils.c get_next_line.c)
-PARSING		= $(addprefix parsing/, parsing.c free_2d_tab.c)
-FILES			= main.c $(addprefix sources/, dda.c map.c player.c raycasting.c normalize_angle.c render_3d.c) $(LIBFT) $(PARSING) $(GNL)
+PARSING			= $(addprefix parsing/, parsing.c free_2d_tab.c)
+FILES			= main.c $(addprefix sources/, horz_vert_inter.c ray_angle.c dda.c map.c player.c raycasting.c normalize_angle.c render_3d.c) $(LIBFT) $(PARSING) $(GNL)
 HEADER_FILES	= $(addprefix include/, cub3d.h)
 OBJECT_FILES	= $(FILES:.c=.o)
 

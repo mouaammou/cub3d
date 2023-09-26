@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 22:57:16 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 15:45:53 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:47:33 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -435,14 +435,14 @@ void	fill_struct(char **argv, t_list *list)
 	g_map = get_map(argv);
 	while (g_map[i])
 	{
-		j = 0;
+		j = -1;
 		if (!ft_strcmp(g_map[i], "") || line_of_white_spaces(g_map[i]))
 		{
 			i++;
 			continue;
 		}
-		while (g_map[i][j] && g_map[i][j] == ' ')
-			j++;
+		while (g_map[i][++j] && g_map[i][j] == ' ');
+			// j++;
 		start = j;
 		while(g_map[i][j] && g_map[i][j] != ' ')
 			j++;
