@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+         #
+#    By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 12:34:07 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/26 11:31:56 by mouaammo         ###   ########.fr        #
+#    Updated: 2023/09/26 14:45:06 by rennacir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJECT_FILES	= $(FILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(HEADER_FILES) $(OBJECT_FILES)
-	@$(CC) $(FLAGS) $(MLX) $(OBJECT_FILES) -o $(NAME)
+	@$(CC) $(FLAGS) $(MLX) $(OBJECT_FILES) -o $(NAME) -lreadline
 	@printf "\n\033[1;36m ───────────── Done ──────────── \033[0m\n\n"
 
 %.o:%.c $(HEADER_FILES) Makefile

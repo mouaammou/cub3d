@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 12:03:41 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:57:30 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,22 @@ int	render_img(t_cub3d *data)
 	return (0);
 }
 
+void func()
+{
+	system("leaks cub3d");
+}
+
+void	free_data(t_cub3d **data)
+{
+	free_2d_tab((*data)->grid);
+}
+
 int main (int argc, char **argv)
 {
 	t_cub3d	*data;
+	t_cub3d	*data1 = malloc (sizeof (t_cub3d));
 	t_list	*list;
-
+	atexit(func);
 	data = malloc (sizeof (t_cub3d));
 	if (!data)
 		return (1);
@@ -85,12 +96,14 @@ int main (int argc, char **argv)
 	data->map_img = NULL;
 	list = parsing(argc, argv);
 	initialize_map(data, list);
-	
+
 	mlx_hook(data->win, ON_KEYDOWN, 0, move_player, data);
 	mlx_hook(data->win, ON_KEYUP, 0, key_released, data);
 	mlx_hook(data->win, ON_DESTROY, 0, destroy_window, data);
 	get_textures(data);
 	mlx_loop_hook(data->mlx, render_img, data);
 	mlx_loop(data->mlx);
+	free_list(&list);
+	free_data(&data);
 	return (0);
 }

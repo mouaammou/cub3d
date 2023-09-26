@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 16:04:50 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/23 13:56:23 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:26:04 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	free(s1);
 	free(s2);
 	return (str);
-}
-
-int	ft_strchr(char *str, char c)
-{
-	if (!str)
-		return (0);
-	while (*str)
-	{
-		if (*str == c)
-			return (1);
-		str++;
-	}
-	return (0);
 }
 
 char	*ft_strdup(char *s1)

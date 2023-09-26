@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 13:02:21 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:46:19 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	fill_my_map(t_cub3d *data)
 	i = -1;
 	data->grid = malloc (sizeof(char *) * (data->list->num_row + 1));
 	if (!data->grid)
-		puts("haaaa");
+		error("Error : about allocation\n");
 	i = -1;
 	while (data->list->map[++i])
 	{
