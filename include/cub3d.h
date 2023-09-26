@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:48:00 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 12:02:57 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:21:16 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef enum screen_data
 	WINDOW_WIDTH		= 2400,
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 1500,
-	MAP_SIZE			= 7
+	TILE_SIZE			= 1000,
+	MAP_SIZE			= 8
 }t_window_data;
 
 typedef struct player
@@ -162,7 +162,6 @@ void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color);
 
 // player functions in c
 void	initialize_player(t_cub3d *data);
-void	render_player(t_cub3d *data);
 void	draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color);
 int		move_player(int keycode, t_cub3d *data);
 void	update_position_player(t_cub3d *data);

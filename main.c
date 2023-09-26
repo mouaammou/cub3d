@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 12:03:41 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:58:18 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	get_imgs_data(t_cub3d *data)
 
 	if (data->list->win_height > WINDOW_WIDTH * 50)
 		data->map.size = 4;
+	else if (data->list->num_col * data->map.size >= WINDOW_WIDTH || data->list->num_row * data->map.size >= WINDOW_HEIGHT)
+		data->map.size = 2;
 	else
 		data->map.size = MAP_SIZE;
 
@@ -85,10 +87,11 @@ int main (int argc, char **argv)
 	data->map_img = NULL;
 	list = parsing(argc, argv);
 	initialize_map(data, list);
-	
+
 	mlx_hook(data->win, ON_KEYDOWN, 0, move_player, data);
 	mlx_hook(data->win, ON_KEYUP, 0, key_released, data);
 	mlx_hook(data->win, ON_DESTROY, 0, destroy_window, data);
+
 	get_textures(data);
 	mlx_loop_hook(data->mlx, render_img, data);
 	mlx_loop(data->mlx);
