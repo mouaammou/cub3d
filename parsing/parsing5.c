@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:22:02 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 19:39:39 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/27 12:10:00 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	check_middle_lines_help(char **m, int *i)
 		j++;
 		while (m[(*i)][j] && m[(*i)][j + 1])
 		{
-			if (m[(*i)][j] == '0' || m[(*i)][j] == 'N')
+			if (m[(*i)][j] == '0' || m[(*i)][j] == 'N' || m[(*i)][j] == 'S'
+				|| m[(*i)][j] == 'W' || m[(*i)][j] == 'E')
 			{
 				if (!check_four_sides(m, *i, j))
 					error("Error : map is not close\n");
