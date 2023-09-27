@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:20:29 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 19:53:50 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/27 12:09:43 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,23 @@ int	get_rgb_value(char *value)
 
 void	check_elem_and_value_help(char *sub, int k, char *value, t_list *list)
 {
+	static int	f;
+	static int	c;
+
 	if (!ft_strcmp(sub, "F") && k < 6)
 	{
 		check_f_and_c(value);
 		list->f = get_rgb_value(value);
+		f++;
 	}
 	else if (!ft_strcmp(sub, "C") && k < 6)
 	{
 		check_f_and_c(value);
 		list->c = get_rgb_value(value);
+		c++;
 	}
+	if (c > 1 || f > 1)
+		error("Error\n");
 }
 
 void	check_elem_and_value(char *line, char *sub, int j, t_list *list)
@@ -89,6 +96,10 @@ void	check_elem_and_value(char *line, char *sub, int j, t_list *list)
 		add_value(list, value, 4);
 	else if ((!ft_strcmp(sub, "F") || !ft_strcmp(sub, "C")) && k < 6)
 		check_elem_and_value_help(sub, k, value, list);
+	else if (ft_strcmp(sub, "NO")
+		&& ft_strcmp(sub, "EA") && ft_strcmp(sub, "WE")
+		&& ft_strcmp(sub, "SO") && ft_strcmp(sub, "F") && ft_strcmp(sub, "C"))
+		error("Error\n");
 	free(value);
 	k++;
 }
