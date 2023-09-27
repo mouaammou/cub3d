@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:48:00 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/27 16:04:56 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/27 20:17:05 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <mlx.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <stdio.h>
 
 # define FOV_ANGLE 1.0471975512
 # define EPSILON 1e-9
@@ -38,7 +39,8 @@ typedef enum screen_data
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
 	TILE_SIZE			= 2000,
-	MAP_SIZE			= 8
+	MAP_SIZE			= 8,
+	ON_MOUSEMOVE		= 6
 }t_window_data;
 
 typedef struct player
