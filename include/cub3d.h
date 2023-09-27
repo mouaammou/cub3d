@@ -3,25 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:48:00 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 19:48:34 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/27 16:04:56 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
 # include <mlx.h>
 # include <limits.h>
-# include <sys/types.h>
 # include <fcntl.h>
-# include <string.h>
 
 # define FOV_ANGLE 1.0471975512
 # define EPSILON 1e-9
@@ -40,8 +37,8 @@ typedef enum screen_data
 	WINDOW_WIDTH		= 2400,
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 1000,
-	MAP_SIZE			= 6
+	TILE_SIZE			= 2000,
+	MAP_SIZE			= 8
 }t_window_data;
 
 typedef struct player
@@ -131,11 +128,8 @@ typedef struct minimap
 
 typedef struct var
 {
-	int			i;
 	int			max_top;
-	double		x_in_texture;
-	int			color;
-	double		y_in_texture;
+	t_cords		x_y_tex;
 	double		wall3d_height;
 	int			d_from_top;
 	t_texture	texture;
@@ -182,6 +176,7 @@ void		left_right_direction(t_cub3d *data, int i, t_texture *tex);
 t_texture	what_direction(t_cub3d *data, int i);
 t_cords		x_step(t_cub3d *data, int i);
 t_cords		y_step(t_cub3d *data, int i);
+t_var		x_y_textures(t_cub3d *data, int i);
 
 // player functions in c
 void		initialize_player(t_cub3d *data);

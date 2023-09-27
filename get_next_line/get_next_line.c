@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 16:35:11 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/26 19:23:36 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:51:17 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 char	*get_next_line(int fd)
 {
-	int		i;
-	int		rd;
-	char	c;
-	char	*buf;
+	char	*join;
+	char	*buffer;
+	int		bytes;
 
-	i = 0;
-	rd = 0;
-	buf = malloc(100000);
-	if (!buf)
-		return (NULL);
+	join = NULL;
 	while (1)
 	{
-		rd = read(fd, &c, 1);
-		if (c == '\n' || rd <= 0)
+		buffer = malloc (sizeof(char) * 2);
+		if (!buffer)
+			return (NULL);
+		bytes = read(fd, buffer, 1);
+		buffer[bytes] = '\0';
+		if (buffer[0] == '\n')
+		{
+			buffer[0] = '\0';
 			break ;
-		buf[i++] = c;
+		}
+		if (bytes <= 0)
+			return (free(buffer), join);
+		join = ft_strjoin(join, buffer);
 	}
-	buf[i] = '\0';
-	if (rd == -1 || (!buf[i - 1] && !rd))
-	{
-		return (free(buf), NULL);
-	}
-	return (buf);
+	join = ft_strjoin(join, buffer);
+	return (join);
 }

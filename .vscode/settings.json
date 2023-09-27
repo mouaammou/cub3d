@@ -12,6 +12,7 @@
 		"float.h": "c",
 		"chrono": "c",
 		"libft.h": "c",
-		"algorithm": "c"
+		"algorithm": "c",
+		"stdio.h": "c"
 	}
 }

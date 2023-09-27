@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 01:12:49 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 17:29:34 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:48:29 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	free_data(t_cub3d **data)
 {
 	free_2d_tab((*data)->grid);
+	free(*data);
 }
 
 double	return_rotation_angle(t_cub3d *data)
