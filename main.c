@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/28 20:07:49 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:24:26 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int	mouse_hook(int x, int y, t_cub3d *data)
 	i = 0;
 	float_x = (float)x;
 	float_y = (float)y;
-
-
 	if (float_x > 0 && float_x < WINDOW_WIDTH && y > 0 && y < WINDOW_HEIGHT)
 	{
 		if (float_x - old_x < -0.1)
