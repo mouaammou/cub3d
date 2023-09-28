@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/27 15:50:11 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/28 18:55:06 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,8 @@ void	get_imgs_data(t_cub3d *data)
 	if (data->map_img)
 		mlx_destroy_image(data->mlx, data->map_img);
 	mlx_clear_window(data->mlx, data->win);
-	if (data->list->win_height > WINDOW_WIDTH * 50)
-		data->map.size = 4;
-	else if (data->list->num_col * data->map.size >= WINDOW_WIDTH
-		|| data->list->num_row * data->map.size >= WINDOW_HEIGHT)
-		data->map.size = 2;
-	else
-		data->map.size = MAP_SIZE;
-	data->map_img = mlx_new_image(data->mlx,
-			data->list->num_col * data->map.size,
-			data->list->num_row * data->map.size);
+	data->map.size = 10;
+	data->map_img = mlx_new_image(data->mlx, MAP_SIZE, MAP_SIZE);
 	data->frame_map = (unsigned int *)mlx_get_data_addr(data->map_img,
 			&tmp, &tmp, &tmp);
 	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -49,6 +41,7 @@ int	render_img(t_cub3d *data)
 	get_imgs_data(data);
 	update_position_player(data);
 	render_map(data);
+	render_player(data);
 	render_rays(data);
 	render_textures(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);

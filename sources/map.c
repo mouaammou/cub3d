@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 19:35:35 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/28 18:55:59 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ void	initialize_map(t_cub3d *data, t_list *list)
 	data->mlx = mlx_init();
 	data->list = list;
 	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
-	data->wall_strip_width = 1;
-	data->num_ray = WINDOW_WIDTH / data->wall_strip_width;
+	data->num_ray = WINDOW_WIDTH;
 	data->myray = malloc (sizeof(t_ray) * data->num_ray);
 	if (!data->myray)
 		return ;
@@ -52,7 +51,7 @@ char	has_wall(double x, double y, t_cub3d *data)
 	if (x < 0)
 		x = 0;
 	if (x > data->list->win_width || y > data->list->win_height)
-		error("Error****\n");
+		error("Error\n");
 	map_grid_x = floor(x / TILE_SIZE);
 	map_grid_y = floor(y / TILE_SIZE);
 	if (map_grid_x >= data->list->num_col)
@@ -70,6 +69,8 @@ void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
 	int	i;
 	int	j;
 
+	tile_x -= data->map.size / 2;
+	tile_y -= data->map.size / 2;
 	i = 0;
 	while (i < data->map.size)
 	{
@@ -83,28 +84,12 @@ void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
 	}
 }
 
-void	render_map(t_cub3d *data)
+void	render_player(t_cub3d *data)
 {
-	int	i;
-	int	j;
-	int	tile_x;
-	int	tile_y;
-	int	tile_color;
+	int	x;
+	int	y;
 
-	i = 0;
-	while (i < data->list->num_row)
-	{
-		j = 0;
-		while (j < data->list->num_col)
-		{
-			tile_x = j * data->map.size;
-			tile_y = i * data->map.size;
-			tile_color = 0xc0c0c0;
-			if (data->grid[i][j] == '1')
-				tile_color = 0x808080;
-			draw_case(data, tile_x, tile_y, tile_color);
-			j++;
-		}
-		i++;
-	}
+	x = (MAP_SIZE / 2);
+	y = (MAP_SIZE / 2);
+	draw_case(data, x, y, 0xff00000);
 }

@@ -13,6 +13,7 @@
 		"chrono": "c",
 		"libft.h": "c",
 		"algorithm": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"ios": "c"
 	}
 }

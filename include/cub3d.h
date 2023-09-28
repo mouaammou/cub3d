@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:48:00 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/27 16:04:56 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/28 18:55:11 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <mlx.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <stdio.h>
 
 # define FOV_ANGLE 1.0471975512
 # define EPSILON 1e-9
@@ -37,8 +38,8 @@ typedef enum screen_data
 	WINDOW_WIDTH		= 2400,
 	ON_KEYUP			= 3,
 	ON_DESTROY			= 17,
-	TILE_SIZE			= 2000,
-	MAP_SIZE			= 8
+	TILE_SIZE			= 10000,
+	MAP_SIZE			= 300
 }t_window_data;
 
 typedef struct player
@@ -121,9 +122,9 @@ typedef struct s_list
 
 typedef struct minimap
 {
-	int		px;
-	int		py;
-	int		size;
+	int			px;
+	int			py;
+	double		size;
 }t_minimap;
 
 typedef struct var
@@ -150,7 +151,6 @@ typedef struct cub3d
 	t_ray			*myray;
 	t_cords			pos;
 	int				num_ray;
-	int				wall_strip_width;
 	t_texture		*texture;
 	t_list			*list;
 	t_minimap		map;
@@ -167,7 +167,7 @@ void		render_map(t_cub3d *data);
 void		fill_my_map(t_cub3d *data);
 void		initialize_map(t_cub3d *data, t_list *list);
 void		put_color_map(t_cub3d *data, int x, int y, int color);
-void		draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color);
+void		rectangle(t_cub3d *data, int tile_x, int tile_y, int tile_color);
 void		draw_line(t_cords p0, t_cords p1, t_cub3d *data, int color);
 double		return_rotation_angle(t_cub3d *data);
 int			destroy_window(void *param);
@@ -177,6 +177,7 @@ t_texture	what_direction(t_cub3d *data, int i);
 t_cords		x_step(t_cub3d *data, int i);
 t_cords		y_step(t_cub3d *data, int i);
 t_var		x_y_textures(t_cub3d *data, int i);
+void		render_player(t_cub3d *data);
 
 // player functions in c
 void		initialize_player(t_cub3d *data);

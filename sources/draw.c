@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:28:43 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/26 19:27:44 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/27 19:17:10 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	put_color_map(t_cub3d *data, int x, int y, int color)
 {
 	int	w;
 
-	w = data->list->num_col * data->map.size;
-	if (x >= 0 && x < data->list->num_col * data->map.size
-		&& y >= 0 && y < data->list->num_row * data->map.size)
+	w = MAP_SIZE;
+	if (x >= 0 && x < MAP_SIZE
+		&& y >= 0 && y < MAP_SIZE)
 		data->frame_map[y * w + x] = color;
 }
