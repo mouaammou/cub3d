@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/28 19:21:25 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:07:49 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,23 @@ int	render_img(t_cub3d *data)
 
 int	mouse_hook(int x, int y, t_cub3d *data)
 {
-	static int	old_x;
+	double			float_x;
+	double			float_y;
+	static float	old_x;
+	double			i;
 
-	if (x > 0 && x < WINDOW_WIDTH && y > 0 && y < WINDOW_HEIGHT)
+	i = 0;
+	float_x = (float)x;
+	float_y = (float)y;
+
+
+	if (float_x > 0 && float_x < WINDOW_WIDTH && y > 0 && y < WINDOW_HEIGHT)
 	{
-		if (x - old_x <= 0)
-			data->myplayer.rotation_angle -= 1 * data->myplayer.rotation_speed;
-		else
-			data->myplayer.rotation_angle += 1 * data->myplayer.rotation_speed;
-		old_x = x;
+		if (float_x - old_x < -0.1)
+			data->myplayer.rotation_angle -= 1 * (M_PI / 180);
+		else if (float_x - old_x > 0.1)
+			data->myplayer.rotation_angle += 1 * (M_PI / 180);
+		old_x = float_x;
 	}
 	return (0);
 }
