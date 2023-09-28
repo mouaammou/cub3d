@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/28 18:55:06 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/28 18:59:33 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,21 @@ int	render_img(t_cub3d *data)
 	return (0);
 }
 
+int	mouse_hook(int x, int y, t_cub3d *data)
+{
+	static int	old_x;
+
+	if (x > 0 && x < WINDOW_WIDTH && y > 0 && y < WINDOW_HEIGHT)
+	{
+		if (x - old_x <= 0)
+			data->myplayer.rotation_angle -= 1 * data->myplayer.rotation_speed;
+		else
+			data->myplayer.rotation_angle += 1 * data->myplayer.rotation_speed;
+		old_x = x;
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_cub3d	*data;
@@ -62,6 +77,7 @@ int	main(int argc, char **argv)
 	list = parsing(argc, argv);
 	initialize_map(data, list);
 	mlx_hook(data->win, ON_KEYDOWN, 0, key_pressed, data);
+	mlx_hook(data->win, 6, 0, mouse_hook, data);
 	mlx_hook(data->win, ON_KEYUP, 0, key_released, data);
 	mlx_hook(data->win, ON_DESTROY, 0, destroy_window, data);
 	get_textures(data);
