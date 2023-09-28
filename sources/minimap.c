@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:50:54 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/28 18:57:48 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:13:03 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	render_map(t_cub3d *data)
 		j = 0;
 		while (j < MAP_SIZE)
 		{
-			color = 0x000000;
+			color = 0xc0c0c0;
 			if (is_wall(data, (i + start_x) / data->map.size
 					, (j + start_y) / data->map.size))
-				color = 0xffffff;
+				color = 0x808080;
 			put_color_map(data, i, j, color);
 			j++;
 		}

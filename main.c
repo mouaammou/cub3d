@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/28 18:59:33 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:21:25 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	get_imgs_data(t_cub3d *data)
 	if (data->map_img)
 		mlx_destroy_image(data->mlx, data->map_img);
 	mlx_clear_window(data->mlx, data->win);
-	data->map.size = 10;
+	data->map.size = 15;
 	data->map_img = mlx_new_image(data->mlx, MAP_SIZE, MAP_SIZE);
 	data->frame_map = (unsigned int *)mlx_get_data_addr(data->map_img,
 			&tmp, &tmp, &tmp);
