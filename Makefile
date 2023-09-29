@@ -6,7 +6,7 @@
 #    By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 12:34:07 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/29 12:04:47 by rennacir         ###   ########.fr        #
+#    Updated: 2023/09/29 12:21:16 by rennacir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJECT_FILES	= $(FILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(HEADER_FILES) $(OBJECT_FILES)
-	@$(CC) $(FLAGS) $(MLX) $(OBJECT_FILES) -o $(NAME) -lreadline
+	@$(CC) $(FLAGS) $(MLX) $(OBJECT_FILES) -o $(NAME)
 	@printf "\n\033[1;36m ───────────── Done ──────────── \033[0m\n\n"
 
 %.o:%.c $(HEADER_FILES) Makefile
