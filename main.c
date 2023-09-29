@@ -6,7 +6,7 @@
 /*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 22:37:31 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/29 12:12:41 by rennacir         ###   ########.fr       */
+/*   Updated: 2023/09/29 12:19:31 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,11 @@ int	mouse_hook(int x, int y, t_cub3d *data)
 	return (0);
 }
 
-void func()
-{
-	system("leaks cub3d");
-}
-
 int	main(int argc, char **argv)
 {
 	t_cub3d	*data;
 	t_list	*list;
-	atexit(func);
+
 	data = malloc (sizeof (t_cub3d));
 	if (!data)
 		return (1);
