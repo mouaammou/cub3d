@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/29 11:45:22 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/29 13:10:21 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	initialize_map(t_cub3d *data, t_list *list)
 {
 	data->mlx = mlx_init();
 	data->list = list;
+	data->map.size = 15;
 	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
 	data->num_ray = WINDOW_WIDTH;
 	data->myray = malloc (sizeof(t_ray) * data->num_ray);
