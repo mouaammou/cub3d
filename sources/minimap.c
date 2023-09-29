@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 18:50:54 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/28 19:13:03 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/29 11:48:48 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	is_wall(t_cub3d *data, int x, int y)
 {
+	if (x > data->list->num_row * data->map.size
+		|| y > data->list->num_col * data->map.size
+		|| x < 0 || y < 0)
+		return (2);
 	if (y < 0)
 		y = 0;
 	if (x < 0)
 		x = 0;
-	if (x > data->list->num_row * data->map.size
-		|| y > data->list->num_col * data->map.size
-		|| x < 0 || y < 0)
-		return (0);
 	if (x >= data->list->num_col)
 		x = data->list->num_col - 1;
 	if (y >= data->list->num_row)
@@ -48,9 +48,10 @@ void	render_map(t_cub3d *data)
 		while (j < MAP_SIZE)
 		{
 			color = 0xc0c0c0;
-			if (is_wall(data, (i + start_x) / data->map.size
-					, (j + start_y) / data->map.size))
+			if (is_wall(data, (i + start_x) / data->map.size, (j + start_y) / data->map.size) == 1)
 				color = 0x808080;
+			else if (is_wall(data, (i + start_x) / data->map.size , (j + start_y) / data->map.size) == 2)
+				color = 0x000000;
 			put_color_map(data, i, j, color);
 			j++;
 		}
