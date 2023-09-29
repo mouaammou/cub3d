@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/28 19:07:39 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/29 11:45:22 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	has_wall(double x, double y, t_cub3d *data)
 	if (x < 0)
 		x = 0;
 	if (x > data->list->win_width || y > data->list->win_height)
-		error("Error\n");
+		return ('1');
 	map_grid_x = floor(x / TILE_SIZE);
 	map_grid_y = floor(y / TILE_SIZE);
 	if (map_grid_x >= data->list->num_col)
