@@ -6,7 +6,7 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:04:22 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/29 13:10:21 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:46:52 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,9 @@ void	draw_case(t_cub3d *data, int tile_x, int tile_y, int tile_color)
 
 void	render_player(t_cub3d *data)
 {
-	int	x;
-	int	y;
+	t_cords	p0;
 
-	x = (MAP_SIZE / 2);
-	y = (MAP_SIZE / 2);
-	draw_case(data, x, y, 0xff00000);
+	p0.x = (MAP_SIZE / 2);
+	p0.y = (MAP_SIZE / 2);
+	draw_case(data, p0.x, p0.y, 0xff00000);
 }

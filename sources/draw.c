@@ -6,11 +6,18 @@
 /*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:28:43 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/27 19:17:10 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:44:50 by mouaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+int	destroy_window(void *param)
+{
+	(void)param;
+	exit(0);
+	return (0);
+}
 
 void	put_color(t_cub3d *data, int x, int y, int color)
 {
