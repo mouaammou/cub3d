@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:48:00 by mouaammo          #+#    #+#             */
-/*   Updated: 2023/09/28 18:59:50 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/29 12:04:34 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,7 @@ char		*al_spaces(int len);
 char		**join_line_with_spaces(char **map, int count);
 void		check_first_and_last_line(char *s);
 void		check_elements(char **m);
+char		*ft_strtrim(char const *s1, char const *set);
 int			check_four_sides(char **map, int i, int j);
 void		check_middle_lines(char **m);
 void		pars_map(t_list *list, char **map);

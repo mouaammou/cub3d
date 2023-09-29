@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+         #
+#    By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/13 12:34:07 by mouaammo          #+#    #+#              #
-#    Updated: 2023/09/28 19:08:00 by mouaammo         ###   ########.fr        #
+#    Updated: 2023/09/29 12:04:47 by rennacir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME 			= cub3d
 CC				= cc -Ofast #-O3 -g -fsanitize=address
 RM				= rm -fr
 MLX				= -lmlx -framework OpenGL -framework AppKit
-LIBFT			= $(addprefix libft/, ft_atoi.c ft_putstr_fd.c ft_split.c ft_strcmp.c ft_strlen.c ft_substr.c is_white_space.c)
+LIBFT			= $(addprefix libft/, ft_atoi.c ft_putstr_fd.c ft_split.c ft_strcmp.c ft_strlen.c ft_substr.c is_white_space.c ft_strtrim.c)
 GNL				= $(addprefix get_next_line/, get_next_line_utils.c get_next_line.c)
 PARSING			= $(addprefix parsing/, parsing.c parsing1.c parsing2.c parsing3.c parsing4.c  parsing5.c free_2d_tab.c tools.c)
 FILES			= main.c $(addprefix sources/, minimap.c textures_data.c what_direction.c draw.c horz_vert_inter.c \

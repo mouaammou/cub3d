@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouaammo <mouaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rennacir <rennacir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:16:37 by rennacir          #+#    #+#             */
-/*   Updated: 2023/09/27 15:43:13 by mouaammo         ###   ########.fr       */
+/*   Updated: 2023/09/29 12:11:45 by rennacir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,12 @@ int	line_of_white_spaces(char *s)
 
 char	*get_value_of_elmnts(char *line, int j)
 {
-	int		start;
-	char	*sub;
+	char	*trim;
 
-	while (line[j] && line[j] == ' ')
-		j++;
-	if (!line[j])
+	trim = ft_strtrim(line + j, " ");
+	if (!ft_strcmp(trim, ""))
 		error("Error : a value is missing\n");
-	start = j;
-	while (line[j] && line[j] != ' ')
-		j++;
-	sub = ft_substr(line, start, j - start);
-	while (line[j] && line[j] == ' ')
-		j++;
-	if (line[j])
-		error("Error : check the value of first elements\n");
-	return (sub);
+	return (trim);
 }
 
 void	check_is_digit(char *s)
